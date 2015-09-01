@@ -12,6 +12,6 @@ namespace GSD.Models
 		public virtual string Name { get; set; }
 		public virtual Project Project { get; set; }
 
-		public ICollection<Todo> Todos { get; set; }
+		public virtual ICollection<Todo> Todos { get; set; }
 	}
 }

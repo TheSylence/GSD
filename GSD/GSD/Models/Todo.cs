@@ -10,6 +10,7 @@ namespace GSD.Models
 		}
 
 		public virtual string Details { get; set; }
+		public virtual bool Done { get; set; }
 		public virtual Project Project { get; set; }
 		public virtual string Summary { get; set; }
 		public virtual ICollection<Tag> Tags { get; set; }

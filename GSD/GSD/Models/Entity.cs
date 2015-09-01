@@ -21,8 +21,8 @@ namespace GSD.Models
 				return false;
 
 			// handle the case of comparing two NEW objects
-			bool otherIsTransient = Equals( other.Id, Guid.Empty );
-			bool thisIsTransient = Equals( Id, Guid.Empty );
+			bool otherIsTransient = Equals( other.Id, 0 );
+			bool thisIsTransient = Equals( Id, 0 );
 			if( otherIsTransient && thisIsTransient )
 				return ReferenceEquals( other, this );
 
@@ -35,7 +35,7 @@ namespace GSD.Models
 			if( OldHashCode.HasValue )
 				return OldHashCode.Value;
 
-			bool thisIsTransient = Equals( Id, Guid.Empty );
+			bool thisIsTransient = Equals( Id, 0 );
 
 			// When this instance is transient, we use the base GetHashCode()
 			// and remember it, so an instance can NEVER change its hash code.
@@ -47,7 +47,7 @@ namespace GSD.Models
 			return Id.GetHashCode();
 		}
 
-		public virtual Guid Id { get; set; }
+		public virtual int Id { get; set; }
 		private int? OldHashCode;
 	}
 }
