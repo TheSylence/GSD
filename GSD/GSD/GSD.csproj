@@ -105,7 +105,11 @@
     </Compile>
     <Compile Include="Behaviors\DataContextDisposer.cs" />
     <Compile Include="Behaviors\FlyoutOpener.cs" />
+    <Compile Include="Converters\BackgroundColor.cs" />
+    <Compile Include="Converters\ForegroundColor.cs" />
+    <Compile Include="Converters\Markdown.cs" />
     <Compile Include="Converters\RelativeWidth.cs" />
+    <Compile Include="Converters\TextToFlowDocumentConverter.cs" />
     <Compile Include="Messages\CurrentProjectChangedMessage.cs" />
     <Compile Include="Messages\FlyoutMessage.cs" />
     <Compile Include="Models\Entity.cs" />
@@ -126,6 +130,7 @@
     <Compile Include="ViewModels\ProjectViewModel.cs" />
     <Compile Include="ViewModels\TagListViewModel.cs" />
     <Compile Include="ViewModels\TagViewModel.cs" />
+    <Compile Include="ViewModels\TodoTagViewModel.cs" />
     <Compile Include="ViewModels\TodoViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBaseEx.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">

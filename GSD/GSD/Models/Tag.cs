@@ -9,6 +9,7 @@ namespace GSD.Models
 			Todos = new List<Todo>();
 		}
 
+		public virtual string Color { get; set; }
 		public virtual string Name { get; set; }
 		public virtual Project Project { get; set; }
 

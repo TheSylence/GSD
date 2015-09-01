@@ -19,6 +19,7 @@
 		<id name="Id" generator="native" />
 
 		<property name="Name" />
+		<property name="Color" length="6" />
 
 		<many-to-one name="Project" class="Project" />
 
