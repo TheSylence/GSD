@@ -32,6 +32,11 @@ namespace GSD.ViewModels
 			MessengerInstance.Send( new FlyoutMessage( ProjectFlyoutName ) );
 		}
 
+		private void ExecuteOpenSettingsCommand()
+		{
+			MessengerInstance.Send( new FlyoutMessage( SettingsFlyoutName ) );
+		}
+
 		private void ExecuteOpenTagManagementCommand()
 		{
 			MessengerInstance.Send( new FlyoutMessage( TagFlyoutName ) );
@@ -41,6 +46,8 @@ namespace GSD.ViewModels
 
 		public ICommand OpenProjectManagementCommand => _OpenProjectManagementCommand ?? ( _OpenProjectManagementCommand = new RelayCommand( ExecuteOpenProjectManagementCommand ) );
 
+		public RelayCommand OpenSettingsCommand => _OpenSettingsCommand ?? ( _OpenSettingsCommand = new RelayCommand( ExecuteOpenSettingsCommand ) );
+
 		public ICommand OpenTagManagementCommand => _OpenTagManagementCommand ?? ( _OpenTagManagementCommand = new RelayCommand( ExecuteOpenTagManagementCommand, CanExecuteOpenTagManagementCommand ) );
 
 		public ProjectListViewModel ProjectList { get; }
@@ -49,6 +56,8 @@ namespace GSD.ViewModels
 
 		private const string ProjectFlyoutName = "ProjectsFlyout";
 
+		private const string SettingsFlyoutName = "SettingsFlyout";
+
 		private const string TagFlyoutName = "TagsFlyout";
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
@@ -56,6 +65,9 @@ namespace GSD.ViewModels
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private RelayCommand _OpenProjectManagementCommand;
+
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private RelayCommand _OpenSettingsCommand;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private RelayCommand _OpenTagManagementCommand;

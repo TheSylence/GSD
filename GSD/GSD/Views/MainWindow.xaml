@@ -111,6 +111,47 @@
 					</ListView>
 				</DockPanel>
 			</controls:Flyout>
+			<controls:Flyout x:Name="SettingsFlyout" Position="Left" Header="Settings" Theme="Adapt"
+			                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
+				<i:Interaction.Behaviors>
+					<behaviors:FlyoutOpener />
+				</i:Interaction.Behaviors>
+				<controls:Flyout.DataContext>
+					<viewModels:SettingsViewModel />
+				</controls:Flyout.DataContext>
+				<DockPanel>
+					<DockPanel LastChildFill="False" DockPanel.Dock="Bottom" Margin="5">
+						<Button Content="Save" Command="{Binding SaveCommand}"
+						        Style="{DynamicResource SquareButtonStyle}"
+						        Margin="5,0" DockPanel.Dock="Right" />
+						<Button Content="Reset to defaults" Command="{Binding ResetToDefaultsCommand}"
+						        Style="{DynamicResource SquareButtonStyle}"
+						        Margin="5,0" DockPanel.Dock="Left" />
+					</DockPanel>
+
+					<StackPanel Orientation="Vertical" Margin="5">
+						<StackPanel.Resources>
+							<DataTemplate x:Key="ColorDataTemplate" DataType="{x:Type viewModels:ColorItem}">
+								<DockPanel>
+									<Ellipse Fill="{Binding ColorBrush}"
+									         Stroke="{Binding BorderBrush}"
+									         Width="18" Height="18" />
+									<TextBlock Text="{Binding Name}" Margin="5,0" />
+								</DockPanel>
+							</DataTemplate>
+						</StackPanel.Resources>
+
+						<TextBlock Text="Theme" />
+						<ComboBox ItemsSource="{Binding AvailableThemes}"
+						          SelectedItem="{Binding SelectedTheme, Mode=TwoWay}"
+						          ItemTemplate="{StaticResource ColorDataTemplate}" />
+						<TextBlock Text="Accent" />
+						<ComboBox ItemsSource="{Binding AvailableAccents}"
+						          SelectedItem="{Binding SelectedAccent, Mode=TwoWay}"
+						          ItemTemplate="{StaticResource ColorDataTemplate}" />
+					</StackPanel>
+				</DockPanel>
+			</controls:Flyout>
 		</controls:FlyoutsControl>
 	</controls:MetroWindow.Flyouts>
 
@@ -126,6 +167,16 @@
 		</Grid.RowDefinitions>
 
 		<StackPanel Orientation="Vertical" Grid.Row="0" Margin="5">
+			<Button Width="36" Height="36" ToolTip="Settings"
+			        Style="{DynamicResource MetroCircleButtonStyle}"
+			        Command="{Binding OpenSettingsCommand}">
+				<Rectangle Width="16" Height="16"
+				           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+					<Rectangle.OpacityMask>
+						<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_cog}" />
+					</Rectangle.OpacityMask>
+				</Rectangle>
+			</Button>
 			<Button Width="36" Height="36" ToolTip="Manage projects"
 			        Style="{DynamicResource MetroCircleButtonStyle}"
 			        Command="{Binding OpenProjectManagementCommand}">
@@ -204,7 +255,7 @@
 									          VerticalAlignment="Center" />
 									<StackPanel Orientation="Horizontal">
 										<TextBlock Text="{Binding Model.Summary}"
-										           VerticalAlignment="Center"
+										           VerticalAlignment="Center" Foreground="{DynamicResource IdealForegroundColorBrush}"
 										           FontSize="{DynamicResource NormalFontSize}" />
 
 										<ItemsControl ItemsSource="{Binding Tags}" Margin="5,0">
