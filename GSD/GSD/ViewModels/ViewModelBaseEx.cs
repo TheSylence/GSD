@@ -10,7 +10,7 @@ namespace GSD.ViewModels
 	{
 		protected ViewModelBaseEx()
 		{
-			Session = App.SessionFactory.OpenSession();
+			Session = App.Session;
 			Settings = new SettingsRepository( Session );
 		}
 

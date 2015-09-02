@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Windows.Input;
-using GalaSoft.MvvmLight.CommandWpf;
+﻿using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
 using GSD.ViewServices;
+using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Windows.Input;
 
 namespace GSD.ViewModels
 {
@@ -90,7 +90,16 @@ namespace GSD.ViewModels
 			};
 
 			ProjectRepo.Add( project );
-			Projects.Add( new ProjectViewModel( project ) );
+			var projectVm = new ProjectViewModel( project );
+			Projects.Add( projectVm );
+
+			if( CurrentProject != null )
+			{
+				CurrentProject.IsCurrent = false;
+			}
+			CurrentProject = projectVm;
+			CurrentProject.IsCurrent = true;
+
 			Reset();
 		}
 

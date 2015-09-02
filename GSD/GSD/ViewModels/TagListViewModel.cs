@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -35,6 +36,7 @@ namespace GSD.ViewModels
 		public void Reset()
 		{
 			NewTagName = string.Empty;
+			NewTagColor = AvailableColors.First();
 		}
 
 		private float CalculateHue( Color color )
@@ -61,7 +63,9 @@ namespace GSD.ViewModels
 			h *= 60;
 
 			if( h < 0 )
+			{
 				h += 360;
+			}
 
 			return h;
 		}
@@ -95,7 +99,8 @@ namespace GSD.ViewModels
 			var tag = new Tag
 			{
 				Name = NewTagName,
-				Project = ProjectList.CurrentProject.Model
+				Project = ProjectList.CurrentProject.Model,
+				Color = NewTagColor.ToString( CultureInfo.InvariantCulture ).Substring( 3 )
 			};
 
 			TagRepo.Add( tag );
@@ -266,15 +271,26 @@ namespace GSD.ViewModels
 				_DeleteTagCommand ??
 				( _DeleteTagCommand = new RelayCommand<TagViewModel>( ExecuteDeleteTagCommand, CanExecuteDeleteTagCommand ) );
 
+		public Color NewTagColor
+		{
+			[DebuggerStepThrough] get { return _NewTagColor; }
+			set
+			{
+				if( _NewTagColor == value )
+				{
+					return;
+				}
+
+				_NewTagColor = value;
+				RaisePropertyChanged();
+			}
+		}
+
 		public ICommand NewTagCommand => _NewTagCommand ?? ( _NewTagCommand = new RelayCommand( ExecuteNewTagCommand, CanExecuteNewTagCommand ) );
 
 		public string NewTagName
 		{
-			[DebuggerStepThrough]
-			get
-			{
-				return _NewTagName;
-			}
+			[DebuggerStepThrough] get { return _NewTagName; }
 			set
 			{
 				if( _NewTagName == value )
@@ -288,14 +304,17 @@ namespace GSD.ViewModels
 		}
 
 		public ObservableCollection<TagViewModel> Tags { get; }
+
 		private readonly ProjectListViewModel ProjectList;
+
 		private readonly ITagRepository TagRepo;
+
 		private RelayCommand<TagViewModel> _DeleteTagCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private RelayCommand _NewTagCommand;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private Color _NewTagColor;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private string _NewTagName;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private RelayCommand _NewTagCommand;
+
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private string _NewTagName;
 	}
 }
