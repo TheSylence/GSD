@@ -133,6 +133,10 @@
     <Compile Include="ViewModels\TodoTagViewModel.cs" />
     <Compile Include="ViewModels\TodoViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBaseEx.cs" />
+    <Compile Include="ViewServices\ConfirmationService.cs" />
+    <Compile Include="ViewServices\IViewServiceRepository.cs" />
+    <Compile Include="ViewServices\ViewServiceRepository.cs" />
+    <Compile Include="Views\GenericBindingProxy.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

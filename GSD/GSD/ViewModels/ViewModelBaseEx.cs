@@ -1,5 +1,6 @@
 ﻿using System;
 using GalaSoft.MvvmLight;
+using GSD.ViewServices;
 using NHibernate;
 
 namespace GSD.ViewModels
@@ -27,6 +28,7 @@ namespace GSD.ViewModels
 			}
 		}
 
+		protected IViewServiceRepository ViewServices => App.ViewServices;
 		protected readonly ISession Session;
 	}
 }

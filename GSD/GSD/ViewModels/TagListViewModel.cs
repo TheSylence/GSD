@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -18,7 +19,13 @@ namespace GSD.ViewModels
 			ProjectList = projectList;
 			ProjectList.CurrentProjectChanged += ProjectList_CurrentProjectChanged;
 
-			Tags = new ObservableCollection<TagViewModel>( ProjectList.CurrentProject.Model.Tags.Select( t => new TagViewModel( t ) ) );
+			var tags = Enumerable.Empty<TagViewModel>();
+			if( ProjectList.CurrentProject != null )
+			{
+				tags = ProjectList.CurrentProject.Model.Tags.Select( t => new TagViewModel( t ) );
+			}
+
+			Tags = new ObservableCollection<TagViewModel>( tags );
 		}
 
 		public void Reset()

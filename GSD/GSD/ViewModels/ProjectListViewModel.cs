@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
+using GSD.ViewServices;
 
 namespace GSD.ViewModels
 {
@@ -43,9 +44,36 @@ namespace GSD.ViewModels
 			MessengerInstance.Register<CurrentProjectChangedMessage>( this, OnCurrentProjectChanged );
 		}
 
+		private bool CanExecuteDeleteProjectCommand( ProjectViewModel arg )
+		{
+			return arg != null;
+		}
+
 		private bool CanExecuteNewProjectCommand()
 		{
 			return !string.IsNullOrWhiteSpace( NewProjectName );
+		}
+
+		private async void ExecuteDeleteProjectCommand( ProjectViewModel arg )
+		{
+			ConfirmationServiceArgs args = new ConfirmationServiceArgs( "Confirm", "Do you really want to delete this project?" );
+
+			if( !await ViewServices.Execute<IConfirmationService, bool>( args ) )
+			{
+				return;
+			}
+
+			Projects.Remove( arg );
+			ProjectRepo.Delete( arg.Model );
+
+			if( !Projects.Contains( CurrentProject ) )
+			{
+				CurrentProject = Projects.FirstOrDefault();
+				if( CurrentProject != null )
+				{
+					CurrentProject.IsCurrent = true;
+				}
+			}
 		}
 
 		private void ExecuteNewProjectCommand()
@@ -85,6 +113,9 @@ namespace GSD.ViewModels
 			}
 		}
 
+		public ICommand DeleteProjectCommand => _DeleteProjectCommand ??
+				( _DeleteProjectCommand = new RelayCommand<ProjectViewModel>( ExecuteDeleteProjectCommand, CanExecuteDeleteProjectCommand ) );
+
 		public ICommand NewProjectCommand => _NewProjectCommand ?? ( _NewProjectCommand = new RelayCommand( ExecuteNewProjectCommand, CanExecuteNewProjectCommand ) );
 
 		public string NewProjectName
@@ -107,11 +138,12 @@ namespace GSD.ViewModels
 		}
 
 		public ObservableCollection<ProjectViewModel> Projects { get; }
-
 		private readonly IProjectRepository ProjectRepo;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private ProjectViewModel _CurrentProject;
+
+		private RelayCommand<ProjectViewModel> _DeleteProjectCommand;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private RelayCommand _NewProjectCommand;

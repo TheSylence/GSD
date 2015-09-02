@@ -7,7 +7,7 @@
 		<property name="Details" />
 		<property name="Done" />
 
-		<many-to-one name="Project" class="Project" />
+		<many-to-one name="Project" class="Project" cascade="delete" />
 
 		<bag name="Tags" table="TodoTags">
 			<key column="Todo" />
@@ -21,7 +21,7 @@
 		<property name="Name" />
 		<property name="Color" length="6" />
 
-		<many-to-one name="Project" class="Project" />
+		<many-to-one name="Project" class="Project" cascade="delete" />
 
 		<bag name="Todos" table="TodoTags">
 			<key column="Tag" />

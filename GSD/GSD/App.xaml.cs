@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using GSD.Models;
-using GSD.Models.Repositories;
+using GSD.ViewServices;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
@@ -22,8 +22,12 @@ namespace GSD
 
 			new SchemaUpdate( cfg ).Execute( false, true );
 			SessionFactory = cfg.BuildSessionFactory();
+
+			ViewServices = new ViewServiceRepository();
+			ViewServices.Register<IConfirmationService>( new ConfirmationService() );
 		}
 
 		public static ISessionFactory SessionFactory { get; private set; }
+		public static IViewServiceRepository ViewServices { get; private set; }
 	}
 }
