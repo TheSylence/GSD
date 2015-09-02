@@ -19,7 +19,13 @@ namespace GSD.ViewModels
 
 			Projects = new ObservableCollection<ProjectViewModel>( ProjectRepo.GetAll().OrderBy( p => p.Name ).Select( p => new ProjectViewModel( p ) ) );
 
-			CurrentProject = Projects.FirstOrDefault();
+			var last = Settings.GetById( SettingKeys.LastProject );
+			CurrentProject = Projects.FirstOrDefault( p => p.Model.Id == last.Get<int>() );
+			if( CurrentProject == null )
+			{
+				CurrentProject = Projects.FirstOrDefault();
+			}
+
 			if( CurrentProject != null )
 			{
 				CurrentProject.IsCurrent = true;
@@ -91,6 +97,7 @@ namespace GSD.ViewModels
 		private void OnCurrentProjectChanged( CurrentProjectChangedMessage msg )
 		{
 			CurrentProject = Projects.FirstOrDefault( p => p.IsCurrent );
+			Settings.Set( SettingKeys.LastProject, CurrentProject?.Model?.Id.ToString() );
 		}
 
 		public ProjectViewModel CurrentProject

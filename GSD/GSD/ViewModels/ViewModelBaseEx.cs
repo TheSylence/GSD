@@ -1,5 +1,6 @@
 ﻿using System;
 using GalaSoft.MvvmLight;
+using GSD.Models.Repositories;
 using GSD.ViewServices;
 using NHibernate;
 
@@ -10,6 +11,7 @@ namespace GSD.ViewModels
 		protected ViewModelBaseEx()
 		{
 			Session = App.SessionFactory.OpenSession();
+			Settings = new SettingsRepository( Session );
 		}
 
 		/// <summary>
@@ -30,5 +32,6 @@ namespace GSD.ViewModels
 
 		protected IViewServiceRepository ViewServices => App.ViewServices;
 		protected readonly ISession Session;
+		protected readonly ISettingsRepository Settings;
 	}
 }

@@ -199,11 +199,13 @@
 						<Expander>
 							<Expander.Header>
 								<DockPanel>
-									<CheckBox DockPanel.Dock="Right"
+									<CheckBox DockPanel.Dock="Right" ToolTip="Done"
 									          IsChecked="{Binding Model.Done}"
 									          VerticalAlignment="Center" />
 									<StackPanel Orientation="Horizontal">
-										<TextBlock Text="{Binding Model.Summary}" VerticalAlignment="Center" />
+										<TextBlock Text="{Binding Model.Summary}"
+										           VerticalAlignment="Center"
+										           FontSize="{DynamicResource NormalFontSize}" />
 
 										<ItemsControl ItemsSource="{Binding Tags}" Margin="5,0">
 											<ItemsControl.ItemTemplate>
@@ -211,6 +213,7 @@
 													<Border BorderBrush="Black" BorderThickness="1" Margin="5,0" Padding="4,2" CornerRadius="5"
 													        Background="{Binding Model.Color, Converter={StaticResource BackgroundColorConv}}">
 														<TextBlock Text="{Binding Model.Name}"
+														           FontSize="{DynamicResource NormalFontSize}"
 														           Foreground="{Binding Model.Color, Converter={StaticResource ForegroundColorConv}}"
 														           VerticalAlignment="Center" />
 													</Border>
@@ -222,15 +225,50 @@
 							</Expander.Header>
 
 							<FlowDocumentScrollViewer Document="{Binding Model.Details, Converter={StaticResource TextToFlowDocumentConv}}" />
-							<!--<TextBlock Text="{Binding Model.Details}" />-->
 						</Expander>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
 		</DockPanel>
 
-		<StatusBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
-			<StatusBarItem Content="Test" />
+		<StatusBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Padding="5,0">
+			<StatusBar.Style>
+				<Style TargetType="StatusBar" BasedOn="{StaticResource {x:Type StatusBar}}">
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding ProjectList.Projects.Count}" Value="0">
+							<Setter Property="Visibility" Value="Hidden" />
+						</DataTrigger>
+						<DataTrigger Binding="{Binding ProjectList.CurrentProject.Todos.Count}" Value="0">
+							<Setter Property="Visibility" Value="Hidden" />
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</StatusBar.Style>
+			<StatusBar.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+					</Grid>
+				</ItemsPanelTemplate>
+			</StatusBar.ItemsPanel>
+
+			<StatusBarItem Grid.Column="0">
+				<TextBlock Text="{Binding ProjectList.CurrentProject.Model.Name}" />
+			</StatusBarItem>
+			<StatusBarItem Grid.Column="1">
+				<TextBlock Text="{Binding ProjectList.CurrentProject.OpenTodoCount, StringFormat=Open: {0}}" />
+			</StatusBarItem>
+			<StatusBarItem Grid.Column="2">
+				<TextBlock Text="{Binding ProjectList.CurrentProject.Todos.Count, StringFormat=Total: {0}}" />
+			</StatusBarItem>
+			<StatusBarItem Grid.Column="3">
+				<TextBlock Text="{Binding ProjectList.CurrentProject.Progress, StringFormat={}{0}%}" />
+			</StatusBarItem>
 		</StatusBar>
 	</Grid>
 </controls:MetroWindow>

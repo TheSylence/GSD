@@ -46,4 +46,9 @@
 			<one-to-many class="Todo" />
 		</bag>
 	</class>
+
+	<class name="Config" table="configs">
+		<id name="Id" />
+		<property name="Value" />
+	</class>
 </hibernate-mapping>

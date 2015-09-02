@@ -10,4 +10,5 @@
 
 	<converters:Markdown x:Key="Markdown" DocumentStyle="{StaticResource DocumentStyle}" />
 	<converters:TextToFlowDocumentConverter Markdown="{StaticResource Markdown}" x:Key="TextToFlowDocumentConv" />
+	<BooleanToVisibilityConverter x:Key="BoolToVisibleConv" />
 </ResourceDictionary>

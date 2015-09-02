@@ -7,6 +7,8 @@ namespace GSD.Models
 		public Todo()
 		{
 			Tags = new List<Tag>();
+
+			Done = false;
 		}
 
 		public virtual string Details { get; set; }
