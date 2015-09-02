@@ -92,11 +92,23 @@
 				<i:Interaction.Behaviors>
 					<behaviors:FlyoutOpener />
 				</i:Interaction.Behaviors>
+				<controls:Flyout.Resources>
+					<views:TagListBindingProxy Data="{Binding}" x:Key="TagssProxy" />
+				</controls:Flyout.Resources>
 				<DockPanel>
 					<DockPanel DockPanel.Dock="Bottom" Margin="5">
 						<Button DockPanel.Dock="Right" Content="Create" Margin="5,0,0,0"
 						        Command="{Binding NewTagCommand}"
 						        Style="{DynamicResource SquareButtonStyle}" />
+                        <ComboBox DockPanel.Dock="Right" ItemsSource="{Binding AvailableColors}" VerticalAlignment="Center" HorizontalContentAlignment="Stretch">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="Color">
+									<!--<Grid>-->
+                                        <Ellipse Width="16" MinHeight="16" Fill="{Binding Converter={StaticResource ColorToBrushConv}}"/>
+                                    <!--</Grid>-->
+                                </DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
 						<TextBox controls:TextBoxHelper.Watermark="Add tag" VerticalAlignment="Center"
 						         Text="{Binding NewTagName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 					</DockPanel>
@@ -104,8 +116,26 @@
 					<ListView ItemsSource="{Binding Tags}">
 						<ListView.ItemTemplate>
 							<DataTemplate DataType="viewModels:TagViewModel">
-								<TextBlock Text="{Binding Model.Name}"
-								           VerticalAlignment="Center" Margin="5,0" />
+								<DockPanel>
+									<Button DockPanel.Dock="Left" Width="32" Height="32" ToolTip="Delete"
+									        Style="{DynamicResource MetroCircleButtonStyle}"
+									        Command="{Binding Data.DeleteTagCommand, Source={StaticResource TagssProxy}}"
+									        CommandParameter="{Binding}">
+										<Rectangle Width="12" Height="12"
+										           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+											<Rectangle.OpacityMask>
+												<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_delete}" />
+											</Rectangle.OpacityMask>
+										</Rectangle>
+									</Button>
+
+									<Ellipse DockPanel.Dock="Right" VerticalAlignment="Center" Margin="5,0" Height="24" Width="24"
+									         Stroke="{DynamicResource IdealForegroundColorBrush}"
+									         Fill="{Binding Model.Color, Converter={StaticResource BackgroundColorConv}}" />
+
+									<TextBlock Text="{Binding Model.Name}"
+									           VerticalAlignment="Center" Margin="5,0" />
+								</DockPanel>
 							</DataTemplate>
 						</ListView.ItemTemplate>
 					</ListView>
@@ -121,10 +151,12 @@
 				</controls:Flyout.DataContext>
 				<DockPanel>
 					<DockPanel LastChildFill="False" DockPanel.Dock="Bottom" Margin="5">
-						<Button Content="Save" Command="{Binding SaveCommand}"
+						<Button Content="Save"
+						        Command="{Binding SaveCommand}"
 						        Style="{DynamicResource SquareButtonStyle}"
 						        Margin="5,0" DockPanel.Dock="Right" />
-						<Button Content="Reset to defaults" Command="{Binding ResetToDefaultsCommand}"
+						<Button Content="Reset to defaults"
+						        Command="{Binding ResetToDefaultsCommand}"
 						        Style="{DynamicResource SquareButtonStyle}"
 						        Margin="5,0" DockPanel.Dock="Left" />
 					</DockPanel>
@@ -255,13 +287,14 @@
 									          VerticalAlignment="Center" />
 									<StackPanel Orientation="Horizontal">
 										<TextBlock Text="{Binding Model.Summary}"
-										           VerticalAlignment="Center" Foreground="{DynamicResource IdealForegroundColorBrush}"
+										           VerticalAlignment="Center"
+										           Foreground="{DynamicResource IdealForegroundColorBrush}"
 										           FontSize="{DynamicResource NormalFontSize}" />
 
 										<ItemsControl ItemsSource="{Binding Tags}" Margin="5,0">
 											<ItemsControl.ItemTemplate>
 												<DataTemplate DataType="viewModels:TodoTagViewModel">
-													<Border BorderBrush="Black" BorderThickness="1" Margin="5,0" Padding="4,2" CornerRadius="5"
+													<Border BorderBrush="{DynamicResource IdealForegroundColorBrush}" BorderThickness="1" Margin="5,0" Padding="4,2" CornerRadius="5"
 													        Background="{Binding Model.Color, Converter={StaticResource BackgroundColorConv}}">
 														<TextBlock Text="{Binding Model.Name}"
 														           FontSize="{DynamicResource NormalFontSize}"

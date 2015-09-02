@@ -21,4 +21,7 @@ namespace GSD.Views
 
 	internal class ProjectListBindingProxy : GenericBindingProxy<ProjectListViewModel>
 	{ }
+
+	internal class TagListBindingProxy : GenericBindingProxy<TagListViewModel>
+	{ }
 }

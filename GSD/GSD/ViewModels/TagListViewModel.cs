@@ -4,9 +4,11 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Media;
 using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Models;
 using GSD.Models.Repositories;
+using GSD.ViewServices;
 
 namespace GSD.ViewModels
 {
@@ -26,6 +28,8 @@ namespace GSD.ViewModels
 			}
 
 			Tags = new ObservableCollection<TagViewModel>( tags );
+
+			AvailableColors = new List<Color>( GetAllColors().OrderBy( CalculateHue ) );
 		}
 
 		public void Reset()
@@ -33,9 +37,57 @@ namespace GSD.ViewModels
 			NewTagName = string.Empty;
 		}
 
+		private float CalculateHue( Color color )
+		{
+			var min = Math.Min( color.ScR, Math.Min( color.ScG, color.ScB ) );
+			var max = Math.Max( color.ScR, Math.Max( color.ScG, color.ScB ) );
+			float h;
+			var delta = max - min;
+			const float tolerance = 0.0001f;
+
+			if( Math.Abs( color.ScR - max ) < tolerance )
+			{
+				h = ( color.ScG - color.ScB ) / delta;
+			}
+			else if( Math.Abs( color.ScG - max ) < tolerance )
+			{
+				h = 2 + ( color.ScB - color.ScR ) / delta;
+			}
+			else
+			{
+				h = 4 + ( color.ScR - color.ScG ) / delta;
+			}
+
+			h *= 60;
+
+			if( h < 0 )
+				h += 360;
+
+			return h;
+		}
+
+		private bool CanExecuteDeleteTagCommand( TagViewModel arg )
+		{
+			return arg != null;
+		}
+
 		private bool CanExecuteNewTagCommand()
 		{
 			return !string.IsNullOrWhiteSpace( NewTagName );
+		}
+
+		private async void ExecuteDeleteTagCommand( TagViewModel arg )
+		{
+			ConfirmationServiceArgs args = new ConfirmationServiceArgs( "Confirm",
+				"Do you really want to delete the selected tag?" );
+
+			if( !await ViewServices.Execute<IConfirmationService, bool>( args ) )
+			{
+				return;
+			}
+
+			TagRepo.Delete( arg.Model );
+			Tags.Remove( arg );
 		}
 
 		private void ExecuteNewTagCommand()
@@ -52,6 +104,151 @@ namespace GSD.ViewModels
 			Reset();
 		}
 
+		private IEnumerable<Color> GetAllColors()
+		{
+			yield return Colors.AliceBlue;
+			yield return Colors.AntiqueWhite;
+			yield return Colors.Aqua;
+			yield return Colors.Aquamarine;
+			yield return Colors.Azure;
+			yield return Colors.Beige;
+			yield return Colors.Bisque;
+			yield return Colors.Black;
+			yield return Colors.BlanchedAlmond;
+			yield return Colors.Blue;
+			yield return Colors.BlueViolet;
+			yield return Colors.Brown;
+			yield return Colors.BurlyWood;
+			yield return Colors.CadetBlue;
+			yield return Colors.Chartreuse;
+			yield return Colors.Chocolate;
+			yield return Colors.Coral;
+			yield return Colors.CornflowerBlue;
+			yield return Colors.Cornsilk;
+			yield return Colors.Crimson;
+			yield return Colors.Cyan;
+			yield return Colors.DarkBlue;
+			yield return Colors.DarkCyan;
+			yield return Colors.DarkGoldenrod;
+			yield return Colors.DarkGray;
+			yield return Colors.DarkGreen;
+			yield return Colors.DarkKhaki;
+			yield return Colors.DarkMagenta;
+			yield return Colors.DarkOliveGreen;
+			yield return Colors.DarkOrange;
+			yield return Colors.DarkOrchid;
+			yield return Colors.DarkRed;
+			yield return Colors.DarkSalmon;
+			yield return Colors.DarkSeaGreen;
+			yield return Colors.DarkSlateBlue;
+			yield return Colors.DarkSlateGray;
+			yield return Colors.DarkTurquoise;
+			yield return Colors.DarkViolet;
+			yield return Colors.DeepPink;
+			yield return Colors.DeepSkyBlue;
+			yield return Colors.DimGray;
+			yield return Colors.DodgerBlue;
+			yield return Colors.Firebrick;
+			yield return Colors.FloralWhite;
+			yield return Colors.ForestGreen;
+			yield return Colors.Fuchsia;
+			yield return Colors.Gainsboro;
+			yield return Colors.GhostWhite;
+			yield return Colors.Gold;
+			yield return Colors.Goldenrod;
+			yield return Colors.Gray;
+			yield return Colors.Green;
+			yield return Colors.GreenYellow;
+			yield return Colors.Honeydew;
+			yield return Colors.HotPink;
+			yield return Colors.IndianRed;
+			yield return Colors.Indigo;
+			yield return Colors.Ivory;
+			yield return Colors.Khaki;
+			yield return Colors.Lavender;
+			yield return Colors.LavenderBlush;
+			yield return Colors.LawnGreen;
+			yield return Colors.LemonChiffon;
+			yield return Colors.LightBlue;
+			yield return Colors.LightCoral;
+			yield return Colors.LightCyan;
+			yield return Colors.LightGoldenrodYellow;
+			yield return Colors.LightGray;
+			yield return Colors.LightGreen;
+			yield return Colors.LightPink;
+			yield return Colors.LightSalmon;
+			yield return Colors.LightSeaGreen;
+			yield return Colors.LightSkyBlue;
+			yield return Colors.LightSlateGray;
+			yield return Colors.LightSteelBlue;
+			yield return Colors.LightYellow;
+			yield return Colors.Lime;
+			yield return Colors.LimeGreen;
+			yield return Colors.Linen;
+			yield return Colors.Magenta;
+			yield return Colors.Maroon;
+			yield return Colors.MediumAquamarine;
+			yield return Colors.MediumBlue;
+			yield return Colors.MediumOrchid;
+			yield return Colors.MediumPurple;
+			yield return Colors.MediumSeaGreen;
+			yield return Colors.MediumSlateBlue;
+			yield return Colors.MediumSpringGreen;
+			yield return Colors.MediumTurquoise;
+			yield return Colors.MediumVioletRed;
+			yield return Colors.MidnightBlue;
+			yield return Colors.MintCream;
+			yield return Colors.MistyRose;
+			yield return Colors.Moccasin;
+			yield return Colors.NavajoWhite;
+			yield return Colors.Navy;
+			yield return Colors.OldLace;
+			yield return Colors.Olive;
+			yield return Colors.OliveDrab;
+			yield return Colors.Orange;
+			yield return Colors.OrangeRed;
+			yield return Colors.Orchid;
+			yield return Colors.PaleGoldenrod;
+			yield return Colors.PaleGreen;
+			yield return Colors.PaleTurquoise;
+			yield return Colors.PaleVioletRed;
+			yield return Colors.PapayaWhip;
+			yield return Colors.PeachPuff;
+			yield return Colors.Peru;
+			yield return Colors.Pink;
+			yield return Colors.Plum;
+			yield return Colors.PowderBlue;
+			yield return Colors.Purple;
+			yield return Colors.Red;
+			yield return Colors.RosyBrown;
+			yield return Colors.RoyalBlue;
+			yield return Colors.SaddleBrown;
+			yield return Colors.Salmon;
+			yield return Colors.SandyBrown;
+			yield return Colors.SeaGreen;
+			yield return Colors.SeaShell;
+			yield return Colors.Sienna;
+			yield return Colors.Silver;
+			yield return Colors.SkyBlue;
+			yield return Colors.SlateBlue;
+			yield return Colors.SlateGray;
+			yield return Colors.Snow;
+			yield return Colors.SpringGreen;
+			yield return Colors.SteelBlue;
+			yield return Colors.Tan;
+			yield return Colors.Teal;
+			yield return Colors.Thistle;
+			yield return Colors.Tomato;
+			yield return Colors.Transparent;
+			yield return Colors.Turquoise;
+			yield return Colors.Violet;
+			yield return Colors.Wheat;
+			yield return Colors.White;
+			yield return Colors.WhiteSmoke;
+			yield return Colors.Yellow;
+			yield return Colors.YellowGreen;
+		}
+
 		private void ProjectList_CurrentProjectChanged( object sender, EventArgs e )
 		{
 			Tags.Clear();
@@ -61,6 +258,13 @@ namespace GSD.ViewModels
 				Tags.Add( new TagViewModel( tag ) );
 			}
 		}
+
+		public List<Color> AvailableColors { get; }
+
+		public RelayCommand<TagViewModel> DeleteTagCommand
+			=>
+				_DeleteTagCommand ??
+				( _DeleteTagCommand = new RelayCommand<TagViewModel>( ExecuteDeleteTagCommand, CanExecuteDeleteTagCommand ) );
 
 		public ICommand NewTagCommand => _NewTagCommand ?? ( _NewTagCommand = new RelayCommand( ExecuteNewTagCommand, CanExecuteNewTagCommand ) );
 
@@ -86,6 +290,7 @@ namespace GSD.ViewModels
 		public ObservableCollection<TagViewModel> Tags { get; }
 		private readonly ProjectListViewModel ProjectList;
 		private readonly ITagRepository TagRepo;
+		private RelayCommand<TagViewModel> _DeleteTagCommand;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private RelayCommand _NewTagCommand;
