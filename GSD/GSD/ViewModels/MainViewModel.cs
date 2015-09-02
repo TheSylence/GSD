@@ -25,6 +25,8 @@ namespace GSD.ViewModels
 
 		private void ExecuteAddEntryCommand()
 		{
+			var vm = new AddEntryViewModel( TagList, ProjectList.CurrentProject );
+			MessengerInstance.Send( new FlyoutMessage( AddEntryFlyoutName, vm ) );
 		}
 
 		private void ExecuteOpenProjectManagementCommand()
@@ -59,6 +61,8 @@ namespace GSD.ViewModels
 		private const string SettingsFlyoutName = "SettingsFlyout";
 
 		private const string TagFlyoutName = "TagsFlyout";
+
+		private const string AddEntryFlyoutName = "AddEntryFlyout";
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private RelayCommand _AddEntryCommand;

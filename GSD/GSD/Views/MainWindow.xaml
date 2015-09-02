@@ -8,6 +8,7 @@
     </Window.DataContext>
 
     <Window.Resources>
+        <views:MainBindingProxy Data="{Binding}" x:Key="MainProxy" />
         <GeometryDrawing x:Key="WindowIcon"
 		                 Brush="{StaticResource IdealForegroundColorBrush}"
 		                 Geometry="M373.529,81.667C364.437,81.667,355.715,78.069,349.265,71.659L327.5,50 184.5,50 162.733,71.658C156.285,78.069,147.562,81.667,138.47,81.667L79.5,81.667 79.5,462 432.5,462 432.5,81.667 373.529,81.667z M392,421.5L119,421.5 119,121.5 181.333,121.5 206.25,146.5 307.5,146.5 332.75,121.5 392,121.5 392,421.5z M162.874,277.426L179.23,262.305C198.363,271.563 210.496,278.607 232.001,293.936 272.427,248.059 299.14,224.784 348.793,193.891L354.115,206.133C313.168,241.867 283.178,281.668 239.996,359.11 213.361,327.741 195.585,307.746 162.874,277.426z" />
@@ -180,6 +181,47 @@
 						          SelectedItem="{Binding SelectedAccent, Mode=TwoWay}"
 						          ItemTemplate="{StaticResource ColorDataTemplate}" />
                     </StackPanel>
+                </DockPanel>
+            </controls:Flyout>
+            <controls:Flyout x:Name="AddEntryFlyout" Position="Left" Header="New entry" Theme="Adapt"
+							 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
+                <i:Interaction.Behaviors>
+                    <behaviors:FlyoutOpener />
+                </i:Interaction.Behaviors>
+                <DockPanel d:DataContext="{d:DesignInstance viewModels:AddEntryViewModel}">
+                    <Button DockPanel.Dock="Bottom" HorizontalAlignment="Right" Content="Add" Margin="5" Command="{Binding AddCommand}" />
+
+                    <Grid Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Summary" />
+                        <TextBox Text="{Binding Summary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" controls:TextBoxHelper.Watermark="Entry summary" />
+                        <TextBlock Text="Details" Grid.Row="2" />
+                        <TextBox Text="{Binding Details, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" controls:TextBoxHelper.Watermark="Entry details" />
+                        <TextBlock Text="Tags" Grid.Row="4" />
+                        <ItemsControl Grid.Row="5" ItemsSource="{Binding Tags}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="viewModels:TagEntry">
+                                    <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}">
+                                        <Border BorderBrush="{DynamicResource IdealForegroundColorBrush}" BorderThickness="1" Margin="5,0" Padding="4,2" CornerRadius="5"
+													        Background="{Binding Tag.Model.Color, Converter={StaticResource BackgroundColorConv}}">
+                                            <TextBlock Text="{Binding Tag.Model.Name}"
+														           FontSize="{DynamicResource NormalFontSize}"
+														           Foreground="{Binding Tag.Model.Color, Converter={StaticResource ForegroundColorConv}}"
+														           VerticalAlignment="Center" />
+                                        </Border>
+                                    </CheckBox>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
                 </DockPanel>
             </controls:Flyout>
         </controls:FlyoutsControl>

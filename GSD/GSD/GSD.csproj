@@ -124,6 +124,7 @@
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\Todo.cs" />
     <Compile Include="ViewModels\ColorItem.cs" />
+    <Compile Include="ViewModels\AddEntryViewModel.cs" />
     <Compile Include="ViewModels\IResettable.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ProjectListViewModel.cs" />

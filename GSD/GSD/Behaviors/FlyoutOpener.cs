@@ -25,6 +25,11 @@ namespace GSD.Behaviors
 				AssociatedObject.IsOpen = !AssociatedObject.IsOpen;
 				if( AssociatedObject.IsOpen )
 				{
+					if( msg.DataContext != null )
+					{
+						AssociatedObject.DataContext = msg.DataContext;
+					}
+
 					var resettable = AssociatedObject.DataContext as IResettable;
 					resettable?.Reset();
 				}
