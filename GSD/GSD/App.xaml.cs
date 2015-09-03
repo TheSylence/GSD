@@ -1,12 +1,13 @@
-﻿using GSD.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using GSD.Models;
 using GSD.Models.Repositories;
 using GSD.ViewServices;
 using MahApps.Metro;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
-using System.Linq;
-using System.Windows;
 
 namespace GSD
 {
@@ -34,7 +35,19 @@ namespace GSD
 
 		private static void ConnectToDatabase()
 		{
+			var properties = new Dictionary<string, string>
+			{
+				{"connection.provider", "NHibernate.Connection.DriverConnectionProvider"},
+				{"dialect", "NHibernate.Dialect.MySQL5Dialect"},
+				{"connection.driver_class", "NHibernate.Driver.MySqlDataDriver"},
+				{"connection.connection_string", "Server=localhost;Database=gsd;User ID=gsd;Password=gsd;"},
+#if DEBUG
+				{ "show_sql", "true" }
+#endif
+			};
+
 			var cfg = new Configuration();
+			cfg.SetProperties( properties );
 			cfg.AddAssembly( typeof( Project ).Assembly );
 			cfg.Configure();
 
