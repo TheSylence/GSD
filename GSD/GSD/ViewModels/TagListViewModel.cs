@@ -311,10 +311,13 @@ namespace GSD.ViewModels
 
 		private RelayCommand<TagViewModel> _DeleteTagCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private Color _NewTagColor;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private Color _NewTagColor;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private RelayCommand _NewTagCommand;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private RelayCommand _NewTagCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private string _NewTagName;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private string _NewTagName;
 	}
 }

@@ -1,6 +1,6 @@
-﻿using NHibernate;
+﻿using System.Collections.Generic;
+using NHibernate;
 using NHibernate.Criterion;
-using System.Collections.Generic;
 
 namespace GSD.Models.Repositories
 {

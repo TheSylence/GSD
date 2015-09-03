@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GSD.Models
+﻿namespace GSD.Models
 {
 	internal class Entity
 	{

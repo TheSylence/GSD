@@ -1,5 +1,6 @@
-﻿using GSD.Models;
-using System;
+﻿using System;
+using System.Diagnostics;
+using GSD.Models;
 
 namespace GSD.ViewModels
 {
@@ -17,7 +18,7 @@ namespace GSD.ViewModels
 
 		public bool IsSelected
 		{
-			[System.Diagnostics.DebuggerStepThrough]
+			[DebuggerStepThrough]
 			get
 			{
 				return _IsSelected;
@@ -45,7 +46,7 @@ namespace GSD.ViewModels
 
 		public Tag Model { get; }
 
-		[System.Diagnostics.DebuggerBrowsable( System.Diagnostics.DebuggerBrowsableState.Never )]
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private bool _IsSelected;
 
 		private Todo Todo;

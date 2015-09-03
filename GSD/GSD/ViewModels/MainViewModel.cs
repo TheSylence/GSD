@@ -56,13 +56,12 @@ namespace GSD.ViewModels
 
 		public TagListViewModel TagList { get; }
 
+		private const string AddEntryFlyoutName = "AddEntryFlyout";
 		private const string ProjectFlyoutName = "ProjectsFlyout";
 
 		private const string SettingsFlyoutName = "SettingsFlyout";
 
 		private const string TagFlyoutName = "TagsFlyout";
-
-		private const string AddEntryFlyoutName = "AddEntryFlyout";
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private RelayCommand _AddEntryCommand;

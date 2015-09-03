@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
@@ -47,7 +48,7 @@ namespace GSD.ViewModels
 
 		public string Details
 		{
-			[System.Diagnostics.DebuggerStepThrough] get { return _Details; }
+			[DebuggerStepThrough] get { return _Details; }
 			set
 			{
 				if( _Details == value )
@@ -62,7 +63,7 @@ namespace GSD.ViewModels
 
 		public string Summary
 		{
-			[System.Diagnostics.DebuggerStepThrough] get { return _Summary; }
+			[DebuggerStepThrough] get { return _Summary; }
 			set
 			{
 				if( _Summary == value )
@@ -80,9 +81,11 @@ namespace GSD.ViewModels
 		private readonly ITodoRepository TodoRepo;
 		private RelayCommand _AddCommand;
 
-		[System.Diagnostics.DebuggerBrowsable( System.Diagnostics.DebuggerBrowsableState.Never )] private string _Details;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private string _Details;
 
-		[System.Diagnostics.DebuggerBrowsable( System.Diagnostics.DebuggerBrowsableState.Never )] private string _Summary;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private string _Summary;
 	}
 
 	internal class TagEntry : ObservableObject
@@ -94,7 +97,7 @@ namespace GSD.ViewModels
 
 		public bool IsSelected
 		{
-			[System.Diagnostics.DebuggerStepThrough] get { return _IsSelected; }
+			[DebuggerStepThrough] get { return _IsSelected; }
 			set
 			{
 				if( _IsSelected == value )
@@ -109,6 +112,7 @@ namespace GSD.ViewModels
 
 		public TagViewModel Tag { get; }
 
-		[System.Diagnostics.DebuggerBrowsable( System.Diagnostics.DebuggerBrowsableState.Never )] private bool _IsSelected;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private bool _IsSelected;
 	}
 }

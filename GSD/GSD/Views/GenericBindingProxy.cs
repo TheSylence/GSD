@@ -19,12 +19,12 @@ namespace GSD.Views
 		public static readonly DependencyProperty DataProperty = DependencyProperty.Register( "Data", typeof( T ), typeof( GenericBindingProxy<T> ), new UIPropertyMetadata( null ) );
 	}
 
+	internal class MainBindingProxy : GenericBindingProxy<MainViewModel>
+	{ }
+
 	internal class ProjectListBindingProxy : GenericBindingProxy<ProjectListViewModel>
 	{ }
 
 	internal class TagListBindingProxy : GenericBindingProxy<TagListViewModel>
-	{ }
-
-	internal class MainBindingProxy : GenericBindingProxy<MainViewModel>
 	{ }
 }

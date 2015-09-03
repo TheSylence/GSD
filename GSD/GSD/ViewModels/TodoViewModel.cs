@@ -1,8 +1,9 @@
-﻿using GalaSoft.MvvmLight;
-using GSD.Models;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using GalaSoft.MvvmLight;
+using GSD.Models;
 using GSD.Models.Repositories;
 
 namespace GSD.ViewModels
@@ -28,7 +29,7 @@ namespace GSD.ViewModels
 			Tags = new ObservableCollection<TodoTagViewModel>( AllTags.Where( t => t.IsSelected ) );
 		}
 
-		private void Tag_Deselected( object sender, System.EventArgs e )
+		private void Tag_Deselected( object sender, EventArgs e )
 		{
 			var tag = sender as TodoTagViewModel;
 			Debug.Assert( tag != null );
@@ -38,7 +39,7 @@ namespace GSD.ViewModels
 			TodoRepo.Update( Model );
 		}
 
-		private void Tag_Selected( object sender, System.EventArgs e )
+		private void Tag_Selected( object sender, EventArgs e )
 		{
 			var tag = sender as TodoTagViewModel;
 			Debug.Assert( tag != null );
@@ -48,9 +49,9 @@ namespace GSD.ViewModels
 			TodoRepo.Update( Model );
 		}
 
-		private readonly ITodoRepository TodoRepo;
 		public ObservableCollection<TodoTagViewModel> AllTags { get; }
 		public Todo Model { get; }
 		public ObservableCollection<TodoTagViewModel> Tags { get; }
+		private readonly ITodoRepository TodoRepo;
 	}
 }

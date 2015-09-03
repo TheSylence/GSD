@@ -1,20 +1,20 @@
 ﻿//Copyright( c) 2010 Bevan Arps
 
 //Permission is hereby granted, free of charge, to any person obtaining a copy
-//of this software and associated documentation files (the "Software"), to deal 
+//of this software and associated documentation files (the "Software"), to deal
 //in the Software without restriction, including without limitation the rights
 //to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//copies of the Software, and to permit persons to whom the Software is 
+//copies of the Software, and to permit persons to whom the Software is
 //furnished to do so, subject to the following conditions:
 
 //The above copyright notice and this permission notice shall be included in all
 //copies or substantial portions of the Software.
 
 //THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 //FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 //AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+//LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
@@ -776,7 +776,7 @@ namespace GSD.Converters
 		/// </summary>
 		private const int _tabWidth = 4;
 
-		private static Regex _anchorInline = new Regex( string.Format( @"
+		private static readonly Regex _anchorInline = new Regex( string.Format( @"
                 (                           # wrap whole match in $1
                     \[
                         ({0})               # link text = $2
@@ -795,10 +795,10 @@ namespace GSD.Converters
                 )", GetNestedBracketsPattern(), GetNestedParensPattern() ),
 				  RegexOptions.Singleline | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled );
 
-		private static Regex _bold = new Regex( @"(\*\*|__) (?=\S) (.+?[*_]*) (?<=\S) \1",
+		private static readonly Regex _bold = new Regex( @"(\*\*|__) (?=\S) (.+?[*_]*) (?<=\S) \1",
 			RegexOptions.IgnorePatternWhitespace | RegexOptions.Singleline | RegexOptions.Compiled );
 
-		private static Regex _codeSpan = new Regex( @"
+		private static readonly Regex _codeSpan = new Regex( @"
                     (?<!\\)   # Character before opening ` can't be a backslash
                     (`+)      # $1 = Opening run of `
                     (.+?)     # $2 = The code block
@@ -806,9 +806,9 @@ namespace GSD.Converters
                     \1
                     (?!`)", RegexOptions.IgnorePatternWhitespace | RegexOptions.Singleline | RegexOptions.Compiled );
 
-		private static Regex _eoln = new Regex( "\\s+" );
+		private static readonly Regex _eoln = new Regex( "\\s+" );
 
-		private static Regex _headerAtx = new Regex( @"
+		private static readonly Regex _headerAtx = new Regex( @"
                 ^(\#{1,6})  # $1 = string of #'s
                 [ ]*
                 (.+?)       # $2 = Header text
@@ -817,7 +817,7 @@ namespace GSD.Converters
                 \n+",
 			RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled );
 
-		private static Regex _headerSetext = new Regex( @"
+		private static readonly Regex _headerSetext = new Regex( @"
                 ^(.+?)
                 [ ]*
                 \n
@@ -826,7 +826,7 @@ namespace GSD.Converters
                 \n+",
 	RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled );
 
-		private static Regex _horizontalRules = new Regex( @"
+		private static readonly Regex _horizontalRules = new Regex( @"
             ^[ ]{0,3}         # Leading space
                 ([-*_])       # $1: First marker
                 (?>           # Repeated marker group
@@ -837,30 +837,30 @@ namespace GSD.Converters
                 $             # End of line.
             ", RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled );
 
-		private static Regex _italic = new Regex( @"(\*|_) (?=\S) (.+?) (?<=\S) \1",
+		private static readonly Regex _italic = new Regex( @"(\*|_) (?=\S) (.+?) (?<=\S) \1",
 			RegexOptions.IgnorePatternWhitespace | RegexOptions.Singleline | RegexOptions.Compiled );
 
 		private static Regex _leadingWhitespace = new Regex( @"^[ ]*", RegexOptions.Compiled );
 
-		private static Regex _listNested = new Regex( @"^" + _wholeList,
+		private static readonly Regex _listNested = new Regex( @"^" + _wholeList,
 			RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled );
 
-		private static Regex _listTopLevel = new Regex( @"(?:(?<=\n\n)|\A\n?)" + _wholeList,
+		private static readonly Regex _listTopLevel = new Regex( @"(?:(?<=\n\n)|\A\n?)" + _wholeList,
 			RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled );
 
 		private static string _nestedBracketsPattern;
 		private static string _nestedParensPattern;
-		private static Regex _newlinesLeadingTrailing = new Regex( @"^\n+|\n+\z", RegexOptions.Compiled );
-		private static Regex _newlinesMultiple = new Regex( @"\n{2,}", RegexOptions.Compiled );
-		private static Regex _outDent = new Regex( @"^[ ]{1," + _tabWidth + @"}", RegexOptions.Multiline | RegexOptions.Compiled );
+		private static readonly Regex _newlinesLeadingTrailing = new Regex( @"^\n+|\n+\z", RegexOptions.Compiled );
+		private static readonly Regex _newlinesMultiple = new Regex( @"\n{2,}", RegexOptions.Compiled );
+		private static readonly Regex _outDent = new Regex( @"^[ ]{1," + _tabWidth + @"}", RegexOptions.Multiline | RegexOptions.Compiled );
 
-		private static Regex _strictBold = new Regex( @"([\W_]|^) (\*\*|__) (?=\S) ([^\r]*?\S[\*_]*) \2 ([\W_]|$)",
+		private static readonly Regex _strictBold = new Regex( @"([\W_]|^) (\*\*|__) (?=\S) ([^\r]*?\S[\*_]*) \2 ([\W_]|$)",
 			RegexOptions.IgnorePatternWhitespace | RegexOptions.Singleline | RegexOptions.Compiled );
 
-		private static Regex _strictItalic = new Regex( @"([\W_]|^) (\*|_) (?=\S) ([^\r\*_]*?\S) \2 ([\W_]|$)",
+		private static readonly Regex _strictItalic = new Regex( @"([\W_]|^) (\*|_) (?=\S) ([^\r\*_]*?\S) \2 ([\W_]|$)",
 			RegexOptions.IgnorePatternWhitespace | RegexOptions.Singleline | RegexOptions.Compiled );
 
-		private static string _wholeList = string.Format( @"
+		private static readonly string _wholeList = string.Format( @"
             (                               # $1 = whole list
               (                             # $2
                 [ ]{{0,{1}}}
