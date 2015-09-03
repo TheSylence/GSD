@@ -6,6 +6,7 @@ using System.Linq;
 using GalaSoft.MvvmLight;
 using GSD.Messages;
 using GSD.Models;
+using GSD.Models.Repositories;
 
 namespace GSD.ViewModels
 {
@@ -15,14 +16,38 @@ namespace GSD.ViewModels
 		{
 			Model = project;
 
+			TodoRepo = new TodoRepository( App.Session );
+
 			Todos = new ObservableCollection<TodoViewModel>( Model.Todos.Select( t => new TodoViewModel( t ) ) );
 			Todos.CollectionChanged += Todos_CollectionChanged;
+
+			foreach( var todo in Todos )
+			{
+				todo.DeleteRequested += Todo_DeleteRequested;
+			}
+		}
+
+		private void Todo_DeleteRequested( object sender, EventArgs e )
+		{
+			var todo = sender as TodoViewModel;
+			Debug.Assert( todo != null );
+
+			TodoRepo.Delete( todo.Model );
+			Todos.Remove( todo );
 		}
 
 		private void Todos_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
 		{
 			RaisePropertyChanged( nameof( OpenTodoCount ) );
 			RaisePropertyChanged( nameof( Progress ) );
+
+			if( e.Action == NotifyCollectionChangedAction.Add )
+			{
+				foreach( TodoViewModel newItem in e.NewItems )
+				{
+					newItem.DeleteRequested += Todo_DeleteRequested;
+				}
+			}
 		}
 
 		public int ClosedTodoCount => Todos.Count( t => t.Model.Done );
@@ -64,6 +89,7 @@ namespace GSD.ViewModels
 		}
 
 		public ObservableCollection<TodoViewModel> Todos { get; }
+		private readonly ITodoRepository TodoRepo;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private bool _IsCurrent;

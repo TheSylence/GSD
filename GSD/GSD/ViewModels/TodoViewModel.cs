@@ -2,9 +2,11 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
+using GSD.ViewServices;
 
 namespace GSD.ViewModels
 {
@@ -30,6 +32,19 @@ namespace GSD.ViewModels
 			}
 
 			Tags = new ObservableCollection<TodoTagViewModel>( AllTags.Where( t => t.IsSelected ) );
+		}
+
+		public event EventHandler DeleteRequested;
+
+		private async void ExecuteDeleteEntryCommand()
+		{
+			ConfirmationServiceArgs args = new ConfirmationServiceArgs( "Confirm", "Do you really want to delete this entry?" );
+			if( !await ViewServices.Execute<IConfirmationService, bool>( args ) )
+			{
+				return;
+			}
+
+			DeleteRequested?.Invoke( this, EventArgs.Empty );
 		}
 
 		private void OnTagAdded( TagAddedMessage msg )
@@ -66,8 +81,16 @@ namespace GSD.ViewModels
 		}
 
 		public ObservableCollection<TodoTagViewModel> AllTags { get; }
+
+		public RelayCommand DeleteEntryCommand => _DeleteEntryCommand ?? ( _DeleteEntryCommand = new RelayCommand( ExecuteDeleteEntryCommand ) );
+
 		public Todo Model { get; }
+
 		public ObservableCollection<TodoTagViewModel> Tags { get; }
+
 		private readonly ITodoRepository TodoRepo;
+
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private RelayCommand _DeleteEntryCommand;
 	}
 }
