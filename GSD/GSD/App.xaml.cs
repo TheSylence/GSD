@@ -39,8 +39,14 @@ namespace GSD
 
 		private static void ConnectToDatabase()
 		{
-			string fileName = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ), "btbsoft", "data.db3" );
+			string appDir = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ), "btbsoft" );
+			if( !Directory.Exists( appDir ) )
+			{
+				Directory.CreateDirectory( appDir );
+			}
 
+            string fileName = Path.Combine( appDir ,"data.db3" );
+			
 			var dbConfig = MySQLConfiguration.Standard.ConnectionString( c => c.Server("localhost").Username("gsd").Password("gsd").Database("gsd"))
 //			var dbConfig = new SQLiteConfiguration().UsingFile( fileName )
 
