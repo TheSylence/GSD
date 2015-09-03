@@ -4,7 +4,7 @@
 		<id name="Id" generator="native" />
 
 		<property name="Summary" />
-		<property name="Details" />
+		<property name="Details" length="4000" />
 		<property name="Done" />
 
 		<many-to-one name="Project" class="Project" cascade="delete" />

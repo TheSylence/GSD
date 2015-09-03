@@ -1,7 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GSD.Models;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using GSD.Models.Repositories;
 
 namespace GSD.ViewModels
 {
@@ -9,12 +11,46 @@ namespace GSD.ViewModels
 	{
 		public TodoViewModel( Todo todo )
 		{
+			TodoRepo = new TodoRepository( App.Session );
 			Model = todo;
-			Tags = new ObservableCollection<TodoTagViewModel>( Model.Tags.Select( t => new TodoTagViewModel( t ) ) );
+
+			AllTags = new ObservableCollection<TodoTagViewModel>( Model.Project.Tags.Select( t => new TodoTagViewModel( todo, t )
+			{
+				IsSelected = Model.Tags.Contains( t )
+			} ) );
+
+			foreach( var t in AllTags )
+			{
+				t.Selected += Tag_Selected;
+				t.Deselected += Tag_Deselected;
+			}
+
+			Tags = new ObservableCollection<TodoTagViewModel>( AllTags.Where( t => t.IsSelected ) );
 		}
 
-		public Todo Model { get; }
+		private void Tag_Deselected( object sender, System.EventArgs e )
+		{
+			var tag = sender as TodoTagViewModel;
+			Debug.Assert( tag != null );
+			Tags.Remove( tag );
 
+			Model.Tags.Remove( tag.Model );
+			TodoRepo.Update( Model );
+		}
+
+		private void Tag_Selected( object sender, System.EventArgs e )
+		{
+			var tag = sender as TodoTagViewModel;
+			Debug.Assert( tag != null );
+			Tags.Add( tag );
+
+			Model.Tags.Add( tag.Model );
+			TodoRepo.Update( Model );
+		}
+
+		private readonly ITodoRepository TodoRepo;
+		public ObservableCollection<TodoTagViewModel> AllTags { get; }
+		public Todo Model { get; }
 		public ObservableCollection<TodoTagViewModel> Tags { get; }
 	}
 }

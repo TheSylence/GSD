@@ -317,11 +317,46 @@
                         </Style.Triggers>
                     </Style>
                 </ItemsControl.Style>
+                <ItemsControl.Template>
+                    <ControlTemplate TargetType="ItemsControl">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ItemsControl.Template>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="viewModels:TodoViewModel">
                         <Expander>
                             <Expander.Header>
-                                <DockPanel>
+                                <DockPanel Background="Transparent">
+                                    <DockPanel.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="Tags" ItemsSource="{Binding AllTags}">
+                                                <MenuItem.ItemContainerStyle>
+                                                    <Style TargetType="MenuItem">
+                                                        <Setter Property="HeaderTemplate">
+                                                            <Setter.Value>
+                                                                <DataTemplate DataType="viewModels:TodoTagViewModel">
+                                                                    <Border BorderBrush="{DynamicResource IdealForegroundColorBrush}" BorderThickness="1" Padding="4,2" CornerRadius="5"
+													        Background="{Binding Model.Color, Converter={StaticResource BackgroundColorConv}}" VerticalAlignment="Center">
+                                                                        <TextBlock Text="{Binding Model.Name}"
+														           FontSize="{DynamicResource NormalFontSize}"
+														           Foreground="{Binding Model.Color, Converter={StaticResource ForegroundColorConv}}"
+														           VerticalAlignment="Center" />
+                                                                    </Border>
+                                                                </DataTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+														<Setter Property="IsCheckable" Value="True"/>
+                                                        <Setter Property="IsChecked" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                                    </Style>
+                                                </MenuItem.ItemContainerStyle>
+                                            </MenuItem>
+                                            <Separator />
+                                            <MenuItem Header="Edit" />
+                                            <MenuItem Header="Delete" />
+                                        </ContextMenu>
+                                    </DockPanel.ContextMenu>
                                     <CheckBox DockPanel.Dock="Right" ToolTip="Done"
 									          IsChecked="{Binding Model.Done}"
 									          VerticalAlignment="Center" />
@@ -332,6 +367,11 @@
 										           FontSize="{DynamicResource NormalFontSize}" />
 
                                         <ItemsControl ItemsSource="{Binding Tags}" Margin="5,0">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate DataType="viewModels:TodoTagViewModel">
                                                     <Border BorderBrush="{DynamicResource IdealForegroundColorBrush}" BorderThickness="1" Margin="5,0" Padding="4,2" CornerRadius="5"
@@ -348,7 +388,7 @@
                                 </DockPanel>
                             </Expander.Header>
 
-                            <FlowDocumentScrollViewer Document="{Binding Model.Details, Converter={StaticResource TextToFlowDocumentConv}}" />
+                            <FlowDocumentScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Document="{Binding Model.Details, Converter={StaticResource TextToFlowDocumentConv}}" />
                         </Expander>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
