@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
+using FluentNHibernate.Cfg;
+using FluentNHibernate.Cfg.Db;
 using GSD.Models;
 using GSD.Models.Repositories;
 using GSD.ViewServices;
@@ -8,6 +11,7 @@ using MahApps.Metro;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
+using Environment = System.Environment;
 
 namespace GSD
 {
@@ -35,21 +39,19 @@ namespace GSD
 
 		private static void ConnectToDatabase()
 		{
-			var properties = new Dictionary<string, string>
-			{
-				{"connection.provider", "NHibernate.Connection.DriverConnectionProvider"},
-				{"dialect", "NHibernate.Dialect.MySQL5Dialect"},
-				{"connection.driver_class", "NHibernate.Driver.MySqlDataDriver"},
-				{"connection.connection_string", "Server=localhost;Database=gsd;User ID=gsd;Password=gsd;"},
-#if DEBUG
-				{ "show_sql", "true" }
-#endif
-			};
+			string fileName = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ), "btbsoft", "data.db3" );
 
-			var cfg = new Configuration();
-			cfg.SetProperties( properties );
-			cfg.AddAssembly( typeof( Project ).Assembly );
-			cfg.Configure();
+			var dbConfig = MySQLConfiguration.Standard.ConnectionString( c => c.Server("localhost").Username("gsd").Password("gsd").Database("gsd"))
+//			var dbConfig = new SQLiteConfiguration().UsingFile( fileName )
+
+#if !DEBUG
+				.DoNot
+#endif
+				.ShowSql();
+
+			var cfg = Fluently.Configure().Database( dbConfig )
+				.Mappings( map => map.FluentMappings.AddFromAssembly( Assembly.GetExecutingAssembly() ) )
+				.BuildConfiguration();
 
 			new SchemaUpdate( cfg ).Execute( false, true );
 			var factory = cfg.BuildSessionFactory();
