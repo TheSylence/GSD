@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
 using GalaSoft.MvvmLight.CommandWpf;
+using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
 using GSD.ViewServices;
@@ -92,6 +93,8 @@ namespace GSD.ViewModels
 
 			TagRepo.Delete( arg.Model );
 			Tags.Remove( arg );
+
+			MessengerInstance.Send( new TagRemovedMessage( arg.Model ) );
 		}
 
 		private void ExecuteNewTagCommand()
@@ -107,6 +110,8 @@ namespace GSD.ViewModels
 			ProjectList.AddTag( tag );
 			Tags.Add( new TagViewModel( tag ) );
 			Reset();
+
+			MessengerInstance.Send( new TagAddedMessage( tag ) );
 		}
 
 		private IEnumerable<Color> GetAllColors()

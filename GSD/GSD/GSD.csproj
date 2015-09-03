@@ -113,6 +113,8 @@
     <Compile Include="Converters\TextToFlowDocumentConverter.cs" />
     <Compile Include="Messages\CurrentProjectChangedMessage.cs" />
     <Compile Include="Messages\FlyoutMessage.cs" />
+    <Compile Include="Messages\TagAddedMessage.cs" />
+    <Compile Include="Messages\TagRemovedMessage.cs" />
     <Compile Include="Models\Config.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Project.cs" />

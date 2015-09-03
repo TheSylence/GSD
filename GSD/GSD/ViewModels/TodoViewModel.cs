@@ -2,20 +2,23 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using GalaSoft.MvvmLight;
+using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
 
 namespace GSD.ViewModels
 {
-	internal class TodoViewModel : ViewModelBase
+	internal class TodoViewModel : ViewModelBaseEx
 	{
 		public TodoViewModel( Todo todo )
 		{
+			MessengerInstance.Register<TagAddedMessage>( this, OnTagAdded );
+			MessengerInstance.Register<TagRemovedMessage>( this, OnTagRemoved );
+
 			TodoRepo = new TodoRepository( App.Session );
 			Model = todo;
 
-			AllTags = new ObservableCollection<TodoTagViewModel>( Model.Project.Tags.Select( t => new TodoTagViewModel( todo, t )
+			AllTags = new ObservableCollection<TodoTagViewModel>( Model.Project.Tags.Select( t => new TodoTagViewModel( Model, t )
 			{
 				IsSelected = Model.Tags.Contains( t )
 			} ) );
@@ -27,6 +30,19 @@ namespace GSD.ViewModels
 			}
 
 			Tags = new ObservableCollection<TodoTagViewModel>( AllTags.Where( t => t.IsSelected ) );
+		}
+
+		private void OnTagAdded( TagAddedMessage msg )
+		{
+			AllTags.Add( new TodoTagViewModel( Model, msg.Tag ) );
+		}
+
+		private void OnTagRemoved( TagRemovedMessage msg )
+		{
+			var tag = AllTags.FirstOrDefault( t => t.Model == msg.Tag );
+
+			AllTags.Remove( tag );
+			Tags.Remove( tag );
 		}
 
 		private void Tag_Deselected( object sender, EventArgs e )
