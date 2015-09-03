@@ -83,7 +83,7 @@ namespace GSD.ViewModels
 		private async void ExecuteDeleteTagCommand( TagViewModel arg )
 		{
 			ConfirmationServiceArgs args = new ConfirmationServiceArgs( "Confirm",
-				"Do you really want to delete the selected tag?" );
+				$"Do you really want to delete the tag '{arg.Model.Name}'?" );
 
 			if( !await ViewServices.Execute<IConfirmationService, bool>( args ) )
 			{

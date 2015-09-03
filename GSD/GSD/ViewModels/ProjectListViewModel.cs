@@ -1,13 +1,13 @@
-﻿using GalaSoft.MvvmLight.CommandWpf;
-using GSD.Messages;
-using GSD.Models;
-using GSD.Models.Repositories;
-using GSD.ViewServices;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
+using GalaSoft.MvvmLight.CommandWpf;
+using GSD.Messages;
+using GSD.Models;
+using GSD.Models.Repositories;
+using GSD.ViewServices;
 
 namespace GSD.ViewModels
 {
@@ -62,7 +62,7 @@ namespace GSD.ViewModels
 
 		private async void ExecuteDeleteProjectCommand( ProjectViewModel arg )
 		{
-			ConfirmationServiceArgs args = new ConfirmationServiceArgs( "Confirm", "Do you really want to delete this project?" );
+			ConfirmationServiceArgs args = new ConfirmationServiceArgs( "Confirm", $"Do you really want to delete the project '{arg.Model.Name}'?" );
 
 			if( !await ViewServices.Execute<IConfirmationService, bool>( args ) )
 			{
