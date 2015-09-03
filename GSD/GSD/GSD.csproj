@@ -114,6 +114,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Behaviors\DataContextDisposer.cs" />
+    <Compile Include="Behaviors\EnterCommand.cs" />
     <Compile Include="Behaviors\FlyoutOpener.cs" />
     <Compile Include="Converters\BackgroundColor.cs" />
     <Compile Include="Converters\ColorToBrush.cs" />

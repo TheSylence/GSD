@@ -26,22 +26,22 @@ namespace GSD.ViewModels
 		private void ExecuteAddEntryCommand()
 		{
 			var vm = new AddEntryViewModel( TagList, ProjectList.CurrentProject );
-			MessengerInstance.Send( new FlyoutMessage( AddEntryFlyoutName, vm ) );
+			MessengerInstance.Send( new FlyoutMessage( FlyoutMessage.AddEntryFlyoutName, vm ) );
 		}
 
 		private void ExecuteOpenProjectManagementCommand()
 		{
-			MessengerInstance.Send( new FlyoutMessage( ProjectFlyoutName ) );
+			MessengerInstance.Send( new FlyoutMessage( FlyoutMessage.ProjectFlyoutName ) );
 		}
 
 		private void ExecuteOpenSettingsCommand()
 		{
-			MessengerInstance.Send( new FlyoutMessage( SettingsFlyoutName ) );
+			MessengerInstance.Send( new FlyoutMessage( FlyoutMessage.SettingsFlyoutName ) );
 		}
 
 		private void ExecuteOpenTagManagementCommand()
 		{
-			MessengerInstance.Send( new FlyoutMessage( TagFlyoutName ) );
+			MessengerInstance.Send( new FlyoutMessage( FlyoutMessage.TagFlyoutName ) );
 		}
 
 		public ICommand AddEntryCommand => _AddEntryCommand ?? ( _AddEntryCommand = new RelayCommand( ExecuteAddEntryCommand, CanExecuteAddEntryCommand ) );
@@ -55,13 +55,6 @@ namespace GSD.ViewModels
 		public ProjectListViewModel ProjectList { get; }
 
 		public TagListViewModel TagList { get; }
-
-		private const string AddEntryFlyoutName = "AddEntryFlyout";
-		private const string ProjectFlyoutName = "ProjectsFlyout";
-
-		private const string SettingsFlyoutName = "SettingsFlyout";
-
-		private const string TagFlyoutName = "TagsFlyout";
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private RelayCommand _AddEntryCommand;

@@ -56,7 +56,11 @@
 						        Command="{Binding NewProjectCommand}"
 						        Style="{DynamicResource SquareButtonStyle}" />
 						<TextBox controls:TextBoxHelper.Watermark="Create project" VerticalAlignment="Center"
-						         Text="{Binding NewProjectName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+						         Text="{Binding NewProjectName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+							<i:Interaction.Behaviors>
+								<behaviors:EnterCommand Command="{Binding NewProjectCommand}" />
+							</i:Interaction.Behaviors>
+						</TextBox>
 					</DockPanel>
 
 					<ItemsControl ItemsSource="{Binding Projects}">
@@ -195,8 +199,13 @@
 					<behaviors:FlyoutOpener />
 				</i:Interaction.Behaviors>
 				<DockPanel d:DataContext="{d:DesignInstance viewModels:AddEntryViewModel}">
-					<Button DockPanel.Dock="Bottom" HorizontalAlignment="Right" Content="Add" Margin="5"
-					        Command="{Binding AddCommand}" />
+					<DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
+						<Button DockPanel.Dock="Right" Content="Add" Margin="5"
+						        Command="{Binding AddCommand}" />
+						<CheckBox Content="Add another" Margin="5"
+						          IsChecked="{Binding StayOpen, Mode=TwoWay}"
+						          DockPanel.Dock="Left" />
+					</DockPanel>
 
 					<Grid Margin="5">
 						<Grid.RowDefinitions>

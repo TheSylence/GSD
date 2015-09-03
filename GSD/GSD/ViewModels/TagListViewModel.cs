@@ -263,9 +263,12 @@ namespace GSD.ViewModels
 		{
 			Tags.Clear();
 
-			foreach( var tag in ProjectList.CurrentProject.Model.Tags )
+			if( ProjectList.CurrentProject != null )
 			{
-				Tags.Add( new TagViewModel( tag ) );
+				foreach( var tag in ProjectList.CurrentProject.Model.Tags )
+				{
+					Tags.Add( new TagViewModel( tag ) );
+				}
 			}
 		}
 
