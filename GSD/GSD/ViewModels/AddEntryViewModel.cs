@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Messages;
 using GSD.Models;
@@ -129,33 +128,5 @@ namespace GSD.ViewModels
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private string _Summary;
-	}
-
-	internal class TagEntry : ObservableObject
-	{
-		public TagEntry( TagViewModel t )
-		{
-			Tag = t;
-		}
-
-		public bool IsSelected
-		{
-			[DebuggerStepThrough] get { return _IsSelected; }
-			set
-			{
-				if( _IsSelected == value )
-				{
-					return;
-				}
-
-				_IsSelected = value;
-				RaisePropertyChanged();
-			}
-		}
-
-		public TagViewModel Tag { get; }
-
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private bool _IsSelected;
 	}
 }

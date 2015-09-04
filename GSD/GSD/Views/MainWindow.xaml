@@ -245,6 +245,55 @@
 					</Grid>
 				</DockPanel>
 			</controls:Flyout>
+			<controls:Flyout Position="Right" Header="Edit entry" Theme="Adapt"
+			                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
+				<i:Interaction.Behaviors>
+					<behaviors:FlyoutOpener Name="EditEntryFlyout" />
+				</i:Interaction.Behaviors>
+				<DockPanel d:DataContext="{d:DesignInstance viewModels:EditEntryViewModel}">
+					<DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
+						<Button DockPanel.Dock="Right" Content="Save" Margin="5"
+						        Command="{Binding SaveCommand}" />
+					</DockPanel>
+
+					<Grid Margin="5">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+
+						<TextBlock Text="Summary" FontSize="{DynamicResource NormalFontSize}" />
+						<TextBox Text="{Binding Summary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						         Grid.Row="1" controls:TextBoxHelper.Watermark="Entry summary" />
+						<TextBlock Text="Details" Grid.Row="2"
+						           FontSize="{DynamicResource NormalFontSize}" />
+						<TextBox Text="{Binding Details, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						         AcceptsReturn="True" Grid.Row="3" controls:TextBoxHelper.Watermark="Entry details" />
+						<TextBlock Text="Tags" Grid.Row="4"
+						           FontSize="{DynamicResource NormalFontSize}" />
+						<ItemsControl Grid.Row="5" ItemsSource="{Binding Tags}">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate DataType="viewModels:TagEntry">
+									<CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}">
+										<Border BorderBrush="{DynamicResource IdealForegroundColorBrush}"
+										        BorderThickness="1" Margin="5,0" Padding="4,2" CornerRadius="5"
+										        Background="{Binding Tag.Model.Color, Converter={StaticResource BackgroundColorConv}}">
+											<TextBlock Text="{Binding Tag.Model.Name}"
+											           FontSize="{DynamicResource NormalFontSize}"
+											           Foreground="{Binding Tag.Model.Color, Converter={StaticResource ForegroundColorConv}}"
+											           VerticalAlignment="Center" />
+										</Border>
+									</CheckBox>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+					</Grid>
+				</DockPanel>
+			</controls:Flyout>
 		</controls:FlyoutsControl>
 	</controls:MetroWindow.Flyouts>
 
@@ -394,7 +443,8 @@
 
 										<Button Width="32" Height="32" ToolTip="Edit entry"
 										        Style="{DynamicResource MetroCircleButtonStyle}"
-										        Command="{Binding EditEntryCommand}"
+										        Command="{Binding Data.EditEntryCommand, Source={StaticResource MainProxy}}"
+										        CommandParameter="{Binding}"
 										        VerticalAlignment="Center"
 										        Foreground="{DynamicResource IdealForegroundColorBrush}">
 											<Rectangle Width="12" Height="12"

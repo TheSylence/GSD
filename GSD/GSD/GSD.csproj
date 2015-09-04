@@ -142,11 +142,13 @@
     <Compile Include="Models\Todo.cs" />
     <Compile Include="ViewModels\ColorItem.cs" />
     <Compile Include="ViewModels\AddEntryViewModel.cs" />
+    <Compile Include="ViewModels\EditEntryViewModel.cs" />
     <Compile Include="ViewModels\IResettable.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ProjectListViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\TagEntry.cs" />
     <Compile Include="ViewModels\TagListViewModel.cs" />
     <Compile Include="ViewModels\TagViewModel.cs" />
     <Compile Include="ViewModels\TodoTagViewModel.cs" />

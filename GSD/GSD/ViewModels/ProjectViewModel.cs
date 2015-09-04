@@ -26,7 +26,7 @@ namespace GSD.ViewModels
 				todo.DeleteRequested += Todo_DeleteRequested;
 			}
 		}
-
+		
 		private void Todo_DeleteRequested( object sender, EventArgs e )
 		{
 			var todo = sender as TodoViewModel;
