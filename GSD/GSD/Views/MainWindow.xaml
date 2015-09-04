@@ -41,11 +41,11 @@
 
 	<controls:MetroWindow.Flyouts>
 		<controls:FlyoutsControl>
-			<controls:Flyout x:Name="ProjectsFlyout" Position="Left" Theme="Adapt" Header="Projects"
+			<controls:Flyout Position="Left" Theme="Adapt" Header="Projects"
 			                 DataContext="{Binding ProjectList}"
 			                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
 				<i:Interaction.Behaviors>
-					<behaviors:FlyoutOpener />
+					<behaviors:FlyoutOpener Name="ProjectsFlyout" />
 				</i:Interaction.Behaviors>
 				<controls:Flyout.Resources>
 					<views:ProjectListBindingProxy Data="{Binding}" x:Key="ProjectsProxy" />
@@ -92,11 +92,11 @@
 					</ItemsControl>
 				</DockPanel>
 			</controls:Flyout>
-			<controls:Flyout x:Name="TagsFlyout" Position="Left" Header="Tags" Theme="Adapt"
+			<controls:Flyout Position="Left" Header="Tags" Theme="Adapt"
 			                 DataContext="{Binding TagList}"
 			                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
 				<i:Interaction.Behaviors>
-					<behaviors:FlyoutOpener />
+					<behaviors:FlyoutOpener Name="TagsFlyout" />
 				</i:Interaction.Behaviors>
 				<controls:Flyout.Resources>
 					<views:TagListBindingProxy Data="{Binding}" x:Key="TagssProxy" />
@@ -150,10 +150,10 @@
 					</ItemsControl>
 				</DockPanel>
 			</controls:Flyout>
-			<controls:Flyout x:Name="SettingsFlyout" Position="Left" Header="Settings" Theme="Adapt"
+			<controls:Flyout Position="Left" Header="Settings" Theme="Adapt"
 			                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
 				<i:Interaction.Behaviors>
-					<behaviors:FlyoutOpener />
+					<behaviors:FlyoutOpener Name="SettingsFlyout" />
 				</i:Interaction.Behaviors>
 				<controls:Flyout.DataContext>
 					<viewModels:SettingsViewModel />
@@ -193,10 +193,10 @@
 					</StackPanel>
 				</DockPanel>
 			</controls:Flyout>
-			<controls:Flyout x:Name="AddEntryFlyout" Position="Left" Header="New entry" Theme="Adapt"
+			<controls:Flyout Position="Left" Header="New entry" Theme="Adapt"
 			                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
 				<i:Interaction.Behaviors>
-					<behaviors:FlyoutOpener />
+					<behaviors:FlyoutOpener Name="AddEntryFlyout" />
 				</i:Interaction.Behaviors>
 				<DockPanel d:DataContext="{d:DesignInstance viewModels:AddEntryViewModel}">
 					<DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
@@ -393,7 +393,7 @@
 										</Popup>
 
 										<Button Width="32" Height="32" ToolTip="Edit entry"
-										        Style="{StaticResource MetroCircleButtonStyle}"
+										        Style="{DynamicResource MetroCircleButtonStyle}"
 										        Command="{Binding EditEntryCommand}"
 										        VerticalAlignment="Center"
 										        Foreground="{DynamicResource IdealForegroundColorBrush}">
@@ -405,7 +405,7 @@
 											</Rectangle>
 										</Button>
 										<Button Width="32" Height="32" ToolTip="Delete entry"
-										        Style="{StaticResource MetroCircleButtonStyle}"
+										        Style="{DynamicResource MetroCircleButtonStyle}"
 										        Command="{Binding DeleteEntryCommand}"
 										        VerticalAlignment="Center"
 										        Foreground="{DynamicResource IdealForegroundColorBrush}">

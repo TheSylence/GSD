@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Interactivity;
 using GalaSoft.MvvmLight.Messaging;
 using GSD.Messages;
@@ -13,14 +14,12 @@ namespace GSD.Behaviors
 		{
 			base.OnAttached();
 
-			FlyoutName = AssociatedObject.Name;
-
 			Messenger.Default.Register<FlyoutMessage>( this, OnFlyoutMessage );
 		}
 
 		private void OnFlyoutMessage( FlyoutMessage msg )
 		{
-			if( msg.FlyoutName.Equals( FlyoutName, StringComparison.Ordinal ) )
+			if( msg.FlyoutName.Equals( Name, StringComparison.Ordinal ) )
 			{
 				AssociatedObject.IsOpen = !AssociatedObject.IsOpen;
 				if( AssociatedObject.IsOpen )
@@ -36,6 +35,12 @@ namespace GSD.Behaviors
 			}
 		}
 
-		private string FlyoutName;
+		public string Name
+		{
+			get { return (string)GetValue( NameProperty ); }
+			set { SetValue( NameProperty, value ); }
+		}
+
+		public static readonly DependencyProperty NameProperty = DependencyProperty.Register( "Name", typeof( string ), typeof( FlyoutOpener ), new PropertyMetadata( null ) );
 	}
 }
