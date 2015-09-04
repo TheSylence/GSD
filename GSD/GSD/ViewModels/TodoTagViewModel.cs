@@ -16,6 +16,8 @@ namespace GSD.ViewModels
 
 		public event EventHandler Selected;
 
+		public bool RaiseSelectionEvents { get; set; } = true;
+
 		public bool IsSelected
 		{
 			[DebuggerStepThrough]
@@ -33,13 +35,16 @@ namespace GSD.ViewModels
 				_IsSelected = value;
 				RaisePropertyChanged();
 
-				if( value )
+				if( RaiseSelectionEvents )
 				{
-					Selected?.Invoke( this, EventArgs.Empty );
-				}
-				else
-				{
-					Deselected?.Invoke( this, EventArgs.Empty );
+					if( value )
+					{
+						Selected?.Invoke( this, EventArgs.Empty );
+					}
+					else
+					{
+						Deselected?.Invoke( this, EventArgs.Empty );
+					}
 				}
 			}
 		}

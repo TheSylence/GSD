@@ -36,6 +36,11 @@ namespace GSD.ViewModels
 
 		public event EventHandler DeleteRequested;
 
+		public void RaiseUpdates()
+		{
+			RaisePropertyChanged( nameof( Model ) );
+		}
+
 		private async void ExecuteDeleteEntryCommand()
 		{
 			ConfirmationServiceArgs args = new ConfirmationServiceArgs( "Confirm", "Do you really want to delete this entry?" );

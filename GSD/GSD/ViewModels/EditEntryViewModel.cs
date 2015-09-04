@@ -2,17 +2,17 @@
 using System.Diagnostics;
 using System.Linq;
 using GalaSoft.MvvmLight.CommandWpf;
+using GSD.Messages;
 using GSD.Models.Repositories;
 
 namespace GSD.ViewModels
 {
 	internal class EditEntryViewModel : ViewModelBaseEx
 	{
-		public EditEntryViewModel( TodoViewModel entry, TagListViewModel tagList )
+		public EditEntryViewModel( TodoViewModel entry )
 		{
 			Entry = entry;
 			TodoRepo = new TodoRepository( App.Session );
-			Tags = tagList.Tags.Select( t => new TagEntry( t ) ).ToList();
 
 			Summary = entry.Model.Summary;
 			Details = entry.Model.Details;
@@ -29,6 +29,9 @@ namespace GSD.ViewModels
 			Entry.Model.Summary = Summary;
 
 			TodoRepo.Update( Entry.Model );
+			Entry.RaiseUpdates();
+
+			MessengerInstance.Send( new FlyoutMessage( FlyoutMessage.EditEntryFlyoutName ) );
 		}
 
 		public string Details
@@ -62,8 +65,7 @@ namespace GSD.ViewModels
 				RaisePropertyChanged();
 			}
 		}
-
-		public List<TagEntry> Tags { get; }
+		
 		private readonly TodoViewModel Entry;
 		private readonly ITodoRepository TodoRepo;
 

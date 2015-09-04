@@ -36,7 +36,7 @@ namespace GSD.ViewModels
 
 		private void ExecuteEditEntryCommand( TodoViewModel arg )
 		{
-			var vm = new EditEntryViewModel( arg, TagList );
+			var vm = new EditEntryViewModel( arg );
 			MessengerInstance.Send( new FlyoutMessage( FlyoutMessage.EditEntryFlyoutName, vm ) );
 		}
 
