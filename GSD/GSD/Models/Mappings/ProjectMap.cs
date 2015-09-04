@@ -12,8 +12,8 @@ namespace GSD.Models.Mappings
 
 			Map( x => x.Name ).Not.Nullable().Length( 100 );
 
-			HasMany<Tag>( x => x.Tags ).KeyColumn( nameof( Tag.Project ) );
-			HasMany<Todo>( x => x.Todos ).KeyColumn( nameof( Todo.Project ) );
+			HasMany<Tag>( x => x.Tags ).KeyColumn( nameof( Tag.Project ) ).Cascade.Delete();
+			HasMany<Todo>( x => x.Todos ).KeyColumn( nameof( Todo.Project ) ).Cascade.Delete();
 		}
 	}
 }

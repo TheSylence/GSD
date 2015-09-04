@@ -13,7 +13,7 @@ namespace GSD.Models.Mappings
 			Map( x => x.Name ).Not.Nullable().Length( 100 );
 			Map( x => x.Color ).Length( 6 );
 
-			References<Project>( x => x.Project ).Column( nameof( Tag.Project ) ).Cascade.Delete();
+			References<Project>( x => x.Project ).Column( nameof( Tag.Project ) );
 			HasManyToMany<Todo>( x => x.Todos ).Table( "TodoTags" ).AsBag().ChildKeyColumn( "Todo" ).ParentKeyColumn( "Tag" );
 		}
 	}
