@@ -336,158 +336,172 @@
 		<DockPanel Grid.Column="1" Grid.Row="0" Margin="5">
 			<TextBox DockPanel.Dock="Top" controls:TextBoxHelper.Watermark="Search" controls:TextBoxHelper.ClearTextButton="True" />
 
-			<ItemsControl ItemsSource="{Binding ProjectList.CurrentProject.Todos}">
-				<ItemsControl.Style>
-					<Style TargetType="ItemsControl" BasedOn="{StaticResource {x:Type ItemsControl}}">
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding ProjectList.Projects.Count}" Value="0">
-								<Setter Property="Template">
-									<Setter.Value>
-										<ControlTemplate>
-											<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-												<TextBlock Text="No projects defined" FontSize="{StaticResource NormalFontSize}" />
-												<Button Content="Create project" Margin="0,5"
-												        Command="{Binding OpenProjectManagementCommand}" />
-											</StackPanel>
-										</ControlTemplate>
-									</Setter.Value>
-								</Setter>
-							</DataTrigger>
-							<DataTrigger Binding="{Binding ProjectList.CurrentProject.Todos.Count}" Value="0">
-								<Setter Property="Template">
-									<Setter.Value>
-										<ControlTemplate>
-											<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-												<TextBlock Text="No entries defined" FontSize="{StaticResource NormalFontSize}" />
-												<Button Content="Add new entry" Margin="0,5"
-												        Command="{Binding AddEntryCommand}" />
-											</StackPanel>
-										</ControlTemplate>
-									</Setter.Value>
-								</Setter>
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</ItemsControl.Style>
-				<ItemsControl.Template>
-					<ControlTemplate TargetType="ItemsControl">
-						<ScrollViewer VerticalScrollBarVisibility="Auto">
-							<ItemsPresenter />
-						</ScrollViewer>
-					</ControlTemplate>
-				</ItemsControl.Template>
-				<ItemsControl.ItemTemplate>
-					<DataTemplate DataType="viewModels:TodoViewModel">
-						<Expander>
-							<Expander.Header>
-								<DockPanel>
-									<StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
-										<ToggleButton Width="32" Height="32"
-										              Style="{DynamicResource MetroCircleToggleButtonStyle}"
-										              x:Name="btnTags"
-										              Foreground="{DynamicResource IdealForegroundColorBrush}">
-											<Rectangle Width="12" Height="12"
-											           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
-												<Rectangle.OpacityMask>
-													<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_tag}" />
-												</Rectangle.OpacityMask>
-											</Rectangle>
-										</ToggleButton>
+			<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
+				<ItemsControl ItemsSource="{Binding ProjectList.CurrentProject.Todos}">
+					<ItemsControl.Style>
+						<Style TargetType="ItemsControl" BasedOn="{StaticResource {x:Type ItemsControl}}">
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding ProjectList.Projects.Count}" Value="0">
+									<Setter Property="Template">
+										<Setter.Value>
+											<ControlTemplate>
+												<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+													<TextBlock Text="No projects defined" FontSize="{StaticResource NormalFontSize}" />
+													<Button Content="Create project" Margin="0,5"
+													        Command="{Binding OpenProjectManagementCommand}" />
+												</StackPanel>
+											</ControlTemplate>
+										</Setter.Value>
+									</Setter>
+								</DataTrigger>
+								<DataTrigger Binding="{Binding ProjectList.CurrentProject.Todos.Count}" Value="0">
+									<Setter Property="Template">
+										<Setter.Value>
+											<ControlTemplate>
+												<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+													<TextBlock Text="No entries defined" FontSize="{StaticResource NormalFontSize}" />
+													<Button Content="Add new entry" Margin="0,5"
+													        Command="{Binding AddEntryCommand}" />
+												</StackPanel>
+											</ControlTemplate>
+										</Setter.Value>
+									</Setter>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</ItemsControl.Style>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate DataType="viewModels:TodoViewModel">
+							<Expander>
+								<Expander.Header>
+									<DockPanel>
+										<StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
+											<ToggleButton Width="32" Height="32"
+											              Style="{DynamicResource MetroCircleToggleButtonStyle}"
+											              x:Name="btnTags"
+											              Foreground="{DynamicResource IdealForegroundColorBrush}">
+												<Rectangle Width="12" Height="12"
+												           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
+													<Rectangle.OpacityMask>
+														<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_tag}" />
+													</Rectangle.OpacityMask>
+												</Rectangle>
+											</ToggleButton>
 
-										<Popup StaysOpen="False"
-										       PlacementTarget="{Binding ElementName=btnTags}"
-										       Placement="Bottom"
-										       IsOpen="{Binding IsChecked, ElementName=btnTags}">
-											<Border BorderThickness="1"
-											        BorderBrush="{DynamicResource AccentColorBrush}"
-											        Background="{DynamicResource ControlBackgroundBrush}">
-												<ItemsControl ItemsSource="{Binding AllTags}" Margin="5">
-													<ItemsControl.ItemTemplate>
-														<DataTemplate DataType="viewModels:TodoTagViewModel">
-															<CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}">
-																<CheckBox.Content>
-																	<Border BorderBrush="{DynamicResource IdealForegroundColorBrush}"
-																	        BorderThickness="1" Padding="4,2" CornerRadius="5"
-																	        Background="{Binding Model.Color, Converter={StaticResource BackgroundColorConv}}"
-																	        VerticalAlignment="Center">
-																		<TextBlock Text="{Binding Model.Name}"
-																		           FontSize="{DynamicResource NormalFontSize}"
-																		           Foreground="{Binding Model.Color, Converter={StaticResource ForegroundColorConv}}"
-																		           VerticalAlignment="Center" />
-																	</Border>
-																</CheckBox.Content>
-															</CheckBox>
-														</DataTemplate>
-													</ItemsControl.ItemTemplate>
-												</ItemsControl>
-											</Border>
-										</Popup>
+											<Popup StaysOpen="False"
+											       PlacementTarget="{Binding ElementName=btnTags}"
+											       Placement="Bottom"
+											       IsOpen="{Binding IsChecked, ElementName=btnTags}">
+												<Border BorderThickness="1"
+												        BorderBrush="{DynamicResource AccentColorBrush}"
+												        Background="{DynamicResource ControlBackgroundBrush}">
+													<ItemsControl ItemsSource="{Binding AllTags}" Margin="5">
+														<ItemsControl.Style>
+															<Style TargetType="ItemsControl" BasedOn="{StaticResource {x:Type ItemsControl}}">
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding AllTags.Count}" Value="0">
+																		<Setter Property="Template">
+																			<Setter.Value>
+																				<ControlTemplate>
+																					<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+																						<TextBlock Text="No tags defined for this project" FontSize="{StaticResource NormalFontSize}" />
+																						<Button Content="Define tags" Margin="0,5"
+																						        Command="{Binding Data.OpenTagManagementCommand, Source={StaticResource MainProxy}}" />
+																					</StackPanel>
+																				</ControlTemplate>
+																			</Setter.Value>
+																		</Setter>
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</ItemsControl.Style>
+														<ItemsControl.ItemTemplate>
+															<DataTemplate DataType="viewModels:TodoTagViewModel">
+																<CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}">
+																	<CheckBox.Content>
+																		<Border BorderBrush="{DynamicResource IdealForegroundColorBrush}"
+																		        BorderThickness="1" Padding="4,2" CornerRadius="5"
+																		        Background="{Binding Model.Color, Converter={StaticResource BackgroundColorConv}}"
+																		        VerticalAlignment="Center">
+																			<TextBlock Text="{Binding Model.Name}"
+																			           FontSize="{DynamicResource NormalFontSize}"
+																			           Foreground="{Binding Model.Color, Converter={StaticResource ForegroundColorConv}}"
+																			           VerticalAlignment="Center" />
+																		</Border>
+																	</CheckBox.Content>
+																</CheckBox>
+															</DataTemplate>
+														</ItemsControl.ItemTemplate>
+													</ItemsControl>
+												</Border>
+											</Popup>
 
-										<Button Width="32" Height="32" ToolTip="Edit entry"
-										        Style="{DynamicResource MetroCircleButtonStyle}"
-										        Command="{Binding Data.EditEntryCommand, Source={StaticResource MainProxy}}"
-										        CommandParameter="{Binding}"
-										        VerticalAlignment="Center"
-										        Foreground="{DynamicResource IdealForegroundColorBrush}">
-											<Rectangle Width="12" Height="12"
-											           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-												<Rectangle.OpacityMask>
-													<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_edit}" />
-												</Rectangle.OpacityMask>
-											</Rectangle>
-										</Button>
-										<Button Width="32" Height="32" ToolTip="Delete entry"
-										        Style="{DynamicResource MetroCircleButtonStyle}"
-										        Command="{Binding DeleteEntryCommand}"
-										        VerticalAlignment="Center"
-										        Foreground="{DynamicResource IdealForegroundColorBrush}">
-											<Rectangle Width="12" Height="12"
-											           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-												<Rectangle.OpacityMask>
-													<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_delete}" />
-												</Rectangle.OpacityMask>
-											</Rectangle>
-										</Button>
-									</StackPanel>
+											<Button Width="32" Height="32" ToolTip="Edit entry"
+											        Style="{DynamicResource MetroCircleButtonStyle}"
+											        Command="{Binding Data.EditEntryCommand, Source={StaticResource MainProxy}}"
+											        CommandParameter="{Binding}"
+											        VerticalAlignment="Center"
+											        Foreground="{DynamicResource IdealForegroundColorBrush}">
+												<Rectangle Width="12" Height="12"
+												           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+													<Rectangle.OpacityMask>
+														<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_edit}" />
+													</Rectangle.OpacityMask>
+												</Rectangle>
+											</Button>
+											<Button Width="32" Height="32" ToolTip="Delete entry"
+											        Style="{DynamicResource MetroCircleButtonStyle}"
+											        Command="{Binding DeleteEntryCommand}"
+											        VerticalAlignment="Center"
+											        Foreground="{DynamicResource IdealForegroundColorBrush}">
+												<Rectangle Width="12" Height="12"
+												           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+													<Rectangle.OpacityMask>
+														<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_delete}" />
+													</Rectangle.OpacityMask>
+												</Rectangle>
+											</Button>
+										</StackPanel>
 
-									<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-										<CheckBox ToolTip="Done"
-										          Content="{Binding Model.Summary}"
-										          IsChecked="{Binding Model.Done}"
-										          Foreground="{DynamicResource IdealForegroundColorBrush}"
-										          VerticalAlignment="Center"
-										          FontSize="{DynamicResource NormalFontSize}" />
+										<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+											<CheckBox ToolTip="Done"
+											          Content="{Binding Model.Summary}"
+											          IsChecked="{Binding Model.Done}"
+											          Foreground="{DynamicResource IdealForegroundColorBrush}"
+											          VerticalAlignment="Center"
+											          FontSize="{DynamicResource NormalFontSize}" />
 
-										<ItemsControl ItemsSource="{Binding Tags}"
-										              Margin="5,0" VerticalAlignment="Center">
-											<ItemsControl.ItemsPanel>
-												<ItemsPanelTemplate>
-													<StackPanel Orientation="Horizontal" />
-												</ItemsPanelTemplate>
-											</ItemsControl.ItemsPanel>
-											<ItemsControl.ItemTemplate>
-												<DataTemplate DataType="viewModels:TodoTagViewModel">
-													<Border BorderBrush="{DynamicResource IdealForegroundColorBrush}"
-													        VerticalAlignment="Center" BorderThickness="1" Margin="5,0" Padding="4,2" CornerRadius="5"
-													        Background="{Binding Model.Color, Converter={StaticResource BackgroundColorConv}}">
-														<TextBlock Text="{Binding Model.Name}"
-														           FontSize="{DynamicResource NormalFontSize}"
-														           Foreground="{Binding Model.Color, Converter={StaticResource ForegroundColorConv}}"
-														           VerticalAlignment="Center" />
-													</Border>
-												</DataTemplate>
-											</ItemsControl.ItemTemplate>
-										</ItemsControl>
-									</StackPanel>
-								</DockPanel>
-							</Expander.Header>
+											<ItemsControl ItemsSource="{Binding Tags}"
+											              Margin="5,0" VerticalAlignment="Center">
+												<ItemsControl.ItemsPanel>
+													<ItemsPanelTemplate>
+														<StackPanel Orientation="Horizontal" />
+													</ItemsPanelTemplate>
+												</ItemsControl.ItemsPanel>
+												<ItemsControl.ItemTemplate>
+													<DataTemplate DataType="viewModels:TodoTagViewModel">
+														<Border BorderBrush="{DynamicResource IdealForegroundColorBrush}"
+														        VerticalAlignment="Center" BorderThickness="1" Margin="5,0" Padding="4,2" CornerRadius="5"
+														        Background="{Binding Model.Color, Converter={StaticResource BackgroundColorConv}}">
+															<TextBlock Text="{Binding Model.Name}"
+															           FontSize="{DynamicResource NormalFontSize}"
+															           Foreground="{Binding Model.Color, Converter={StaticResource ForegroundColorConv}}"
+															           VerticalAlignment="Center" />
+														</Border>
+													</DataTemplate>
+												</ItemsControl.ItemTemplate>
+											</ItemsControl>
+										</StackPanel>
+									</DockPanel>
+								</Expander.Header>
 
-							<FlowDocumentScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden"
-							                          Document="{Binding Model.Details, Converter={StaticResource TextToFlowDocumentConv}}" />
-						</Expander>
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-			</ItemsControl>
+								<FlowDocumentScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden"
+								                          Document="{Binding Model.Details, Converter={StaticResource TextToFlowDocumentConv}}" />
+							</Expander>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</ScrollViewer>
 		</DockPanel>
 
 		<StatusBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Padding="5,0">

@@ -12,4 +12,5 @@
 	<converters:TextToFlowDocumentConverter Markdown="{StaticResource Markdown}" x:Key="TextToFlowDocumentConv" />
 	<BooleanToVisibilityConverter x:Key="BoolToVisibleConv" />
 	<converters:ColorToBrush x:Key="ColorToBrushConv" />
+	<converters:DebugBreak x:Key="DebugConv" />
 </ResourceDictionary>

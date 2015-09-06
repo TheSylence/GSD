@@ -118,6 +118,7 @@
     <Compile Include="Behaviors\FlyoutOpener.cs" />
     <Compile Include="Converters\BackgroundColor.cs" />
     <Compile Include="Converters\ColorToBrush.cs" />
+    <Compile Include="Converters\DebugBreak.cs" />
     <Compile Include="Converters\ForegroundColor.cs" />
     <Compile Include="Converters\Markdown.cs" />
     <Compile Include="Converters\RelativeWidth.cs" />
