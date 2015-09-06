@@ -28,6 +28,18 @@
 		</DataTemplate>
 	</controls:MetroWindow.IconTemplate>
 
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button>
+                <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_information_circle}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+		</controls:WindowCommands>
+	</controls:MetroWindow.RightWindowCommands>
+
 	<Window.InputBindings>
 		<KeyBinding Modifiers="Control" Key="T"
 		            Command="{Binding OpenTagManagementCommand}" />
