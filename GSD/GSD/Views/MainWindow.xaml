@@ -28,6 +28,15 @@
 		</DataTemplate>
 	</controls:MetroWindow.IconTemplate>
 
+	<Window.InputBindings>
+		<KeyBinding Modifiers="Control" Key="T"
+		            Command="{Binding OpenTagManagementCommand}" />
+		<KeyBinding Modifiers="Control" Key="N"
+		            Command="{Binding AddEntryCommand}" />
+		<KeyBinding Modifiers="Control" Key="P"
+		            Command="{Binding OpenProjectManagementCommand}" />
+	</Window.InputBindings>
+
 	<Window.Icon>
 		<DrawingImage Drawing="{StaticResource WindowIcon}" />
 	</Window.Icon>
