@@ -28,10 +28,10 @@ namespace GSD.Converters
 	public class TextToFlowDocumentConverter : DependencyObject, IValueConverter
 	{
 		/// <summary>
-		/// Converts a value.
+		///     Converts a value.
 		/// </summary>
 		/// <returns>
-		/// A converted value. If the method returns null, the valid null value is used.
+		///     A converted value. If the method returns null, the valid null value is used.
 		/// </returns>
 		/// <param name="value">The value produced by the binding source.</param>
 		/// <param name="targetType">The type of the binding target property.</param>
@@ -41,21 +41,21 @@ namespace GSD.Converters
 		{
 			if( value == null )
 			{
-				return null;
+				return DependencyProperty.UnsetValue;
 			}
 
 			var text = (string)value;
 
-			var engine = Markdown ?? mMarkdown.Value;
+			var engine = Markdown ?? _Markdown.Value;
 
 			return engine.Transform( text );
 		}
 
 		/// <summary>
-		/// Converts a value.
+		///     Converts a value.
 		/// </summary>
 		/// <returns>
-		/// A converted value. If the method returns null, the valid null value is used.
+		///     A converted value. If the method returns null, the valid null value is used.
 		/// </returns>
 		/// <param name="value">The value that is produced by the binding target.</param>
 		/// <param name="targetType">The type to convert to.</param>
@@ -63,7 +63,7 @@ namespace GSD.Converters
 		/// <param name="culture">The culture to use in the converter.</param>
 		public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
 		{
-			throw new NotImplementedException();
+			throw new NotSupportedException();
 		}
 
 		public Markdown Markdown
@@ -76,7 +76,6 @@ namespace GSD.Converters
 		public static readonly DependencyProperty MarkdownProperty =
 			DependencyProperty.Register( "Markdown", typeof( Markdown ), typeof( TextToFlowDocumentConverter ), new PropertyMetadata( null ) );
 
-		private readonly Lazy<Markdown> mMarkdown
-			= new Lazy<Markdown>( () => new Markdown() );
+		private readonly Lazy<Markdown> _Markdown = new Lazy<Markdown>( () => new Markdown() );
 	}
 }

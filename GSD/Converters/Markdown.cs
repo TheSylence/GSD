@@ -31,6 +31,7 @@ using System.Windows.Shapes;
 
 namespace GSD.Converters
 {
+	[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 	public class Markdown : DependencyObject
 	{
 		public Markdown()
@@ -38,7 +39,7 @@ namespace GSD.Converters
 			HyperlinkCommand = NavigationCommands.GoToPage;
 		}
 
-		public FlowDocument Transform( string text )
+		public virtual FlowDocument Transform( string text )
 		{
 			if( text == null )
 			{

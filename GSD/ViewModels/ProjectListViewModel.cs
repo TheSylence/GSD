@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Windows.Input;
-using GalaSoft.MvvmLight.CommandWpf;
+﻿using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
 using GSD.ViewServices;
+using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Windows.Input;
 
 namespace GSD.ViewModels
 {
 	internal class ProjectListViewModel : ViewModelBaseEx, IResettable
 	{
-		public ProjectListViewModel()
+		public ProjectListViewModel( ISettingsRepository settingsRepo = null, IProjectRepository projectRepo = null )
+			: base( settingsRepo )
 		{
-			ProjectRepo = new ProjectRepository( Session );
+			ProjectRepo = projectRepo ?? new ProjectRepository( Session );
 
 			Projects = new ObservableCollection<ProjectViewModel>( ProjectRepo.GetAll().OrderBy( p => p.Name ).Select( p => new ProjectViewModel( p ) ) );
 

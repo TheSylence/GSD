@@ -6,7 +6,7 @@ namespace GSD.ViewServices
 	{
 		Task<object> Execute<TService>( object args = null ) where TService : IViewService;
 
-		Task<TResult> Execute<TService, TResult>( object args ) where TService : IViewService;
+		Task<TResult> Execute<TService, TResult>( object args = null ) where TService : IViewService;
 
 		void Register<TService>( IViewService service ) where TService : IViewService;
 	}

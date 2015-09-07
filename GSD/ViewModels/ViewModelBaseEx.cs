@@ -1,21 +1,22 @@
-﻿using System;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
 using GSD.Models.Repositories;
 using GSD.ViewServices;
 using NHibernate;
+using System;
 
 namespace GSD.ViewModels
 {
 	internal class ViewModelBaseEx : ViewModelBase, IDisposable
 	{
-		protected ViewModelBaseEx()
+		protected ViewModelBaseEx( ISettingsRepository settingsRepo = null )
 		{
 			Session = App.Session;
-			Settings = new SettingsRepository( Session );
+			Settings = settingsRepo ?? new SettingsRepository( Session );
 		}
 
 		/// <summary>
-		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
 		/// </summary>
 		public void Dispose()
 		{
@@ -29,6 +30,8 @@ namespace GSD.ViewModels
 				Session?.Dispose();
 			}
 		}
+
+		public IMessenger TestMessenger => MessengerInstance;
 
 		protected IViewServiceRepository ViewServices => App.ViewServices;
 		protected readonly ISession Session;

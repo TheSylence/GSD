@@ -1,13 +1,15 @@
-﻿using System.Diagnostics;
-using System.Threading.Tasks;
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace GSD.ViewServices
 {
 	internal interface IConfirmationService : IViewService
-	{ }
+	{
+	}
 
+	[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 	internal class ConfirmationService : IConfirmationService
 	{
 		public async Task<object> Execute( MetroWindow window, object args )
@@ -17,8 +19,8 @@ namespace GSD.ViewServices
 
 			MetroDialogSettings settings = new MetroDialogSettings
 			{
-				AffirmativeButtonText = "Yes",
-				NegativeButtonText = "No"
+				AffirmativeButtonText = csa.OkText,
+				NegativeButtonText = csa.CancelText
 			};
 
 			var result = await window.ShowMessageAsync( csa.Title, csa.Message, MessageDialogStyle.AffirmativeAndNegative, settings );
