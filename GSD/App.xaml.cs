@@ -39,7 +39,7 @@ namespace GSD
 
 		private static void ConnectToDatabase()
 		{
-			string appDir = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ), "btbsoft" );
+			string appDir = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ), "btbsoft", "GSD" );
 			if( !Directory.Exists( appDir ) )
 			{
 				Directory.CreateDirectory( appDir );
