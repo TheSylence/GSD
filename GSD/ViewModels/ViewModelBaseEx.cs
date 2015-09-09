@@ -1,16 +1,17 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using GSD.Models.Repositories;
 using GSD.ViewServices;
 using NHibernate;
-using System;
 
 namespace GSD.ViewModels
 {
 	internal abstract class ViewModelBaseEx : ViewModelBase, IDisposable
 	{
-		protected ViewModelBaseEx( ISettingsRepository settingsRepo = null )
+		protected ViewModelBaseEx( IViewServiceRepository viewServices = null, ISettingsRepository settingsRepo = null )
 		{
+			ViewServices = viewServices ?? App.ViewServices;
 			Session = App.Session;
 			Settings = settingsRepo ?? new SettingsRepository( Session );
 		}
@@ -33,7 +34,7 @@ namespace GSD.ViewModels
 
 		public IMessenger TestMessenger => MessengerInstance;
 
-		protected IViewServiceRepository ViewServices => App.ViewServices;
+		protected IViewServiceRepository ViewServices { get; }
 		protected readonly ISession Session;
 		protected readonly ISettingsRepository Settings;
 	}

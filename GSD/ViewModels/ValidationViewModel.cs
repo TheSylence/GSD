@@ -6,13 +6,14 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using GSD.ViewServices;
 
 namespace GSD.ViewModels
 {
 	internal abstract class ValidationViewModel : ViewModelBaseEx, INotifyDataErrorInfo
 	{
-		protected ValidationViewModel( ISettingsRepository settingsRepo = null )
-			: base( settingsRepo )
+		protected ValidationViewModel( IViewServiceRepository viewServices = null, ISettingsRepository settingsRepo = null )
+			: base( viewServices, settingsRepo )
 		{
 		}
 

@@ -1,20 +1,20 @@
-﻿using GalaSoft.MvvmLight.CommandWpf;
-using GSD.Messages;
-using GSD.Models;
-using GSD.Models.Repositories;
-using GSD.ViewServices;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
+using GalaSoft.MvvmLight.CommandWpf;
+using GSD.Messages;
+using GSD.Models;
+using GSD.Models.Repositories;
+using GSD.ViewServices;
 
 namespace GSD.ViewModels
 {
 	internal class ProjectListViewModel : ValidationViewModel, IResettable
 	{
-		public ProjectListViewModel( ISettingsRepository settingsRepo = null, IProjectRepository projectRepo = null )
-			: base( settingsRepo )
+		public ProjectListViewModel( IViewServiceRepository viewServices = null, ISettingsRepository settingsRepo = null, IProjectRepository projectRepo = null )
+			: base( viewServices, settingsRepo )
 		{
 			ProjectRepo = projectRepo ?? new ProjectRepository( Session );
 
