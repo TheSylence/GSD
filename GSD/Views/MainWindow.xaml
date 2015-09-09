@@ -77,7 +77,7 @@
 						        Command="{Binding NewProjectCommand}"
 						        Style="{DynamicResource SquareButtonStyle}" />
 						<TextBox controls:TextBoxHelper.Watermark="Create project" VerticalAlignment="Center"
-						         Text="{Binding NewProjectName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+						         Text="{Binding NewProjectName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
 							<i:Interaction.Behaviors>
 								<behaviors:EnterCommand Command="{Binding NewProjectCommand}" />
 							</i:Interaction.Behaviors>
@@ -139,7 +139,7 @@
 							</ComboBox.ItemTemplate>
 						</ComboBox>
 						<TextBox controls:TextBoxHelper.Watermark="Add tag" VerticalAlignment="Center"
-						         Text="{Binding NewTagName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+						         Text="{Binding NewTagName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 					</DockPanel>
 
 					<ItemsControl ItemsSource="{Binding Tags}">
@@ -239,7 +239,7 @@
 						</Grid.RowDefinitions>
 
 						<TextBlock Text="Summary" FontSize="{DynamicResource NormalFontSize}" />
-						<TextBox Text="{Binding Summary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						<TextBox Text="{Binding Summary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 						         Grid.Row="1" controls:TextBoxHelper.Watermark="Entry summary" />
 						<TextBlock Text="Details" Grid.Row="2"
 						           FontSize="{DynamicResource NormalFontSize}" />

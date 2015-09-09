@@ -154,6 +154,9 @@
     <Compile Include="ViewModels\TagViewModel.cs" />
     <Compile Include="ViewModels\TodoTagViewModel.cs" />
     <Compile Include="ViewModels\TodoViewModel.cs" />
+    <Compile Include="ViewModels\ValidationBinder.cs" />
+    <Compile Include="ViewModels\ValidationSetup.cs" />
+    <Compile Include="ViewModels\ValidationViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBaseEx.cs" />
     <Compile Include="ViewServices\ConfirmationService.cs" />
     <Compile Include="ViewServices\IViewServiceRepository.cs" />

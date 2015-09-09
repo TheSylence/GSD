@@ -1,4 +1,9 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.CommandWpf;
+using GSD.Messages;
+using GSD.Models;
+using GSD.Models.Repositories;
+using GSD.ViewServices;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -6,15 +11,10 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
-using GalaSoft.MvvmLight.CommandWpf;
-using GSD.Messages;
-using GSD.Models;
-using GSD.Models.Repositories;
-using GSD.ViewServices;
 
 namespace GSD.ViewModels
 {
-	internal class TagListViewModel : ViewModelBaseEx, IResettable
+	internal class TagListViewModel : ValidationViewModel, IResettable
 	{
 		public TagListViewModel( ProjectListViewModel projectList )
 		{
@@ -32,12 +32,17 @@ namespace GSD.ViewModels
 			Tags = new ObservableCollection<TagViewModel>( tags );
 
 			AvailableColors = new List<Color>( GetAllColors().OrderBy( CalculateHue ) );
+
+			Validate( nameof( NewTagName ) ).Check( () => !string.IsNullOrWhiteSpace( NewTagName ) ).Message( "Tag must have a name" );
+			Reset();
 		}
 
 		public void Reset()
 		{
 			NewTagName = string.Empty;
 			NewTagColor = AvailableColors.First();
+
+			ClearValidationErrors();
 		}
 
 		private float CalculateHue( Color color )
@@ -319,13 +324,10 @@ namespace GSD.ViewModels
 
 		private RelayCommand<TagViewModel> _DeleteTagCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private Color _NewTagColor;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private Color _NewTagColor;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private RelayCommand _NewTagCommand;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private RelayCommand _NewTagCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private string _NewTagName;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private string _NewTagName;
 	}
 }

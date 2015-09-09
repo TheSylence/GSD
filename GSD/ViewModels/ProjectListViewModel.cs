@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace GSD.ViewModels
 {
-	internal class ProjectListViewModel : ViewModelBaseEx, IResettable
+	internal class ProjectListViewModel : ValidationViewModel, IResettable
 	{
 		public ProjectListViewModel( ISettingsRepository settingsRepo = null, IProjectRepository projectRepo = null )
 			: base( settingsRepo )
@@ -28,6 +28,7 @@ namespace GSD.ViewModels
 				CurrentProject.IsCurrent = true;
 			}
 
+			Validate( nameof( NewProjectName ) ).Check( () => !string.IsNullOrWhiteSpace( NewProjectName ) ).Message( "Project must have a name" );
 			Reset();
 		}
 
@@ -45,6 +46,8 @@ namespace GSD.ViewModels
 
 			MessengerInstance.Unregister( this );
 			MessengerInstance.Register<CurrentProjectChangedMessage>( this, OnCurrentProjectChanged );
+
+			ClearValidationErrors();
 		}
 
 		private bool CanExecuteDeleteProjectCommand( ProjectViewModel arg )
@@ -108,11 +111,7 @@ namespace GSD.ViewModels
 
 		public ProjectViewModel CurrentProject
 		{
-			[DebuggerStepThrough]
-			get
-			{
-				return _CurrentProject;
-			}
+			[DebuggerStepThrough] get { return _CurrentProject; }
 			set
 			{
 				if( Equals( _CurrentProject, value ) )
@@ -127,17 +126,14 @@ namespace GSD.ViewModels
 		}
 
 		public ICommand DeleteProjectCommand => _DeleteProjectCommand ??
-				( _DeleteProjectCommand = new RelayCommand<ProjectViewModel>( ExecuteDeleteProjectCommand, CanExecuteDeleteProjectCommand ) );
+		                                        ( _DeleteProjectCommand =
+			                                        new RelayCommand<ProjectViewModel>( ExecuteDeleteProjectCommand, CanExecuteDeleteProjectCommand ) );
 
 		public ICommand NewProjectCommand => _NewProjectCommand ?? ( _NewProjectCommand = new RelayCommand( ExecuteNewProjectCommand, CanExecuteNewProjectCommand ) );
 
 		public string NewProjectName
 		{
-			[DebuggerStepThrough]
-			get
-			{
-				return _NewProjectName;
-			}
+			[DebuggerStepThrough] get { return _NewProjectName; }
 			set
 			{
 				if( _NewProjectName == value )
@@ -153,15 +149,12 @@ namespace GSD.ViewModels
 		public ObservableCollection<ProjectViewModel> Projects { get; }
 		private readonly IProjectRepository ProjectRepo;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private ProjectViewModel _CurrentProject;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private ProjectViewModel _CurrentProject;
 
 		private RelayCommand<ProjectViewModel> _DeleteProjectCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private RelayCommand _NewProjectCommand;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private RelayCommand _NewProjectCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private string _NewProjectName;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private string _NewProjectName;
 	}
 }

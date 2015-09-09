@@ -119,6 +119,7 @@
     <Compile Include="Models\TodoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ProjectListViewModelTests.cs" />
+    <Compile Include="ViewModels\ValidationViewModelTests.cs" />
     <Compile Include="ViewServices\ConfirmationServiceArgsTests.cs" />
     <Compile Include="ViewServices\ViewServiceRepositoryTests.cs" />
   </ItemGroup>

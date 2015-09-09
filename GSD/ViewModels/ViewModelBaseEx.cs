@@ -7,7 +7,7 @@ using System;
 
 namespace GSD.ViewModels
 {
-	internal class ViewModelBaseEx : ViewModelBase, IDisposable
+	internal abstract class ViewModelBaseEx : ViewModelBase, IDisposable
 	{
 		protected ViewModelBaseEx( ISettingsRepository settingsRepo = null )
 		{
