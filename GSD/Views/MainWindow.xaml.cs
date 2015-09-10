@@ -1,4 +1,6 @@
-﻿namespace GSD.Views
+﻿using WPFLocalizeExtension.Providers;
+
+namespace GSD.Views
 {
 	/// <summary>
 	///     Interaction logic for MainWindow.xaml

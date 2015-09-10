@@ -1,6 +1,7 @@
 ﻿<controls:MetroWindow x:Class="GSD.Views.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewModels="clr-namespace:GSD.ViewModels" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:behaviors="clr-namespace:GSD.Behaviors" xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls" xmlns:behaviours="http://metro.mahapps.com/winfx/xaml/shared" xmlns:views="clr-namespace:GSD.Views"
                       GlowBrush="{DynamicResource AccentColorBrush}"
-                      mc:Ignorable="d"
+                      mc:Ignorable="d" xmlns:lex="http://wpflocalizeextension.codeplex.com" lex:ResxLocalizationProvider.DefaultAssembly="GSD"
+					  lex:InheritingResxLocalizationProvider.DefaultDictionary="Strings"
                       Title="{Binding ProjectList.CurrentProject.Model.Name, StringFormat=GSD - {0}, FallbackValue=GSD}"
                       Height="600" Width="800">
     <Window.DataContext>
@@ -62,7 +63,7 @@
 
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl>
-            <controls:Flyout Position="Left" Theme="Adapt" Header="Projects"
+            <controls:Flyout Position="Left" Theme="Adapt" Header="{lex:Loc GSD:Strings:Projects}"
 			                 DataContext="{Binding ProjectList}" IsPinned="False"
 			                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
                 <i:Interaction.Behaviors>
@@ -73,10 +74,10 @@
                 </controls:Flyout.Resources>
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Bottom" Margin="5">
-                        <Button DockPanel.Dock="Right" Content="Create" Margin="5,0,0,0"
+                        <Button DockPanel.Dock="Right" Content="{lex:Loc GSD:Strings:Create}" Margin="5,0,0,0"
 						        Command="{Binding NewProjectCommand}"
 						        Style="{DynamicResource SquareButtonStyle}" />
-                        <TextBox controls:TextBoxHelper.Watermark="Create project" VerticalAlignment="Center"
+                        <TextBox controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:CreateProject}" VerticalAlignment="Center"
 						         Text="{Binding NewProjectName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                             <i:Interaction.Behaviors>
                                 <behaviors:EnterCommand Command="{Binding NewProjectCommand}" />
@@ -90,7 +91,7 @@
                             <DataTemplate DataType="viewModels:ProjectViewModel">
                                 <DockPanel Margin="0,5,0,0">
 
-                                    <Button DockPanel.Dock="Left" Width="32" Height="32" ToolTip="Delete"
+                                    <Button DockPanel.Dock="Left" Width="32" Height="32" ToolTip="{lex:Loc GSD:Strings:Delete}"
 									        Style="{DynamicResource MetroCircleButtonStyle}"
 									        Command="{Binding Data.DeleteProjectCommand, Source={StaticResource ProjectsProxy}}"
 									        CommandParameter="{Binding}">
@@ -102,7 +103,7 @@
                                         </Rectangle>
                                     </Button>
 
-                                    <RadioButton DockPanel.Dock="Right" ToolTip="Active project"
+                                    <RadioButton DockPanel.Dock="Right" ToolTip="{lex:Loc GSD:Strings:ActiveProject}"
 									             IsChecked="{Binding IsCurrent, Mode=TwoWay}"
 									             GroupName="ProjectSelector" />
                                     <TextBlock Text="{Binding Model.Name}"
@@ -114,7 +115,7 @@
                     </ItemsControl>
                 </DockPanel>
             </controls:Flyout>
-            <controls:Flyout Position="Left" Header="Tags" Theme="Adapt"
+            <controls:Flyout Position="Left" Header="{lex:Loc GSD:Strings:Tags}" Theme="Adapt"
 			                 DataContext="{Binding TagList}" IsPinned="False"
 			                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
                 <i:Interaction.Behaviors>
@@ -125,7 +126,7 @@
                 </controls:Flyout.Resources>
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Bottom" Margin="5">
-                        <Button DockPanel.Dock="Right" Content="Create" Margin="5,0,0,0"
+                        <Button DockPanel.Dock="Right" Content="{lex:Loc GSD:Strings:Create}" Margin="5,0,0,0"
 						        Command="{Binding NewTagCommand}"
 						        Style="{DynamicResource SquareButtonStyle}" />
                         <ComboBox DockPanel.Dock="Right"
@@ -139,7 +140,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <TextBox controls:TextBoxHelper.Watermark="Add tag" VerticalAlignment="Center"
+                        <TextBox controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:AddTag}" VerticalAlignment="Center"
 						         Text="{Binding NewTagName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                             <i:Interaction.Behaviors>
                                 <behaviors:CancelCommand Command="{Binding CloseFlyoutCommand}" />
@@ -151,7 +152,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="viewModels:TagViewModel">
                                 <DockPanel>
-                                    <Button DockPanel.Dock="Left" Width="32" Height="32" ToolTip="Delete"
+                                    <Button DockPanel.Dock="Left" Width="32" Height="32" ToolTip="{lex:Loc GSD:Strings:Delete}"
 									        Style="{DynamicResource MetroCircleButtonStyle}"
 									        Command="{Binding Data.DeleteTagCommand, Source={StaticResource TagssProxy}}"
 									        CommandParameter="{Binding}">
@@ -176,7 +177,7 @@
                     </ItemsControl>
                 </DockPanel>
             </controls:Flyout>
-            <controls:Flyout Position="Left" Header="Settings" Theme="Adapt" IsPinned="False"
+            <controls:Flyout Position="Left" Header="{lex:Loc GSD:Strings:Settings}" Theme="Adapt" IsPinned="False"
 			                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
                 <i:Interaction.Behaviors>
                     <behaviors:FlyoutOpener Name="SettingsFlyout" />
@@ -186,11 +187,11 @@
                 </controls:Flyout.DataContext>
                 <DockPanel>
                     <DockPanel LastChildFill="False" DockPanel.Dock="Bottom" Margin="5">
-                        <Button Content="Save"
+                        <Button Content="{lex:Loc GSD:Strings:Save}"
 						        Command="{Binding SaveCommand}"
 						        Style="{DynamicResource SquareButtonStyle}"
 						        Margin="5,0" DockPanel.Dock="Right" />
-                        <Button Content="Reset to defaults"
+                        <Button Content="{lex:Loc GSD:Strings:ResetToDefaults}"
 						        Command="{Binding ResetToDefaultsCommand}"
 						        Style="{DynamicResource SquareButtonStyle}"
 						        Margin="5,0" DockPanel.Dock="Left" />
@@ -213,30 +214,30 @@
                             </Style>
                         </StackPanel.Resources>
 
-                        <TextBlock Text="Theme" FontSize="{DynamicResource NormalFontSize}" />
+                        <TextBlock Text="{lex:Loc GSD:Strings:Theme}" FontSize="{DynamicResource NormalFontSize}" />
                         <ComboBox ItemsSource="{Binding AvailableThemes}"
 						          SelectedItem="{Binding SelectedTheme, Mode=TwoWay}"
 						          ItemTemplate="{StaticResource ColorDataTemplate}" />
-                        <TextBlock Text="Accent" FontSize="{DynamicResource NormalFontSize}" />
+                        <TextBlock Text="{lex:Loc GSD:Strings:Accent}" FontSize="{DynamicResource NormalFontSize}" />
                         <ComboBox ItemsSource="{Binding AvailableAccents}"
 						          SelectedItem="{Binding SelectedAccent, Mode=TwoWay}"
 						          ItemTemplate="{StaticResource ColorDataTemplate}" />
 
                         <Separator />
-                        <CheckBox Content="Expand entries" IsChecked="{Binding ExpandEntries, Mode=TwoWay}" />
+                        <CheckBox Content="{lex:Loc GSD:Strings:ExpandEntries}" IsChecked="{Binding ExpandEntries, Mode=TwoWay}" />
                     </StackPanel>
                 </DockPanel>
             </controls:Flyout>
-            <controls:Flyout Position="Left" Header="New entry" Theme="Adapt" IsPinned="False"
+            <controls:Flyout Position="Left" Header="{lex:Loc GSD:Strings:NewEntry}" Theme="Adapt" IsPinned="False"
 			                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
                 <i:Interaction.Behaviors>
                     <behaviors:FlyoutOpener Name="AddEntryFlyout" />
                 </i:Interaction.Behaviors>
                 <DockPanel d:DataContext="{d:DesignInstance viewModels:AddEntryViewModel}">
                     <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
-                        <Button DockPanel.Dock="Right" Content="Add" Margin="5"
+                        <Button DockPanel.Dock="Right" Content="{lex:Loc GSD:Strings:Add}" Margin="5"
 						        Command="{Binding AddCommand}" />
-                        <CheckBox Content="Add another" Margin="5"
+                        <CheckBox Content="{lex:Loc GSD:Strings:AddAnother}" Margin="5"
 						          IsChecked="{Binding StayOpen, Mode=TwoWay}"
 						          DockPanel.Dock="Left" />
                     </DockPanel>
@@ -251,14 +252,14 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Text="Summary" FontSize="{DynamicResource NormalFontSize}" />
+                        <TextBlock Text="{lex:Loc GSD:Strings:Summary}" FontSize="{DynamicResource NormalFontSize}" />
                         <TextBox Text="{Binding Summary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-						         Grid.Row="1" controls:TextBoxHelper.Watermark="Entry summary" />
-                        <TextBlock Text="Details" Grid.Row="2"
+						         Grid.Row="1" controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:EntrySummary}" />
+                        <TextBlock Text="{lex:Loc GSD:Strings:Details}" Grid.Row="2"
 						           FontSize="{DynamicResource NormalFontSize}" />
                         <TextBox Text="{Binding Details, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-						         AcceptsReturn="True" Grid.Row="3" controls:TextBoxHelper.Watermark="Entry details" />
-                        <TextBlock Text="Tags" Grid.Row="4"
+						         AcceptsReturn="True" Grid.Row="3" controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:EntryDetails}" />
+                        <TextBlock Text="{lex:Loc GSD:Strings:Tags}" Grid.Row="4"
 						           FontSize="{DynamicResource NormalFontSize}" />
                         <ItemsControl Grid.Row="5" ItemsSource="{Binding Tags}">
                             <ItemsControl.ItemTemplate>
@@ -279,14 +280,14 @@
                     </Grid>
                 </DockPanel>
             </controls:Flyout>
-            <controls:Flyout Position="Right" Header="Edit entry" Theme="Adapt" IsPinned="False"
+            <controls:Flyout Position="Right" Header="{lex:Loc GSD:Strings:EditEntry}" Theme="Adapt" IsPinned="False"
 			                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
                 <i:Interaction.Behaviors>
                     <behaviors:FlyoutOpener Name="EditEntryFlyout" />
                 </i:Interaction.Behaviors>
                 <DockPanel d:DataContext="{d:DesignInstance viewModels:EditEntryViewModel}">
                     <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
-                        <Button DockPanel.Dock="Right" Content="Save" Margin="5"
+                        <Button DockPanel.Dock="Right" Content="{lex:Loc GSD:Strings:Save}" Margin="5"
 						        Command="{Binding SaveCommand}" />
                     </DockPanel>
 
@@ -300,13 +301,13 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Text="Summary" FontSize="{DynamicResource NormalFontSize}" />
+                        <TextBlock Text="{lex:Loc GSD:Strings:Summary}" FontSize="{DynamicResource NormalFontSize}" />
                         <TextBox Text="{Binding Summary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-						         Grid.Row="1" controls:TextBoxHelper.Watermark="Entry summary" />
-                        <TextBlock Text="Details" Grid.Row="2"
+						         Grid.Row="1" controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:EntrySummary}" />
+                        <TextBlock Text="{lex:Loc GSD:Strings:Details}" Grid.Row="2"
 						           FontSize="{DynamicResource NormalFontSize}" />
                         <TextBox Text="{Binding Details, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-						         AcceptsReturn="True" Grid.Row="3" controls:TextBoxHelper.Watermark="Entry details" />
+						         AcceptsReturn="True" Grid.Row="3" controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:SummaryDetails}" />
                     </Grid>
                 </DockPanel>
             </controls:Flyout>
@@ -326,7 +327,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Orientation="Vertical" Grid.Row="0" Margin="5">
-                <Button Width="36" Height="36" ToolTip="Settings"
+                <Button Width="36" Height="36" ToolTip="{lex:Loc GSD:Strings:Settings}"
 			        Style="{DynamicResource MetroCircleButtonStyle}"
 			        Command="{Binding OpenSettingsCommand}">
                     <Rectangle Width="16" Height="16"
@@ -336,7 +337,7 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button>
-                <Button Width="36" Height="36" ToolTip="Manage projects"
+                <Button Width="36" Height="36" ToolTip="{lex:Loc GSD:Strings:ManageProjects}"
 			        Style="{DynamicResource MetroCircleButtonStyle}"
 			        Command="{Binding OpenProjectManagementCommand}">
                     <Rectangle Width="16" Height="16"
@@ -346,7 +347,7 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button>
-                <Button Width="36" Height="36" ToolTip="Manage tags"
+                <Button Width="36" Height="36" ToolTip="{lex:Loc GSD:Strings:ManageTags}"
 			        Style="{DynamicResource MetroCircleButtonStyle}"
 			        Command="{Binding OpenTagManagementCommand}">
                     <Rectangle Width="16" Height="16"
@@ -356,7 +357,7 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button>
-                <Button Width="36" Height="36" ToolTip="Add new entry"
+                <Button Width="36" Height="36" ToolTip="{lex:Loc GSD:Strings:AddNewEntry}"
 			        Style="{DynamicResource MetroCircleButtonStyle}"
 			        Command="{Binding AddEntryCommand}">
                     <Rectangle Width="16" Height="16"
@@ -369,7 +370,7 @@
             </StackPanel>
 
             <DockPanel Grid.Column="1" Grid.Row="0" Margin="5">
-                <TextBox DockPanel.Dock="Top" controls:TextBoxHelper.Watermark="Search" controls:TextBoxHelper.ClearTextButton="True" Text="{Binding Searcher.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox DockPanel.Dock="Top" controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:Search}" controls:TextBoxHelper.ClearTextButton="True" Text="{Binding Searcher.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <TextBox.ToolTip>
                         <Grid>
                             <Grid.Resources>
@@ -388,19 +389,19 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Search all entries labeled abc" Grid.Column="0" Grid.Row="0" />
+                            <TextBlock Text="{lex:Loc GSD:Strings:SearchAllEntriesTagged}" Grid.Column="0" Grid.Row="0" />
                             <TextBlock Text="label:abc" FontWeight="Bold" Grid.Column="1" Grid.Row="0" />
 
-                            <TextBlock Text="Search all completed entries" Grid.Row="1" Grid.Column="0" />
+                            <TextBlock Text="{lex:Loc GSD:Strings:SearchAllCompletedEntries}" Grid.Row="1" Grid.Column="0" />
                             <TextBlock Text="status:done" FontWeight="Bold" Grid.Column="1" Grid.Row="1" />
 
-                            <TextBlock Text="Search all open entries"  Grid.Row="2" Grid.Column="0" />
+                            <TextBlock Text="{lex:Loc GSD:Strings:SearchAllOpenEntries}"  Grid.Row="2" Grid.Column="0" />
                             <TextBlock Text="status:open" FontWeight="Bold" Grid.Column="1" Grid.Row="2" />
 
-                            <TextBlock Text="Search all containing 'test 123' in details"  Grid.Row="3" Grid.Column="0" />
+                            <TextBlock Text="{lex:Loc GSD:Strings:SearchAllEntriesContaining}"  Grid.Row="3" Grid.Column="0" />
                             <TextBlock Text="details:&quot;test 123&quot;" FontWeight="Bold" Grid.Column="1" Grid.Row="3" />
-							
-							<TextBlock Text="Search is done using AND" FontStyle="Italic" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="4" />
+
+                            <TextBlock Text="{lex:Loc GSD:Strings:SearchIsDoneUsingAND}" FontStyle="Italic" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="4" />
                         </Grid>
                     </TextBox.ToolTip>
                 </TextBox>
@@ -415,7 +416,7 @@
                                             <Setter.Value>
                                                 <ControlTemplate>
                                                     <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                        <TextBlock Text="Your search did not return any matches" FontSize="{StaticResource NormalFontSize}" />
+                                                        <TextBlock Text="{lex:Loc SearchDidNotReturnAnyMatches}" FontSize="{StaticResource NormalFontSize}" />
                                                     </StackPanel>
                                                 </ControlTemplate>
                                             </Setter.Value>
@@ -426,8 +427,8 @@
                                             <Setter.Value>
                                                 <ControlTemplate>
                                                     <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                        <TextBlock Text="No projects defined" FontSize="{StaticResource NormalFontSize}" />
-                                                        <Button Content="Create project" Margin="0,5"
+                                                        <TextBlock Text="{lex:Loc NoProjectsDefined}" FontSize="{StaticResource NormalFontSize}" />
+                                                        <Button Content="{lex:Loc CreateProject}" Margin="0,5"
 													        Command="{Binding OpenProjectManagementCommand}" />
                                                     </StackPanel>
                                                 </ControlTemplate>
@@ -439,8 +440,8 @@
                                             <Setter.Value>
                                                 <ControlTemplate>
                                                     <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                        <TextBlock Text="No entries defined" FontSize="{StaticResource NormalFontSize}" />
-                                                        <Button Content="Add new entry" Margin="0,5"
+                                                        <TextBlock Text="{lex:Loc NoEntriesDefined}" FontSize="{StaticResource NormalFontSize}" />
+                                                        <Button Content="{lex:Loc AddNewEntry}" Margin="0,5"
 													        Command="{Binding AddEntryCommand}" />
                                                     </StackPanel>
                                                 </ControlTemplate>
@@ -484,8 +485,8 @@
                                                                                 <Setter.Value>
                                                                                     <ControlTemplate>
                                                                                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                                                            <TextBlock Text="No tags defined for this project" FontSize="{StaticResource NormalFontSize}" />
-                                                                                            <Button Content="Define tags" Margin="0,5"
+                                                                                            <TextBlock Text="{lex:Loc NoTagsDefinedForProject}" FontSize="{StaticResource NormalFontSize}" />
+                                                                                            <Button Content="{lex:Loc AddTag}" Margin="0,5"
 																						        Command="{Binding Data.OpenTagManagementCommand, Source={StaticResource MainProxy}}" />
                                                                                         </StackPanel>
                                                                                     </ControlTemplate>
@@ -516,7 +517,7 @@
                                                     </Border>
                                                 </Popup>
 
-                                                <Button Width="32" Height="32" ToolTip="Edit entry"
+                                                <Button Width="32" Height="32" ToolTip="{lex:Loc EditEntry}"
 											        Style="{DynamicResource MetroCircleButtonStyle}"
 											        Command="{Binding Data.EditEntryCommand, Source={StaticResource MainProxy}}"
 											        CommandParameter="{Binding}"
@@ -529,7 +530,7 @@
                                                         </Rectangle.OpacityMask>
                                                     </Rectangle>
                                                 </Button>
-                                                <Button Width="32" Height="32" ToolTip="Delete entry"
+                                                <Button Width="32" Height="32" ToolTip="{lex:Loc DeleteEntry}"
 											        Style="{DynamicResource MetroCircleButtonStyle}"
 											        Command="{Binding DeleteEntryCommand}"
 											        VerticalAlignment="Center"
@@ -544,7 +545,7 @@
                                             </StackPanel>
 
                                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                <CheckBox ToolTip="Done"
+                                                <CheckBox ToolTip="{lex:Loc Done}"
 											          Content="{Binding Model.Summary}"
 											          IsChecked="{Binding Model.Done}"
 											          Foreground="{DynamicResource IdealForegroundColorBrush}"
@@ -631,7 +632,10 @@
         </Grid>
 
         <Grid Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibleConv}}" Background="{StaticResource SemiTransparentWhiteBrush}">
-            <controls:ProgressRing IsActive="{Binding IsLoading}" IsLarge="True" />
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <controls:ProgressRing IsActive="{Binding IsLoading}" IsLarge="True" />
+                <TextBlock Text="{lex:Loc PleaseWait}" />
+            </StackPanel>
         </Grid>
     </Grid>
 </controls:MetroWindow>

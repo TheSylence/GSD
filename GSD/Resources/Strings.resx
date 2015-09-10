@@ -46,7 +46,7 @@
     
     mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
-            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
@@ -60,6 +60,7 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -68,9 +69,10 @@
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
@@ -85,9 +87,10 @@
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -109,9 +112,132 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Projects" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="CreateProject" xml:space="preserve">
+    <value>Create project</value>
+  </data>
+  <data name="ActiveProject" xml:space="preserve">
+    <value>Active project</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="AddTag" xml:space="preserve">
+    <value>Add tag</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="ResetToDefaults" xml:space="preserve">
+    <value>Reset to defaults</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="Accent" xml:space="preserve">
+    <value>Accent</value>
+  </data>
+  <data name="ExpandEntries" xml:space="preserve">
+    <value>Expand entries</value>
+  </data>
+  <data name="NewEntry" xml:space="preserve">
+    <value>New entry</value>
+  </data>
+  <data name="AddAnother" xml:space="preserve">
+    <value>Add another</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="EntrySummary" xml:space="preserve">
+    <value>Summary of the entry</value>
+  </data>
+  <data name="EntryDetails" xml:space="preserve">
+    <value>Details of the entry</value>
+  </data>
+  <data name="EditEntry" xml:space="preserve">
+    <value>Edit entry</value>
+  </data>
+  <data name="ManageProjects" xml:space="preserve">
+    <value>Manage projects</value>
+  </data>
+  <data name="ManageTags" xml:space="preserve">
+    <value>Manage tags</value>
+  </data>
+  <data name="AddNewEntry" xml:space="preserve">
+    <value>Add new entry</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchAllEntriesTagged" xml:space="preserve">
+    <value>Search all entries tagged 'abc'</value>
+  </data>
+  <data name="SearchAllCompletedEntries" xml:space="preserve">
+    <value>Search all completed entries</value>
+  </data>
+  <data name="SearchAllOpenEntries" xml:space="preserve">
+    <value>Search all open entries</value>
+  </data>
+  <data name="SearchIsDoneUsingAND" xml:space="preserve">
+    <value>Search is done using AND</value>
+  </data>
+  <data name="SearchAllEntriesContaining" xml:space="preserve">
+    <value>Search all containing 'test 123' in details</value>
+  </data>
+  <data name="SearchDidNotReturnAnyMatches" xml:space="preserve">
+    <value>Your search did not return any matches</value>
+  </data>
+  <data name="NoProjectsDefined" xml:space="preserve">
+    <value>No projects defined</value>
+  </data>
+  <data name="NoEntriesDefined" xml:space="preserve">
+    <value>No entries defined</value>
+  </data>
+  <data name="NoTagsDefinedForProject" xml:space="preserve">
+    <value>No tags defined for this project</value>
+  </data>
+  <data name="DeleteEntry" xml:space="preserve">
+    <value>Delete entry</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="SearchMatches" xml:space="preserve">
+    <value>Search matches: {0}</value>
+  </data>
+  <data name="OpenEntries" xml:space="preserve">
+    <value>Open: {0}</value>
+  </data>
+  <data name="TotalEntries" xml:space="preserve">
+    <value>Total: {0}</value>
+  </data>
+  <data name="PleaseWait" xml:space="preserve">
+    <value>Please wait...</value>
+  </data>
 </root>

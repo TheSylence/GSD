@@ -8,6 +8,7 @@ using NHibernate.Tool.hbm2ddl;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using WPFLocalizeExtension.Providers;
 
 namespace GSD
 {
@@ -28,7 +29,7 @@ namespace GSD
 			base.OnStartup( e );
 
 			SetupViewServices();
-			SetupStyle();
+			ApplySettings();
 		}
 
 		public static void ConnectToDatabase()
@@ -63,7 +64,7 @@ namespace GSD
 			ViewServices.Register<IConfirmationService>( new ConfirmationService() );
 		}
 
-		private void SetupStyle()
+		private void ApplySettings()
 		{
 			var repo = new SettingsRepository();
 
