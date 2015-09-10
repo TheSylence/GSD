@@ -63,7 +63,7 @@
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl>
             <controls:Flyout Position="Left" Theme="Adapt" Header="Projects"
-			                 DataContext="{Binding ProjectList}"
+			                 DataContext="{Binding ProjectList}" IsPinned="False"
 			                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
                 <i:Interaction.Behaviors>
                     <behaviors:FlyoutOpener Name="ProjectsFlyout" />
@@ -80,6 +80,7 @@
 						         Text="{Binding NewProjectName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                             <i:Interaction.Behaviors>
                                 <behaviors:EnterCommand Command="{Binding NewProjectCommand}" />
+								<behaviors:CancelCommand Command="{Binding CloseFlyoutCommand}" />
                             </i:Interaction.Behaviors>
                         </TextBox>
                     </DockPanel>
@@ -114,7 +115,7 @@
                 </DockPanel>
             </controls:Flyout>
             <controls:Flyout Position="Left" Header="Tags" Theme="Adapt"
-			                 DataContext="{Binding TagList}"
+			                 DataContext="{Binding TagList}" IsPinned="False"
 			                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
                 <i:Interaction.Behaviors>
                     <behaviors:FlyoutOpener Name="TagsFlyout" />
@@ -139,7 +140,11 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                         <TextBox controls:TextBoxHelper.Watermark="Add tag" VerticalAlignment="Center"
-						         Text="{Binding NewTagName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+						         Text="{Binding NewTagName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                            <i:Interaction.Behaviors>
+                                <behaviors:CancelCommand Command="{Binding CloseFlyoutCommand}" />
+							</i:Interaction.Behaviors>
+                        </TextBox>
                     </DockPanel>
 
                     <ItemsControl ItemsSource="{Binding Tags}">
@@ -171,7 +176,7 @@
                     </ItemsControl>
                 </DockPanel>
             </controls:Flyout>
-            <controls:Flyout Position="Left" Header="Settings" Theme="Adapt"
+            <controls:Flyout Position="Left" Header="Settings" Theme="Adapt" IsPinned="False"
 			                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
                 <i:Interaction.Behaviors>
                     <behaviors:FlyoutOpener Name="SettingsFlyout" />
@@ -214,7 +219,7 @@
                     </StackPanel>
                 </DockPanel>
             </controls:Flyout>
-            <controls:Flyout Position="Left" Header="New entry" Theme="Adapt"
+            <controls:Flyout Position="Left" Header="New entry" Theme="Adapt" IsPinned="False"
 			                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
                 <i:Interaction.Behaviors>
                     <behaviors:FlyoutOpener Name="AddEntryFlyout" />
@@ -266,7 +271,7 @@
                     </Grid>
                 </DockPanel>
             </controls:Flyout>
-            <controls:Flyout Position="Right" Header="Edit entry" Theme="Adapt"
+            <controls:Flyout Position="Right" Header="Edit entry" Theme="Adapt" IsPinned="False"
 			                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
                 <i:Interaction.Behaviors>
                     <behaviors:FlyoutOpener Name="EditEntryFlyout" />

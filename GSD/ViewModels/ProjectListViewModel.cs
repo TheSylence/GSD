@@ -66,6 +66,11 @@ namespace GSD.ViewModels
 			return !string.IsNullOrWhiteSpace( NewProjectName ) && !ProjectNames.Contains( NewProjectName );
 		}
 
+		private void ExecuteCloseFlyoutCommand()
+		{
+			MessengerInstance.Send( new FlyoutMessage( FlyoutMessage.ProjectFlyoutName ) );
+		}
+
 		private async void ExecuteDeleteProjectCommand( ProjectViewModel arg )
 		{
 			ConfirmationServiceArgs args = new ConfirmationServiceArgs( "Confirm", $"Do you really want to delete the project '{arg.Model.Name}'?" );
@@ -115,6 +120,8 @@ namespace GSD.ViewModels
 			Settings.Set( SettingKeys.LastProject, CurrentProject?.Model?.Id.ToString() );
 		}
 
+		public ICommand CloseFlyoutCommand => _CloseFlyoutCommand ?? ( _CloseFlyoutCommand = new RelayCommand( ExecuteCloseFlyoutCommand ) );
+
 		public ProjectViewModel CurrentProject
 		{
 			[DebuggerStepThrough] get { return _CurrentProject; }
@@ -132,8 +139,8 @@ namespace GSD.ViewModels
 		}
 
 		public ICommand DeleteProjectCommand => _DeleteProjectCommand ??
-		                                        ( _DeleteProjectCommand =
-			                                        new RelayCommand<ProjectViewModel>( ExecuteDeleteProjectCommand, CanExecuteDeleteProjectCommand ) );
+												( _DeleteProjectCommand =
+													new RelayCommand<ProjectViewModel>( ExecuteDeleteProjectCommand, CanExecuteDeleteProjectCommand ) );
 
 		public ICommand NewProjectCommand => _NewProjectCommand ?? ( _NewProjectCommand = new RelayCommand( ExecuteNewProjectCommand, CanExecuteNewProjectCommand ) );
 
@@ -154,14 +161,18 @@ namespace GSD.ViewModels
 
 		public ObservableCollection<ProjectViewModel> Projects { get; }
 		private readonly IProjectRepository ProjectRepo;
+		private RelayCommand _CloseFlyoutCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private ProjectViewModel _CurrentProject;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private ProjectViewModel _CurrentProject;
 
 		private RelayCommand<ProjectViewModel> _DeleteProjectCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private RelayCommand _NewProjectCommand;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private RelayCommand _NewProjectCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private string _NewProjectName;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private string _NewProjectName;
 
 		private List<string> ProjectNames;
 	}

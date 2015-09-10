@@ -113,6 +113,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Behaviors\CancelCommand.cs" />
     <Compile Include="Behaviors\DataContextDisposer.cs" />
     <Compile Include="Behaviors\EnterCommand.cs" />
     <Compile Include="Behaviors\FlyoutOpener.cs" />

@@ -48,13 +48,6 @@ namespace GSD.ViewModels
 			ClearValidationErrors();
 		}
 
-		private void ReadTagNames()
-		{
-			TagNames = TagRepo.GetAllNames( ProjectList.CurrentProject.Model ).ToList();
-		}
-
-		private List<string> TagNames;
-
 		private float CalculateHue( Color color )
 		{
 			var min = Math.Min( color.ScR, Math.Min( color.ScG, color.ScB ) );
@@ -93,7 +86,12 @@ namespace GSD.ViewModels
 
 		private bool CanExecuteNewTagCommand()
 		{
-			return !string.IsNullOrWhiteSpace( NewTagName ) && !TagNames.Contains(NewTagName);
+			return !string.IsNullOrWhiteSpace( NewTagName ) && !TagNames.Contains( NewTagName );
+		}
+
+		private void ExecuteCloseFlyoutCommand()
+		{
+			MessengerInstance.Send( new FlyoutMessage( FlyoutMessage.TagFlyoutName ) );
 		}
 
 		private async void ExecuteDeleteTagCommand( TagViewModel arg )
@@ -288,7 +286,13 @@ namespace GSD.ViewModels
 			}
 		}
 
+		private void ReadTagNames()
+		{
+			TagNames = TagRepo.GetAllNames( ProjectList.CurrentProject.Model ).ToList();
+		}
+
 		public List<Color> AvailableColors { get; }
+		public ICommand CloseFlyoutCommand => _CloseFlyoutCommand ?? ( _CloseFlyoutCommand = new RelayCommand( ExecuteCloseFlyoutCommand ) );
 
 		public RelayCommand<TagViewModel> DeleteTagCommand
 			=>
@@ -328,17 +332,20 @@ namespace GSD.ViewModels
 		}
 
 		public ObservableCollection<TagViewModel> Tags { get; }
-
 		private readonly ProjectListViewModel ProjectList;
-
 		private readonly ITagRepository TagRepo;
-
+		private RelayCommand _CloseFlyoutCommand;
 		private RelayCommand<TagViewModel> _DeleteTagCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private Color _NewTagColor;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private Color _NewTagColor;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private RelayCommand _NewTagCommand;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private RelayCommand _NewTagCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private string _NewTagName;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private string _NewTagName;
+
+		private List<string> TagNames;
 	}
 }
