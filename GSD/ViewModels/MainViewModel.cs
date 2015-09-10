@@ -18,12 +18,15 @@ namespace GSD.ViewModels
 
 				ProjectList = new ProjectListViewModel();
 				TagList = new TagListViewModel( ProjectList );
+				Searcher = new EntrySearcher( ProjectList );
+
 			} ).ContinueWith( t =>
 			{
+				ExpandEntries = Settings.GetById( SettingKeys.ExpandEntries ).Get<bool>();
+
 				RaisePropertyChanged( nameof( ProjectList ) );
 				RaisePropertyChanged( nameof( TagList ) );
-
-				ExpandEntries = Settings.GetById( SettingKeys.ExpandEntries ).Get<bool>();
+				RaisePropertyChanged( nameof( Searcher ) );
 
 				IsLoading = false;
 			} );
@@ -115,21 +118,27 @@ namespace GSD.ViewModels
 			=> _OpenTagManagementCommand ?? ( _OpenTagManagementCommand = new RelayCommand( ExecuteOpenTagManagementCommand, CanExecuteOpenTagManagementCommand ) );
 
 		public ProjectListViewModel ProjectList { get; private set; }
-
+		public EntrySearcher Searcher { get; private set; }
 		public TagListViewModel TagList { get; private set; }
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private RelayCommand _AddEntryCommand;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private RelayCommand _AddEntryCommand;
 
 		private RelayCommand<TodoViewModel> _EditEntryCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private bool _ExpandEntries;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private bool _ExpandEntries;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private bool _IsLoading;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private bool _IsLoading;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private RelayCommand _OpenProjectManagementCommand;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private RelayCommand _OpenProjectManagementCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private RelayCommand _OpenSettingsCommand;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private RelayCommand _OpenSettingsCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private RelayCommand _OpenTagManagementCommand;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private RelayCommand _OpenTagManagementCommand;
 	}
 }

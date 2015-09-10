@@ -80,7 +80,7 @@
 						         Text="{Binding NewProjectName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                             <i:Interaction.Behaviors>
                                 <behaviors:EnterCommand Command="{Binding NewProjectCommand}" />
-								<behaviors:CancelCommand Command="{Binding CloseFlyoutCommand}" />
+                                <behaviors:CancelCommand Command="{Binding CloseFlyoutCommand}" />
                             </i:Interaction.Behaviors>
                         </TextBox>
                     </DockPanel>
@@ -143,7 +143,7 @@
 						         Text="{Binding NewTagName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                             <i:Interaction.Behaviors>
                                 <behaviors:CancelCommand Command="{Binding CloseFlyoutCommand}" />
-							</i:Interaction.Behaviors>
+                            </i:Interaction.Behaviors>
                         </TextBox>
                     </DockPanel>
 
@@ -207,9 +207,9 @@
                                 </DockPanel>
                             </DataTemplate>
                             <Style TargetType="Separator">
-								<Setter Property="Margin" Value="0,10"/>
-								<Setter Property="Foreground" Value="{DynamicResource FlyoutBackgroundBrush}"/>
-                                <Setter Property="Background" Value="{DynamicResource FlyoutBackgroundBrush}"/>
+                                <Setter Property="Margin" Value="0,10" />
+                                <Setter Property="Foreground" Value="{DynamicResource FlyoutBackgroundBrush}" />
+                                <Setter Property="Background" Value="{DynamicResource FlyoutBackgroundBrush}" />
                             </Style>
                         </StackPanel.Resources>
 
@@ -221,8 +221,8 @@
                         <ComboBox ItemsSource="{Binding AvailableAccents}"
 						          SelectedItem="{Binding SelectedAccent, Mode=TwoWay}"
 						          ItemTemplate="{StaticResource ColorDataTemplate}" />
-						
-						<Separator />
+
+                        <Separator />
                         <CheckBox Content="Expand entries" IsChecked="{Binding ExpandEntries, Mode=TwoWay}" />
                     </StackPanel>
                 </DockPanel>
@@ -369,13 +369,58 @@
             </StackPanel>
 
             <DockPanel Grid.Column="1" Grid.Row="0" Margin="5">
-                <TextBox DockPanel.Dock="Top" controls:TextBoxHelper.Watermark="Search" controls:TextBoxHelper.ClearTextButton="True" />
+                <TextBox DockPanel.Dock="Top" controls:TextBoxHelper.Watermark="Search" controls:TextBoxHelper.ClearTextButton="True" Text="{Binding Searcher.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.ToolTip>
+                        <Grid>
+                            <Grid.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Margin" Value="5" />
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Search all entries labeled abc" Grid.Column="0" Grid.Row="0" />
+                            <TextBlock Text="label:abc" FontWeight="Bold" Grid.Column="1" Grid.Row="0" />
+
+                            <TextBlock Text="Search all completed entries" Grid.Row="1" Grid.Column="0" />
+                            <TextBlock Text="status:done" FontWeight="Bold" Grid.Column="1" Grid.Row="1" />
+
+                            <TextBlock Text="Search all open entries"  Grid.Row="2" Grid.Column="0" />
+                            <TextBlock Text="status:open" FontWeight="Bold" Grid.Column="1" Grid.Row="2" />
+
+                            <TextBlock Text="Search all containing 'test 123' in details"  Grid.Row="3" Grid.Column="0" />
+                            <TextBlock Text="details:&quot;test 123&quot;" FontWeight="Bold" Grid.Column="1" Grid.Row="3" />
+							
+							<TextBlock Text="Search is done using AND" FontStyle="Italic" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="4" />
+                        </Grid>
+                    </TextBox.ToolTip>
+                </TextBox>
 
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
-                    <ItemsControl ItemsSource="{Binding ProjectList.CurrentProject.Todos}">
+                    <ItemsControl ItemsSource="{Binding Searcher.Matches}">
                         <ItemsControl.Style>
                             <Style TargetType="ItemsControl" BasedOn="{StaticResource {x:Type ItemsControl}}">
                                 <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Searcher.Matches.Count}" Value="0">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                        <TextBlock Text="Your search did not return any matches" FontSize="{StaticResource NormalFontSize}" />
+                                                    </StackPanel>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
                                     <DataTrigger Binding="{Binding ProjectList.Projects.Count}" Value="0">
                                         <Setter Property="Template">
                                             <Setter.Value>
@@ -556,7 +601,9 @@
                     <ItemsPanelTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
@@ -566,22 +613,25 @@
                 </StatusBar.ItemsPanel>
 
                 <StatusBarItem Grid.Column="0">
-                    <TextBlock Text="{Binding ProjectList.CurrentProject.Model.Name}" />
-                </StatusBarItem>
-                <StatusBarItem Grid.Column="1">
-                    <TextBlock Text="{Binding ProjectList.CurrentProject.OpenTodoCount, StringFormat=Open: {0}}" />
+                    <TextBlock Text="{Binding ProjectList.CurrentProject.Model.Name}" Margin="0,0,10,0" />
                 </StatusBarItem>
                 <StatusBarItem Grid.Column="2">
-                    <TextBlock Text="{Binding ProjectList.CurrentProject.Todos.Count, StringFormat=Total: {0}}" />
+                    <TextBlock Text="{Binding Searcher.Matches.Count, StringFormat=Search matches: {0}}" Visibility="{Binding Searcher.IsSearching, Converter={StaticResource BoolToVisibleConv}}" />
                 </StatusBarItem>
                 <StatusBarItem Grid.Column="3">
+                    <TextBlock Text="{Binding ProjectList.CurrentProject.OpenTodoCount, StringFormat=Open: {0}}" />
+                </StatusBarItem>
+                <StatusBarItem Grid.Column="4">
+                    <TextBlock Text="{Binding ProjectList.CurrentProject.Todos.Count, StringFormat=Total: {0}}" />
+                </StatusBarItem>
+                <StatusBarItem Grid.Column="5">
                     <TextBlock Text="{Binding ProjectList.CurrentProject.Progress, StringFormat={}{0}%}" />
                 </StatusBarItem>
             </StatusBar>
         </Grid>
 
         <Grid Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibleConv}}" Background="{StaticResource SemiTransparentWhiteBrush}">
-			<controls:ProgressRing IsActive="{Binding IsLoading}" IsLarge="True"  />
+            <controls:ProgressRing IsActive="{Binding IsLoading}" IsLarge="True" />
         </Grid>
     </Grid>
 </controls:MetroWindow>
