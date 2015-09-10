@@ -32,6 +32,7 @@ namespace GSD.ViewModels
 			Tags = new ObservableCollection<TagViewModel>( tags );
 
 			AvailableColors = new List<Color>( GetAllColors().OrderBy( CalculateHue ) );
+			TagNames = new List<string>();
 
 			Validate( nameof( NewTagName ) ).Check( () => !string.IsNullOrWhiteSpace( NewTagName ) ).Message( "Tag must have a name" );
 			Validate( nameof( NewTagName ) ).Check( () => !TagNames.Contains( NewTagName ) ).Message( "This name is already used" );

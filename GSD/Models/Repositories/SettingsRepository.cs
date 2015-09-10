@@ -44,6 +44,17 @@ namespace GSD.Models.Repositories
 
 					Entries.Add( parts[0], parts[1] );
 				}
+
+				foreach( var kvp in SettingKeys.DefaultValues )
+				{
+					var cfg = GetById( kvp.Key );
+					if( cfg != null )
+					{
+						continue;
+					}
+
+					Entries.Add( kvp.Key, kvp.Value );
+				}
 			}
 			else
 			{

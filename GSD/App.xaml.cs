@@ -1,16 +1,13 @@
 ﻿using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using GSD.Models;
 using GSD.Models.Repositories;
 using GSD.ViewServices;
 using MahApps.Metro;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using Environment = System.Environment;
 
 namespace GSD
 {
@@ -30,13 +27,11 @@ namespace GSD
 		{
 			base.OnStartup( e );
 
-			ConnectToDatabase();
-			SetupDatabase();
 			SetupViewServices();
 			SetupStyle();
 		}
 
-		private static void ConnectToDatabase()
+		public static void ConnectToDatabase()
 		{
 			var repo = new SettingsRepository();
 			string fileName = repo.GetById( SettingKeys.DatabasePath )?.Value;
@@ -66,23 +61,6 @@ namespace GSD
 		{
 			ViewServices = new ViewServiceRepository();
 			ViewServices.Register<IConfirmationService>( new ConfirmationService() );
-		}
-
-		private void SetupDatabase()
-		{
-			var repo = new SettingsRepository();
-
-			foreach( var kvp in SettingKeys.DefaultValues )
-			{
-				var cfg = repo.GetById( kvp.Key );
-				if( cfg != null )
-				{
-					continue;
-				}
-
-				cfg = new Config { Id = kvp.Key, Value = kvp.Value };
-				repo.Add( cfg );
-			}
 		}
 
 		private void SetupStyle()

@@ -1,7 +1,8 @@
-﻿using System.Diagnostics;
-using System.Windows.Input;
-using GalaSoft.MvvmLight.CommandWpf;
+﻿using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Messages;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace GSD.ViewModels
 {
@@ -9,13 +10,24 @@ namespace GSD.ViewModels
 	{
 		public MainViewModel()
 		{
-			ProjectList = new ProjectListViewModel();
-			TagList = new TagListViewModel( ProjectList );
+			IsLoading = true;
+			Task.Run( () =>
+			{
+				App.ConnectToDatabase();
+
+				ProjectList = new ProjectListViewModel();
+				TagList = new TagListViewModel( ProjectList );
+			} ).ContinueWith( t =>
+			{
+				RaisePropertyChanged( nameof( ProjectList ) );
+				RaisePropertyChanged( nameof( TagList ) );
+				IsLoading = false;
+			} );
 		}
 
 		private bool CanExecuteAddEntryCommand()
 		{
-			return ProjectList.CurrentProject != null;
+			return ProjectList?.CurrentProject != null;
 		}
 
 		private bool CanExecuteEditEntryCommand( TodoViewModel arg )
@@ -25,7 +37,7 @@ namespace GSD.ViewModels
 
 		private bool CanExecuteOpenTagManagementCommand()
 		{
-			return ProjectList.CurrentProject != null;
+			return ProjectList?.CurrentProject != null;
 		}
 
 		private void ExecuteAddEntryCommand()
@@ -57,16 +69,43 @@ namespace GSD.ViewModels
 
 		public ICommand AddEntryCommand => _AddEntryCommand ?? ( _AddEntryCommand = new RelayCommand( ExecuteAddEntryCommand, CanExecuteAddEntryCommand ) );
 		public ICommand EditEntryCommand => _EditEntryCommand ?? ( _EditEntryCommand = new RelayCommand<TodoViewModel>( ExecuteEditEntryCommand, CanExecuteEditEntryCommand ) );
+
+		public bool IsLoading
+		{
+			[DebuggerStepThrough]
+			get
+			{
+				return _IsLoading;
+			}
+			set
+			{
+				if( _IsLoading == value )
+				{
+					return;
+				}
+
+				_IsLoading = value;
+				RaisePropertyChanged( nameof( IsLoading ) );
+			}
+		}
+
 		public ICommand OpenProjectManagementCommand => _OpenProjectManagementCommand ?? ( _OpenProjectManagementCommand = new RelayCommand( ExecuteOpenProjectManagementCommand ) );
+
 		public RelayCommand OpenSettingsCommand => _OpenSettingsCommand ?? ( _OpenSettingsCommand = new RelayCommand( ExecuteOpenSettingsCommand ) );
+
 		public ICommand OpenTagManagementCommand => _OpenTagManagementCommand ?? ( _OpenTagManagementCommand = new RelayCommand( ExecuteOpenTagManagementCommand, CanExecuteOpenTagManagementCommand ) );
-		public ProjectListViewModel ProjectList { get; }
-		public TagListViewModel TagList { get; }
+
+		public ProjectListViewModel ProjectList { get; private set; }
+
+		public TagListViewModel TagList { get; private set; }
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private RelayCommand _AddEntryCommand;
 
 		private RelayCommand<TodoViewModel> _EditEntryCommand;
+
+		[System.Diagnostics.DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private bool _IsLoading;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private RelayCommand _OpenProjectManagementCommand;

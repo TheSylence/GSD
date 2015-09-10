@@ -29,8 +29,10 @@ namespace GSD.ViewModels
 				CurrentProject.IsCurrent = true;
 			}
 
+			ProjectNames = new List<string>();
+
 			Validate( nameof( NewProjectName ) ).Check( () => !string.IsNullOrWhiteSpace( NewProjectName ) ).Message( "Project must have a name" );
-			Validate( nameof( NewProjectName ) ).Check( () => !ProjectNames.Contains( NewProjectName ) ).Message( "This name is already used" );
+			Validate( nameof( NewProjectName ) ).Check( () => !ProjectNames.Contains( NewProjectName ) == false ).Message( "This name is already used" );
 			Reset();
 		}
 
