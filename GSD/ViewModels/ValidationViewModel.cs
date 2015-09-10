@@ -26,7 +26,7 @@ namespace GSD.ViewModels
 
 		public IEnumerable GetErrors( string propertyName )
 		{
-			if( !ValidationMap.ContainsKey( propertyName ) )
+			if( string.IsNullOrEmpty( propertyName ) || !ValidationMap.ContainsKey( propertyName ) )
 			{
 				return Enumerable.Empty<string>();
 			}

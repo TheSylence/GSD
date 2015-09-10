@@ -11,6 +11,8 @@ namespace GSD.Tests.Models.Repositories
 		[ClassInitialize]
 		public static void _ClassInit( TestContext context )
 		{
+			MapAction = map => map.FluentMappings.AddFromAssemblyOf<RepositoryTests>();
+
 			ClassInitStatic( context );
 		}
 

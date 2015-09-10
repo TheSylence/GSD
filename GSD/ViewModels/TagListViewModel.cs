@@ -34,6 +34,7 @@ namespace GSD.ViewModels
 			AvailableColors = new List<Color>( GetAllColors().OrderBy( CalculateHue ) );
 
 			Validate( nameof( NewTagName ) ).Check( () => !string.IsNullOrWhiteSpace( NewTagName ) ).Message( "Tag must have a name" );
+			Validate( nameof( NewTagName ) ).Check( () => !TagNames.Contains( NewTagName ) ).Message( "This name is already used" );
 			Reset();
 		}
 
@@ -42,8 +43,16 @@ namespace GSD.ViewModels
 			NewTagName = string.Empty;
 			NewTagColor = AvailableColors.First();
 
+			ReadTagNames();
 			ClearValidationErrors();
 		}
+
+		private void ReadTagNames()
+		{
+			TagNames = TagRepo.GetAllNames( ProjectList.CurrentProject.Model ).ToList();
+		}
+
+		private List<string> TagNames;
 
 		private float CalculateHue( Color color )
 		{
@@ -83,7 +92,7 @@ namespace GSD.ViewModels
 
 		private bool CanExecuteNewTagCommand()
 		{
-			return !string.IsNullOrWhiteSpace( NewTagName );
+			return !string.IsNullOrWhiteSpace( NewTagName ) && !TagNames.Contains(NewTagName);
 		}
 
 		private async void ExecuteDeleteTagCommand( TagViewModel arg )
@@ -100,6 +109,7 @@ namespace GSD.ViewModels
 			Tags.Remove( arg );
 
 			MessengerInstance.Send( new TagRemovedMessage( arg.Model ) );
+			ReadTagNames();
 		}
 
 		private void ExecuteNewTagCommand()

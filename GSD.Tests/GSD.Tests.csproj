@@ -114,6 +114,7 @@
     <Compile Include="Models\Repositories\RepositoryTestBase.cs" />
     <Compile Include="Models\Repositories\RepositoryTests.cs" />
     <Compile Include="Models\Repositories\SettingsRepositoryTests.cs" />
+    <Compile Include="Models\Repositories\TagRepositoryTests.cs" />
     <Compile Include="Models\Repositories\TestRepository.cs" />
     <Compile Include="Models\TestEntity.cs" />
     <Compile Include="Models\SchemaTests.cs" />

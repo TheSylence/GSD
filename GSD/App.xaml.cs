@@ -1,16 +1,15 @@
-﻿using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Windows;
-using FluentNHibernate.Cfg;
+﻿using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using GSD.Models;
 using GSD.Models.Repositories;
 using GSD.ViewServices;
 using MahApps.Metro;
 using NHibernate;
-using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Windows;
 using Environment = System.Environment;
 
 namespace GSD
@@ -45,7 +44,7 @@ namespace GSD
 				Directory.CreateDirectory( appDir );
 			}
 
-            string fileName = Path.Combine( appDir ,"data.db3" );
+			string fileName = Path.Combine( appDir, "data.db3" );
 			var dbConfig = new SQLiteConfiguration().UsingFile( fileName )
 
 #if !DEBUG
