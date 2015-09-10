@@ -1,4 +1,6 @@
-﻿using NHibernate;
+﻿using System.Linq;
+using NHibernate;
+using NHibernate.Criterion;
 
 namespace GSD.Models.Repositories
 {

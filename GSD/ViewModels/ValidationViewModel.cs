@@ -1,4 +1,5 @@
 ﻿using GSD.Models.Repositories;
+using GSD.ViewServices;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using GSD.ViewServices;
 
 namespace GSD.ViewModels
 {
@@ -24,16 +24,6 @@ namespace GSD.ViewModels
 			ValidationMap.Clear();
 		}
 
-		/// <summary>
-		///     Ruft die Validierungsfehler für eine angegebene Eigenschaft oder für die ganze Entität ab.
-		/// </summary>
-		/// <returns>
-		///     Die Validierungsfehler für die Eigenschaft oder die Entität.
-		/// </returns>
-		/// <param name="propertyName">
-		///     Der Name der Eigenschaft, von Validierungsfehlern abgerufen werden soll. null oder Fehlern
-		///     abrufen, <see cref="F:System.String.Empty" />oder auf Entitätsebene.
-		/// </param>
 		public IEnumerable GetErrors( string propertyName )
 		{
 			if( !ValidationMap.ContainsKey( propertyName ) )
@@ -66,21 +56,21 @@ namespace GSD.ViewModels
 				{
 					binder.Clear();
 				}
+
+				RaiseErrorsChanged( kvp.Key );
 			}
 
-			ErrorsChanged?.Invoke( this, new DataErrorsChangedEventArgs( null ) );
+			RaiseErrorsChanged( null );
+		}
+
+		protected void RaiseErrorsChanged( string propertyName )
+		{
+			ErrorsChanged?.Invoke( this, new DataErrorsChangedEventArgs( propertyName ) );
 		}
 
 		protected override void RaisePropertyChanged( [CallerMemberName] string propertyName = null )
 		{
-			Debug.Assert( propertyName != null, "propertyName != null" );
-
-			List<ValidationBinder> binder;
-			if( ValidationMap.TryGetValue( propertyName, out binder ) )
-			{
-				binder.ForEach( b => b.Update() );
-				ErrorsChanged?.Invoke( this, new DataErrorsChangedEventArgs( propertyName ) );
-			}
+			ValidateProperty( propertyName );
 		}
 
 		protected IValidationSetup Validate( string propertyName )
@@ -93,6 +83,18 @@ namespace GSD.ViewModels
 			return new ValidationSetup( this, propertyName );
 		}
 
+		protected void ValidateProperty( string propertyName )
+		{
+			Debug.Assert( propertyName != null, "propertyName != null" );
+
+			List<ValidationBinder> binder;
+			if( ValidationMap.TryGetValue( propertyName, out binder ) )
+			{
+				binder.ForEach( b => b.Update() );
+				RaiseErrorsChanged( propertyName );
+			}
+		}
+
 		public string Error
 		{
 			get
@@ -101,14 +103,10 @@ namespace GSD.ViewModels
 				return lines.Any() ? string.Join( Environment.NewLine, lines ) : null;
 			}
 		}
-		
 
 		public bool HasErrors
 		{
-			get
-			{
-				return ValidationMap.Values.Any( b => b.Any( bb => bb.HasError ) );
-			}
+			get { return ValidationMap.Values.Any( b => b.Any( bb => bb.HasError ) ); }
 		}
 
 		private readonly Dictionary<string, List<ValidationBinder>> ValidationMap = new Dictionary<string, List<ValidationBinder>>();

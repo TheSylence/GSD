@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Windows.Input;
-using GalaSoft.MvvmLight.CommandWpf;
+﻿using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
 using GSD.ViewServices;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Windows.Input;
 
 namespace GSD.ViewModels
 {
@@ -29,6 +30,7 @@ namespace GSD.ViewModels
 			}
 
 			Validate( nameof( NewProjectName ) ).Check( () => !string.IsNullOrWhiteSpace( NewProjectName ) ).Message( "Project must have a name" );
+			Validate( nameof( NewProjectName ) ).Check( () => !ProjectNames.Contains( NewProjectName ) ).Message( "This name is already used" );
 			Reset();
 		}
 
@@ -47,6 +49,8 @@ namespace GSD.ViewModels
 			MessengerInstance.Unregister( this );
 			MessengerInstance.Register<CurrentProjectChangedMessage>( this, OnCurrentProjectChanged );
 
+			ProjectNames = ProjectRepo.GetAll().Select( p => p.Name ).ToList();
+
 			ClearValidationErrors();
 		}
 
@@ -57,7 +61,7 @@ namespace GSD.ViewModels
 
 		private bool CanExecuteNewProjectCommand()
 		{
-			return !string.IsNullOrWhiteSpace( NewProjectName );
+			return !string.IsNullOrWhiteSpace( NewProjectName ) && !ProjectNames.Contains( NewProjectName );
 		}
 
 		private async void ExecuteDeleteProjectCommand( ProjectViewModel arg )
@@ -156,5 +160,7 @@ namespace GSD.ViewModels
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private RelayCommand _NewProjectCommand;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private string _NewProjectName;
+
+		private List<string> ProjectNames;
 	}
 }

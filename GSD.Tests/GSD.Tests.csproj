@@ -110,6 +110,7 @@
     <Compile Include="MockContext.cs" />
     <Compile Include="Models\ConfigTests.cs" />
     <Compile Include="Models\EntityTests.cs" />
+    <Compile Include="Models\Repositories\ProjectRepositoryTests.cs" />
     <Compile Include="Models\Repositories\RepositoryTestBase.cs" />
     <Compile Include="Models\Repositories\RepositoryTests.cs" />
     <Compile Include="Models\Repositories\SettingsRepositoryTests.cs" />
