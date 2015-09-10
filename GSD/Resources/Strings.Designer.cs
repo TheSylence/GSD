@@ -115,6 +115,15 @@ namespace GSD.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        internal static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create.
         /// </summary>
         internal static string Create {
@@ -169,6 +178,33 @@ namespace GSD.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete the project &apos;{0}&apos;?.
+        /// </summary>
+        internal static string DoYouReallyWantToDeleteProjectXXX {
+            get {
+                return ResourceManager.GetString("DoYouReallyWantToDeleteProjectXXX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete the tag &apos;{0}&apos;?.
+        /// </summary>
+        internal static string DoYouReallyWantToDeleteTagXXX {
+            get {
+                return ResourceManager.GetString("DoYouReallyWantToDeleteTagXXX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete this entry?.
+        /// </summary>
+        internal static string DoYouReallyWantToDeleteThisEntry {
+            get {
+                return ResourceManager.GetString("DoYouReallyWantToDeleteThisEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit entry.
         /// </summary>
         internal static string EditEntry {
@@ -183,6 +219,15 @@ namespace GSD.Resources {
         internal static string EntryDetails {
             get {
                 return ResourceManager.GetString("EntryDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entry needs summary.
+        /// </summary>
+        internal static string EntryNeedsSummary {
+            get {
+                return ResourceManager.GetString("EntryNeedsSummary", resourceCulture);
             }
         }
         
@@ -273,6 +318,15 @@ namespace GSD.Resources {
         internal static string PleaseWait {
             get {
                 return ResourceManager.GetString("PleaseWait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project must have a name.
+        /// </summary>
+        internal static string ProjectMustHaveName {
+            get {
+                return ResourceManager.GetString("ProjectMustHaveName", resourceCulture);
             }
         }
         
@@ -394,6 +448,15 @@ namespace GSD.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tag must have a name.
+        /// </summary>
+        internal static string TagMustHaveName {
+            get {
+                return ResourceManager.GetString("TagMustHaveName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tags.
         /// </summary>
         internal static string Tags {
@@ -408,6 +471,15 @@ namespace GSD.Resources {
         internal static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This name is already used.
+        /// </summary>
+        internal static string ThisNameIsAlreadyUsed {
+            get {
+                return ResourceManager.GetString("ThisNameIsAlreadyUsed", resourceCulture);
             }
         }
         

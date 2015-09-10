@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using GalaSoft.MvvmLight.CommandWpf;
+﻿using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
+using GSD.Resources;
 using GSD.ViewServices;
+using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 
 namespace GSD.ViewModels
 {
@@ -43,7 +44,7 @@ namespace GSD.ViewModels
 
 		private async void ExecuteDeleteEntryCommand()
 		{
-			ConfirmationServiceArgs args = new ConfirmationServiceArgs( "Confirm", "Do you really want to delete this entry?" );
+			ConfirmationServiceArgs args = new ConfirmationServiceArgs( Strings.Confirm, Strings.DoYouReallyWantToDeleteThisEntry );
 			if( !await ViewServices.Execute<IConfirmationService, bool>( args ) )
 			{
 				return;
@@ -95,7 +96,6 @@ namespace GSD.ViewModels
 
 		private readonly ITodoRepository TodoRepo;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private RelayCommand _DeleteEntryCommand;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private RelayCommand _DeleteEntryCommand;
 	}
 }

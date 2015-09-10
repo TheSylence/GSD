@@ -2,6 +2,7 @@
 using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
+using GSD.Resources;
 using GSD.ViewServices;
 using System;
 using System.Collections.Generic;
@@ -31,8 +32,8 @@ namespace GSD.ViewModels
 
 			ProjectNames = new List<string>();
 
-			Validate( nameof( NewProjectName ) ).Check( () => !string.IsNullOrWhiteSpace( NewProjectName ) ).Message( "Project must have a name" );
-			Validate( nameof( NewProjectName ) ).Check( () => !ProjectNames.Contains( NewProjectName ) == false ).Message( "This name is already used" );
+			Validate( nameof( NewProjectName ) ).Check( () => !string.IsNullOrWhiteSpace( NewProjectName ) ).Message( Strings.ProjectMustHaveName );
+			Validate( nameof( NewProjectName ) ).Check( () => !ProjectNames.Contains( NewProjectName ) == false ).Message( Strings.ThisNameIsAlreadyUsed );
 			Reset();
 		}
 
@@ -73,7 +74,7 @@ namespace GSD.ViewModels
 
 		private async void ExecuteDeleteProjectCommand( ProjectViewModel arg )
 		{
-			ConfirmationServiceArgs args = new ConfirmationServiceArgs( "Confirm", $"Do you really want to delete the project '{arg.Model.Name}'?" );
+			ConfirmationServiceArgs args = new ConfirmationServiceArgs( Strings.Confirm, string.Format( Strings.DoYouReallyWantToDeleteProjectXXX, arg.Model.Name ) );
 
 			if( !await ViewServices.Execute<IConfirmationService, bool>( args ) )
 			{

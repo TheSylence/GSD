@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
+using GSD.Resources;
 
 namespace GSD.ViewModels
 {
@@ -17,7 +18,7 @@ namespace GSD.ViewModels
 			TodoRepo = new TodoRepository( App.Session );
 			Tags = tagList.Tags.Select( t => new TagEntry( t ) ).ToList();
 
-			Validate( nameof( Summary ) ).Check( () => !string.IsNullOrWhiteSpace( Summary ) ).Message( "Entry needs a summary" );
+			Validate( nameof( Summary ) ).Check( () => !string.IsNullOrWhiteSpace( Summary ) ).Message( Strings.EntryNeedsSummary);
 			Reset();
 		}
 

@@ -2,6 +2,7 @@
 using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
+using GSD.Resources;
 using GSD.ViewServices;
 using System;
 using System.Collections.Generic;
@@ -34,8 +35,8 @@ namespace GSD.ViewModels
 			AvailableColors = new List<Color>( GetAllColors().OrderBy( CalculateHue ) );
 			TagNames = new List<string>();
 
-			Validate( nameof( NewTagName ) ).Check( () => !string.IsNullOrWhiteSpace( NewTagName ) ).Message( "Tag must have a name" );
-			Validate( nameof( NewTagName ) ).Check( () => !TagNames.Contains( NewTagName ) ).Message( "This name is already used" );
+			Validate( nameof( NewTagName ) ).Check( () => !string.IsNullOrWhiteSpace( NewTagName ) ).Message( Strings.TagMustHaveName );
+			Validate( nameof( NewTagName ) ).Check( () => !TagNames.Contains( NewTagName ) ).Message( Strings.ThisNameIsAlreadyUsed );
 			Reset();
 		}
 
@@ -96,8 +97,8 @@ namespace GSD.ViewModels
 
 		private async void ExecuteDeleteTagCommand( TagViewModel arg )
 		{
-			ConfirmationServiceArgs args = new ConfirmationServiceArgs( "Confirm",
-				$"Do you really want to delete the tag '{arg.Model.Name}'?" );
+			ConfirmationServiceArgs args = new ConfirmationServiceArgs( Strings.Confirm,
+				string.Format( Strings.DoYouReallyWantToDeleteTagXXX, arg.Model.Name ) );
 
 			if( !await ViewServices.Execute<IConfirmationService, bool>( args ) )
 			{
@@ -337,14 +338,11 @@ namespace GSD.ViewModels
 		private RelayCommand _CloseFlyoutCommand;
 		private RelayCommand<TagViewModel> _DeleteTagCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private Color _NewTagColor;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private Color _NewTagColor;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private RelayCommand _NewTagCommand;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private RelayCommand _NewTagCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private string _NewTagName;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private string _NewTagName;
 
 		private List<string> TagNames;
 	}

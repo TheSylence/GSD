@@ -240,4 +240,28 @@
   <data name="PleaseWait" xml:space="preserve">
     <value>Please wait...</value>
   </data>
+  <data name="ProjectMustHaveName" xml:space="preserve">
+    <value>Project must have a name</value>
+  </data>
+  <data name="ThisNameIsAlreadyUsed" xml:space="preserve">
+    <value>This name is already used</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="DoYouReallyWantToDeleteProjectXXX" xml:space="preserve">
+    <value>Do you really want to delete the project '{0}'?</value>
+  </data>
+  <data name="TagMustHaveName" xml:space="preserve">
+    <value>Tag must have a name</value>
+  </data>
+  <data name="DoYouReallyWantToDeleteTagXXX" xml:space="preserve">
+    <value>Do you really want to delete the tag '{0}'?</value>
+  </data>
+  <data name="DoYouReallyWantToDeleteThisEntry" xml:space="preserve">
+    <value>Do you really want to delete this entry?</value>
+  </data>
+  <data name="EntryNeedsSummary" xml:space="preserve">
+    <value>Entry needs summary</value>
+  </data>
 </root>
