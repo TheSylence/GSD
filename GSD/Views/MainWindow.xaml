@@ -617,13 +617,14 @@
                     <TextBlock Text="{Binding ProjectList.CurrentProject.Model.Name}" Margin="0,0,10,0" />
                 </StatusBarItem>
                 <StatusBarItem Grid.Column="2">
-                    <TextBlock Text="{Binding Searcher.Matches.Count, StringFormat=Search matches: {0}}" Visibility="{Binding Searcher.IsSearching, Converter={StaticResource BoolToVisibleConv}}" />
+                    <TextBlock views:Localization.FormatSegment1="{Binding Searcher.Matches.Count}" views:Localization.StringFormat="{lex:Loc GSD:Strings:SearchMatches}"
+							   Visibility="{Binding Searcher.IsSearching, Converter={StaticResource BoolToVisibleConv}}" />
                 </StatusBarItem>
                 <StatusBarItem Grid.Column="3">
-                    <TextBlock Text="{Binding ProjectList.CurrentProject.OpenTodoCount, StringFormat=Open: {0}}" />
+                    <TextBlock views:Localization.StringFormat="{lex:Loc GSD:Strings:OpenEntries}" views:Localization.FormatSegment1="{Binding ProjectList.CurrentProject.OpenTodoCount}" />
                 </StatusBarItem>
                 <StatusBarItem Grid.Column="4">
-                    <TextBlock Text="{Binding ProjectList.CurrentProject.Todos.Count, StringFormat=Total: {0}}" />
+                    <TextBlock views:Localization.StringFormat="{lex:Loc GSD:Strings:TotalEntries}" views:Localization.FormatSegment1="{Binding ProjectList.CurrentProject.Todos.Count}"/>
                 </StatusBarItem>
                 <StatusBarItem Grid.Column="5">
                     <TextBlock Text="{Binding ProjectList.CurrentProject.Progress, StringFormat={}{0}%}" />

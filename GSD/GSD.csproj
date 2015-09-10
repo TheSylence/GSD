@@ -177,6 +177,7 @@
     <Compile Include="ViewServices\IViewServiceRepository.cs" />
     <Compile Include="ViewServices\ViewServiceRepository.cs" />
     <Compile Include="Views\GenericBindingProxy.cs" />
+    <Compile Include="Views\Localization.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -211,8 +212,8 @@
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.de.resx">
-		<DependentUpon>Strings.resx</DependentUpon>
-	</EmbeddedResource>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <SplashScreen Include="Resources\Splash.png" />
