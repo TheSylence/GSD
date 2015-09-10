@@ -24,9 +24,10 @@ namespace GSD.ViewModels
 			foreach( var todo in Todos )
 			{
 				todo.DeleteRequested += Todo_DeleteRequested;
+				todo.SaveRequested += Todo_SaveRequested;
 			}
 		}
-		
+
 		private void Todo_DeleteRequested( object sender, EventArgs e )
 		{
 			var todo = sender as TodoViewModel;
@@ -34,6 +35,14 @@ namespace GSD.ViewModels
 
 			TodoRepo.Delete( todo.Model );
 			Todos.Remove( todo );
+		}
+
+		private void Todo_SaveRequested( object sender, EventArgs e )
+		{
+			TodoViewModel todo = sender as TodoViewModel;
+			Debug.Assert( todo != null );
+
+			TodoRepo.Update( todo.Model );
 		}
 
 		private void Todos_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
@@ -46,6 +55,7 @@ namespace GSD.ViewModels
 				foreach( TodoViewModel newItem in e.NewItems )
 				{
 					newItem.DeleteRequested += Todo_DeleteRequested;
+					newItem.SaveRequested += Todo_SaveRequested;
 				}
 			}
 		}

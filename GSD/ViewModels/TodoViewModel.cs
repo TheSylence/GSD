@@ -1,13 +1,13 @@
-﻿using GalaSoft.MvvmLight.CommandWpf;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
 using GSD.Resources;
 using GSD.ViewServices;
-using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
 
 namespace GSD.ViewModels
 {
@@ -20,6 +20,7 @@ namespace GSD.ViewModels
 
 			TodoRepo = new TodoRepository( App.Session );
 			Model = todo;
+			_Done = Model.Done;
 
 			AllTags = new ObservableCollection<TodoTagViewModel>( Model.Project.Tags.Select( t => new TodoTagViewModel( Model, t )
 			{
@@ -36,6 +37,8 @@ namespace GSD.ViewModels
 		}
 
 		public event EventHandler DeleteRequested;
+
+		public event EventHandler SaveRequested;
 
 		public void RaiseUpdates()
 		{
@@ -66,6 +69,12 @@ namespace GSD.ViewModels
 			Tags.Remove( tag );
 		}
 
+		private void SaveDone( bool done )
+		{
+			Model.Done = done;
+			SaveRequested?.Invoke( this, EventArgs.Empty );
+		}
+
 		private void Tag_Deselected( object sender, EventArgs e )
 		{
 			var tag = sender as TodoTagViewModel;
@@ -90,12 +99,37 @@ namespace GSD.ViewModels
 
 		public RelayCommand DeleteEntryCommand => _DeleteEntryCommand ?? ( _DeleteEntryCommand = new RelayCommand( ExecuteDeleteEntryCommand ) );
 
+		public bool Done
+		{
+			[DebuggerStepThrough]
+			get
+			{
+				return _Done;
+			}
+			set
+			{
+				if( _Done == value )
+				{
+					return;
+				}
+
+				_Done = value;
+				RaisePropertyChanged();
+
+				SaveDone( _Done );
+			}
+		}
+
 		public Todo Model { get; }
 
 		public ObservableCollection<TodoTagViewModel> Tags { get; }
 
 		private readonly ITodoRepository TodoRepo;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private RelayCommand _DeleteEntryCommand;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private RelayCommand _DeleteEntryCommand;
+
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private bool _Done;
 	}
 }
