@@ -1,5 +1,7 @@
 ﻿using GSD.Models;
+using GSD.Models.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace GSD.Tests.Models.Repositories
 {
@@ -34,6 +36,19 @@ namespace GSD.Tests.Models.Repositories
 
 				tx.Commit();
 			}
+		}
+
+		[TestMethod, TestCategory( "Models.Repositories" )]
+		public void GetAllNamesReturnsCorrectNames()
+		{
+			// Arrange
+			IProjectRepository repo = new ProjectRepository( Session );
+
+			// Act
+			string[] names = repo.GetAllNames().ToArray();
+
+			// Assert
+			CollectionAssert.AreEquivalent( TestData.Select( t => t.Name ).ToArray(), names );
 		}
 
 		private readonly Project[] TestData =

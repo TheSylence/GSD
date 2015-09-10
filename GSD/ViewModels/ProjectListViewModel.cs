@@ -49,7 +49,7 @@ namespace GSD.ViewModels
 			MessengerInstance.Unregister( this );
 			MessengerInstance.Register<CurrentProjectChangedMessage>( this, OnCurrentProjectChanged );
 
-			ProjectNames = ProjectRepo.GetAll().Select( p => p.Name ).ToList();
+			ProjectNames = ProjectRepo.GetAllNames().ToList();
 
 			ClearValidationErrors();
 		}
