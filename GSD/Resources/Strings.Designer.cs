@@ -214,7 +214,7 @@ namespace GSD.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Details of the entry.
+        ///   Looks up a localized string similar to Details of the entry (Markdown is supported).
         /// </summary>
         internal static string EntryDetails {
             get {
@@ -264,6 +264,15 @@ namespace GSD.Resources {
         internal static string ManageTags {
             get {
                 return ResourceManager.GetString("ManageTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Markdown supported).
+        /// </summary>
+        internal static string MarkdownSupported {
+            get {
+                return ResourceManager.GetString("MarkdownSupported", resourceCulture);
             }
         }
         

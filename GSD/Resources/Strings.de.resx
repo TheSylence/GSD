@@ -178,7 +178,7 @@
     <value>Zusammenfassung des Eintrags</value>
   </data>
   <data name="EntryDetails" xml:space="preserve">
-    <value>Details des Eintrags</value>
+    <value>Details des Eintrags (Markdown wird unterstützt)</value>
   </data>
   <data name="EditEntry" xml:space="preserve">
     <value>Eintrag bearbeiten</value>
@@ -263,5 +263,8 @@
   </data>
   <data name="EntryNeedsSummary" xml:space="preserve">
     <value>Eintrag braucht eine Zusammenfassung</value>
+  </data>
+  <data name="MarkdownSupported" xml:space="preserve">
+    <value>(Markdown wird unterstützt)</value>
   </data>
 </root>
