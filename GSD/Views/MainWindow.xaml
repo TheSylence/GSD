@@ -206,6 +206,11 @@
                                     <TextBlock Text="{Binding Name}" Margin="5,0" />
                                 </DockPanel>
                             </DataTemplate>
+                            <Style TargetType="Separator">
+								<Setter Property="Margin" Value="0,10"/>
+								<Setter Property="Foreground" Value="{DynamicResource FlyoutBackgroundBrush}"/>
+                                <Setter Property="Background" Value="{DynamicResource FlyoutBackgroundBrush}"/>
+                            </Style>
                         </StackPanel.Resources>
 
                         <TextBlock Text="Theme" FontSize="{DynamicResource NormalFontSize}" />
@@ -216,6 +221,9 @@
                         <ComboBox ItemsSource="{Binding AvailableAccents}"
 						          SelectedItem="{Binding SelectedAccent, Mode=TwoWay}"
 						          ItemTemplate="{StaticResource ColorDataTemplate}" />
+						
+						<Separator />
+                        <CheckBox Content="Expand entries" IsChecked="{Binding ExpandEntries, Mode=TwoWay}" />
                     </StackPanel>
                 </DockPanel>
             </controls:Flyout>
@@ -399,7 +407,7 @@
                         </ItemsControl.Style>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="viewModels:TodoViewModel">
-                                <Expander>
+                                <Expander IsExpanded="{Binding Data.ExpandEntries,Source={StaticResource MainProxy}, Mode=OneTime}">
                                     <Expander.Header>
                                         <DockPanel>
                                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">

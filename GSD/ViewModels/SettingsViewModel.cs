@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using GalaSoft.MvvmLight.CommandWpf;
+using GSD.Models.Repositories;
+using MahApps.Metro;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using GalaSoft.MvvmLight.CommandWpf;
-using GSD.Models.Repositories;
-using MahApps.Metro;
 
 namespace GSD.ViewModels
 {
@@ -34,6 +34,8 @@ namespace GSD.ViewModels
 
 			SelectedAccent = AvailableAccents.FirstOrDefault( a => a.Name == accent );
 			SelectedTheme = AvailableThemes.FirstOrDefault( t => t.Name == theme );
+
+			ExpandEntries = Settings.GetById( SettingKeys.ExpandEntries ).Get<bool>();
 		}
 
 		private void ExecuteResetToDefaultsCommand()
@@ -48,6 +50,7 @@ namespace GSD.ViewModels
 		{
 			Settings.Set( SettingKeys.Accent, SelectedAccent.Name );
 			Settings.Set( SettingKeys.Theme, SelectedTheme.Name );
+			Settings.Set( SettingKeys.ExpandEntries, ExpandEntries.ToString() );
 
 			var accent = ThemeManager.Accents.FirstOrDefault( a => a.Name == SelectedAccent.Name );
 			var theme = ThemeManager.AppThemes.FirstOrDefault( t => t.Name == SelectedTheme.Name );
@@ -58,6 +61,25 @@ namespace GSD.ViewModels
 		public List<ColorItem> AvailableAccents { get; }
 
 		public List<ColorItem> AvailableThemes { get; }
+
+		public bool ExpandEntries
+		{
+			[DebuggerStepThrough]
+			get
+			{
+				return _ExpandEntries;
+			}
+			set
+			{
+				if( _ExpandEntries == value )
+				{
+					return;
+				}
+
+				_ExpandEntries = value;
+				RaisePropertyChanged();
+			}
+		}
 
 		public RelayCommand ResetToDefaultsCommand => _ResetToDefaultsCommand ?? ( _ResetToDefaultsCommand = new RelayCommand( ExecuteResetToDefaultsCommand ) );
 
@@ -100,6 +122,9 @@ namespace GSD.ViewModels
 				RaisePropertyChanged();
 			}
 		}
+
+		[System.Diagnostics.DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private bool _ExpandEntries;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private RelayCommand _ResetToDefaultsCommand;

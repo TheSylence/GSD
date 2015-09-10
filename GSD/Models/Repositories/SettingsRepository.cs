@@ -18,13 +18,15 @@ namespace GSD.Models.Repositories
 				{Accent, "Blue"},
 				{Theme, "BaseLight"},
 				{LastProject, "-1"},
-				{DatabasePath, ""}
+				{DatabasePath, ""},
+				{ExpandEntries, "False"}
 			};
 		}
 
 		public static readonly IReadOnlyDictionary<string, string> DefaultValues;
 		internal const string Accent = "style.accent";
 		internal const string DatabasePath = "io.dbpath";
+		internal const string ExpandEntries = "state.expand";
 		internal const string LastProject = "state.project";
 		internal const string Theme = "style.theme";
 	}
@@ -40,7 +42,7 @@ namespace GSD.Models.Repositories
 				Entries = new Dictionary<string, string>();
 				foreach( var line in File.ReadAllLines( FileName ) )
 				{
-					var parts = line.Split( new[] { '=' }, 2 );
+					var parts = line.Split( new[] {'='}, 2 );
 
 					Entries.Add( parts[0], parts[1] );
 				}
@@ -76,7 +78,7 @@ namespace GSD.Models.Repositories
 
 		public IEnumerable<Config> GetAll()
 		{
-			return Entries.Select( kvp => new Config { Id = kvp.Key, Value = kvp.Value } );
+			return Entries.Select( kvp => new Config {Id = kvp.Key, Value = kvp.Value} );
 		}
 
 		public Config GetById( object id )
@@ -86,7 +88,7 @@ namespace GSD.Models.Repositories
 			string value;
 			if( Entries.TryGetValue( key, out value ) )
 			{
-				return new Config { Id = key, Value = value };
+				return new Config {Id = key, Value = value};
 			}
 
 			return null;
