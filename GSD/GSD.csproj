@@ -116,6 +116,7 @@
     <Compile Include="Behaviors\DataContextDisposer.cs" />
     <Compile Include="Behaviors\EnterCommand.cs" />
     <Compile Include="Behaviors\FlyoutOpener.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Converters\BackgroundColor.cs" />
     <Compile Include="Converters\ColorToBrush.cs" />
     <Compile Include="Converters\DebugBreak.cs" />
@@ -129,7 +130,6 @@
     <Compile Include="Messages\TagRemovedMessage.cs" />
     <Compile Include="Models\Config.cs" />
     <Compile Include="Models\Entity.cs" />
-    <Compile Include="Models\Mappings\ConfigMap.cs" />
     <Compile Include="Models\Mappings\ProjectMap.cs" />
     <Compile Include="Models\Mappings\TagMap.cs" />
     <Compile Include="Models\Mappings\TodoMap.cs" />

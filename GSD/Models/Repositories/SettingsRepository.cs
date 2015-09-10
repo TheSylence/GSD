@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using NHibernate;
+using System.IO;
+using System.Linq;
 
 namespace GSD.Models.Repositories
 {
@@ -16,20 +17,68 @@ namespace GSD.Models.Repositories
 			{
 				{Accent, "Blue"},
 				{Theme, "BaseLight"},
-				{LastProject, "-1"}
+				{LastProject, "-1"},
+				{DatabasePath, ""}
 			};
 		}
 
 		public static readonly IReadOnlyDictionary<string, string> DefaultValues;
 		internal const string Accent = "style.accent";
+		internal const string DatabasePath = "io.dbpath";
 		internal const string LastProject = "state.project";
 		internal const string Theme = "style.theme";
 	}
 
-	internal class SettingsRepository : Repository<Config>, ISettingsRepository
+	internal class SettingsRepository : ISettingsRepository
 	{
-		public SettingsRepository( ISession session ) : base( session )
+		public SettingsRepository( string fileName = null )
 		{
+			FileName = fileName ?? Constants.SettingsFileName;
+
+			if( File.Exists( FileName ) )
+			{
+				Entries = new Dictionary<string, string>();
+				foreach( var line in File.ReadAllLines( FileName ) )
+				{
+					var parts = line.Split( new[] { '=' }, 2 );
+
+					Entries.Add( parts[0], parts[1] );
+				}
+			}
+			else
+			{
+				Entries = SettingKeys.DefaultValues.ToDictionary( kvp => kvp.Key, kvp => kvp.Value );
+			}
+		}
+
+		public void Add( Config entity )
+		{
+			Entries.Add( entity.Id, entity.Value );
+			Save();
+		}
+
+		public void Delete( Config entity )
+		{
+			Entries.Remove( entity.Id );
+			Save();
+		}
+
+		public IEnumerable<Config> GetAll()
+		{
+			return Entries.Select( kvp => new Config { Id = kvp.Key, Value = kvp.Value } );
+		}
+
+		public Config GetById( object id )
+		{
+			string key = id.ToString();
+
+			string value;
+			if( Entries.TryGetValue( key, out value ) )
+			{
+				return new Config { Id = key, Value = value };
+			}
+
+			return null;
 		}
 
 		public void Set( string key, string value )
@@ -38,5 +87,19 @@ namespace GSD.Models.Repositories
 			cfg.Value = value ?? SettingKeys.DefaultValues[key];
 			Update( cfg );
 		}
+
+		public void Update( Config entity )
+		{
+			Entries[entity.Id] = entity.Value;
+			Save();
+		}
+
+		private void Save()
+		{
+			File.WriteAllLines( FileName, Entries.Select( kvp => $"{kvp.Key}={kvp.Value}" ) );
+		}
+
+		private readonly Dictionary<string, string> Entries;
+		private readonly string FileName;
 	}
 }

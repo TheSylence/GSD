@@ -13,7 +13,7 @@ namespace GSD.ViewModels
 		{
 			ViewServices = viewServices ?? App.ViewServices;
 			Session = App.Session;
-			Settings = settingsRepo ?? new SettingsRepository( Session );
+			Settings = settingsRepo ?? new SettingsRepository();
 		}
 
 		/// <summary>

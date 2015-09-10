@@ -38,13 +38,13 @@ namespace GSD
 
 		private static void ConnectToDatabase()
 		{
-			string appDir = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ), "btbsoft", "GSD" );
-			if( !Directory.Exists( appDir ) )
+			var repo = new SettingsRepository();
+			string fileName = repo.GetById( SettingKeys.DatabasePath )?.Value;
+			if( string.IsNullOrWhiteSpace( fileName ) )
 			{
-				Directory.CreateDirectory( appDir );
+				fileName = Constants.DefaultDatabasePath;
 			}
 
-			string fileName = Path.Combine( appDir, "data.db3" );
 			var dbConfig = new SQLiteConfiguration().UsingFile( fileName )
 
 #if !DEBUG
@@ -70,7 +70,7 @@ namespace GSD
 
 		private void SetupDatabase()
 		{
-			var repo = new SettingsRepository( Session );
+			var repo = new SettingsRepository();
 
 			foreach( var kvp in SettingKeys.DefaultValues )
 			{
@@ -87,7 +87,7 @@ namespace GSD
 
 		private void SetupStyle()
 		{
-			var repo = new SettingsRepository( Session );
+			var repo = new SettingsRepository();
 
 			var themeName = repo.GetById( SettingKeys.Theme ).Value;
 			var accentName = repo.GetById( SettingKeys.Accent ).Value;
