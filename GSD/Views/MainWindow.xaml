@@ -270,19 +270,9 @@
 															</ItemsControl.Style>
 															<ItemsControl.ItemTemplate>
 																<DataTemplate DataType="viewModels:TodoTagViewModel">
-																	<CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}">
-																		<CheckBox.Content>
-																			<Border BorderBrush="{DynamicResource IdealForegroundColorBrush}"
-																			        BorderThickness="1" Padding="4,2" CornerRadius="5"
-																			        Background="{Binding Model.Color, Converter={StaticResource BackgroundColorConv}}"
-																			        VerticalAlignment="Center">
-																				<TextBlock Text="{Binding Model.Name}"
-																				           FontSize="{DynamicResource NormalFontSize}"
-																				           Foreground="{Binding Model.Color, Converter={StaticResource ForegroundColorConv}}"
-																				           VerticalAlignment="Center" />
-																			</Border>
-																		</CheckBox.Content>
-																	</CheckBox>
+																	<CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
+																	          Content="{Binding}"
+																	          ContentTemplate="{StaticResource TodoTagTemplate}" />
 																</DataTemplate>
 															</ItemsControl.ItemTemplate>
 														</ItemsControl>
@@ -327,24 +317,13 @@
 												          FontSize="{DynamicResource NormalFontSize}" />
 
 												<ItemsControl ItemsSource="{Binding Tags}"
+												              ItemTemplate="{StaticResource TodoTagTemplate}"
 												              Margin="5,0" VerticalAlignment="Center">
 													<ItemsControl.ItemsPanel>
 														<ItemsPanelTemplate>
 															<StackPanel Orientation="Horizontal" />
 														</ItemsPanelTemplate>
 													</ItemsControl.ItemsPanel>
-													<ItemsControl.ItemTemplate>
-														<DataTemplate DataType="viewModels:TodoTagViewModel">
-															<Border BorderBrush="{DynamicResource IdealForegroundColorBrush}"
-															        VerticalAlignment="Center" BorderThickness="1" Margin="5,0" Padding="4,2" CornerRadius="5"
-															        Background="{Binding Model.Color, Converter={StaticResource BackgroundColorConv}}">
-																<TextBlock Text="{Binding Model.Name}"
-																           FontSize="{DynamicResource NormalFontSize}"
-																           Foreground="{Binding Model.Color, Converter={StaticResource ForegroundColorConv}}"
-																           VerticalAlignment="Center" />
-															</Border>
-														</DataTemplate>
-													</ItemsControl.ItemTemplate>
 												</ItemsControl>
 											</StackPanel>
 										</DockPanel>
