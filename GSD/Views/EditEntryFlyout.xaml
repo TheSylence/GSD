@@ -1,0 +1,39 @@
+﻿<controls:Flyout x:Class="GSD.Views.EditEntryFlyout" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:GSD.Views" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:behaviors="clr-namespace:GSD.Behaviors" xmlns:viewModels="clr-namespace:GSD.ViewModels" xmlns:lex="http://wpflocalizeextension.codeplex.com" xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls" mc:Ignorable="d" Position="Right"
+                 Header="{lex:Loc GSD:Strings:EditEntry}"
+                 Theme="Adapt" IsPinned="False"
+                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}"
+                 d:DesignHeight="300" d:DesignWidth="300">
+	<i:Interaction.Behaviors>
+		<behaviors:FlyoutOpener Name="EditEntryFlyout" />
+	</i:Interaction.Behaviors>
+	<DockPanel d:DataContext="{d:DesignInstance viewModels:EditEntryViewModel}">
+		<DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
+			<Button DockPanel.Dock="Right"
+			        Content="{lex:Loc GSD:Strings:Save}"
+			        Margin="5"
+			        Command="{Binding SaveCommand}" />
+		</DockPanel>
+
+		<Grid Margin="5">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<TextBlock Text="{lex:Loc GSD:Strings:Summary}" FontSize="{DynamicResource NormalFontSize}" />
+			<TextBox Text="{Binding Summary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+			         Grid.Row="1"
+			         controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:EntrySummary}" />
+			<TextBlock Text="{lex:Loc GSD:Strings:Details}"
+			           Grid.Row="2"
+			           FontSize="{DynamicResource NormalFontSize}" />
+			<TextBox Text="{Binding Details, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+			         AcceptsReturn="True" Grid.Row="3"
+			         controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:SummaryDetails}" />
+		</Grid>
+	</DockPanel>
+</controls:Flyout>

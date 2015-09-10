@@ -1,0 +1,53 @@
+﻿<controls:Flyout x:Class="GSD.Views.SettingsFlyout" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:GSD.Views" xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls" xmlns:lex="http://wpflocalizeextension.codeplex.com" xmlns:viewModels="clr-namespace:GSD.ViewModels" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:behaviors="clr-namespace:GSD.Behaviors" mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300" Position="Left"
+                 Header="{lex:Loc GSD:Strings:Settings}"
+                 Theme="Adapt" IsPinned="False"
+                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
+	<controls:Flyout.DataContext>
+		<viewModels:SettingsViewModel />
+	</controls:Flyout.DataContext>
+	<i:Interaction.Behaviors>
+		<behaviors:FlyoutOpener Name="SettingsFlyout" />
+	</i:Interaction.Behaviors>
+	<DockPanel>
+		<DockPanel LastChildFill="False" DockPanel.Dock="Bottom" Margin="5">
+			<Button Content="{lex:Loc GSD:Strings:Save}"
+			        Command="{Binding SaveCommand}"
+			        Style="{DynamicResource SquareButtonStyle}"
+			        Margin="5,0" DockPanel.Dock="Right" />
+			<Button Content="{lex:Loc GSD:Strings:ResetToDefaults}"
+			        Command="{Binding ResetToDefaultsCommand}"
+			        Style="{DynamicResource SquareButtonStyle}"
+			        Margin="5,0" DockPanel.Dock="Left" />
+		</DockPanel>
+
+		<StackPanel Orientation="Vertical" Margin="5">
+			<StackPanel.Resources>
+				<DataTemplate x:Key="ColorDataTemplate" DataType="{x:Type viewModels:ColorItem}">
+					<DockPanel>
+						<Ellipse Fill="{Binding ColorBrush}"
+						         Stroke="{Binding BorderBrush}"
+						         Width="18" Height="18" />
+						<TextBlock Text="{Binding Name}" Margin="5,0" />
+					</DockPanel>
+				</DataTemplate>
+				<Style TargetType="Separator">
+					<Setter Property="Background" Value="{DynamicResource FlyoutBackgroundBrush}" />
+					<Setter Property="Foreground" Value="{DynamicResource FlyoutBackgroundBrush}" />
+					<Setter Property="Margin" Value="0,10" />
+				</Style>
+			</StackPanel.Resources>
+
+			<TextBlock Text="{lex:Loc GSD:Strings:Theme}" FontSize="{DynamicResource NormalFontSize}" />
+			<ComboBox ItemsSource="{Binding AvailableThemes}"
+			          SelectedItem="{Binding SelectedTheme, Mode=TwoWay}"
+			          ItemTemplate="{StaticResource ColorDataTemplate}" />
+			<TextBlock Text="{lex:Loc GSD:Strings:Accent}" FontSize="{DynamicResource NormalFontSize}" />
+			<ComboBox ItemsSource="{Binding AvailableAccents}"
+			          SelectedItem="{Binding SelectedAccent, Mode=TwoWay}"
+			          ItemTemplate="{StaticResource ColorDataTemplate}" />
+
+			<Separator />
+			<CheckBox Content="{lex:Loc GSD:Strings:ExpandEntries}" IsChecked="{Binding ExpandEntries, Mode=TwoWay}" />
+		</StackPanel>
+	</DockPanel>
+</controls:Flyout>

@@ -1,0 +1,60 @@
+﻿<controls:Flyout x:Class="GSD.Views.ProjectsFlyout" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:GSD.Views" xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls" xmlns:lex="http://wpflocalizeextension.codeplex.com" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:behaviors="clr-namespace:GSD.Behaviors" xmlns:viewModels="clr-namespace:GSD.ViewModels" mc:Ignorable="d" Position="Left" Theme="Adapt"
+                 Header="{lex:Loc GSD:Strings:Projects}"
+                 DataContext="{Binding ProjectList}"
+                 IsPinned="False"
+                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}"
+                 d:DesignHeight="300" d:DesignWidth="300">
+	<i:Interaction.Behaviors>
+		<behaviors:FlyoutOpener Name="ProjectsFlyout" />
+	</i:Interaction.Behaviors>
+	<controls:Flyout.Resources>
+		<local:ProjectListBindingProxy Data="{Binding}" x:Key="ProjectsProxy" />
+	</controls:Flyout.Resources>
+	<DockPanel>
+		<DockPanel DockPanel.Dock="Bottom" Margin="5">
+			<Button DockPanel.Dock="Right"
+			        Content="{lex:Loc GSD:Strings:Create}"
+			        Margin="5,0,0,0"
+			        Command="{Binding NewProjectCommand}"
+			        Style="{DynamicResource SquareButtonStyle}" />
+			<TextBox controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:CreateProject}"
+			         VerticalAlignment="Center"
+			         Text="{Binding NewProjectName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+				<i:Interaction.Behaviors>
+					<behaviors:EnterCommand Command="{Binding NewProjectCommand}" />
+					<behaviors:CancelCommand Command="{Binding CloseFlyoutCommand}" />
+				</i:Interaction.Behaviors>
+			</TextBox>
+		</DockPanel>
+
+		<ItemsControl ItemsSource="{Binding Projects}">
+			<ItemsControl.ItemTemplate>
+				<DataTemplate DataType="viewModels:ProjectViewModel">
+					<DockPanel Margin="0,5,0,0">
+
+						<Button DockPanel.Dock="Left" Width="32" Height="32"
+						        ToolTip="{lex:Loc GSD:Strings:Delete}"
+						        Style="{DynamicResource MetroCircleButtonStyle}"
+						        Command="{Binding Data.DeleteProjectCommand, Source={StaticResource ProjectsProxy}}"
+						        CommandParameter="{Binding}">
+							<Rectangle Width="12" Height="12"
+							           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+								<Rectangle.OpacityMask>
+									<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_delete}" />
+								</Rectangle.OpacityMask>
+							</Rectangle>
+						</Button>
+
+						<RadioButton DockPanel.Dock="Right"
+						             ToolTip="{lex:Loc GSD:Strings:ActiveProject}"
+						             IsChecked="{Binding IsCurrent, Mode=TwoWay}"
+						             GroupName="ProjectSelector" />
+						<TextBlock Text="{Binding Model.Name}"
+						           FontSize="{DynamicResource NormalFontSize}"
+						           VerticalAlignment="Center" Margin="5,0" />
+					</DockPanel>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+	</DockPanel>
+</controls:Flyout>

@@ -1,0 +1,70 @@
+﻿<controls:Flyout x:Class="GSD.Views.TagsFlyout" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:GSD.Views" xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:behaviors="clr-namespace:GSD.Behaviors" xmlns:lex="http://wpflocalizeextension.codeplex.com" xmlns:viewModels="clr-namespace:GSD.ViewModels" mc:Ignorable="d" Position="Left"
+                 Header="{lex:Loc GSD:Strings:Tags}"
+                 Theme="Adapt"
+                 DataContext="{Binding TagList}"
+                 IsPinned="False"
+                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}"
+                 d:DesignHeight="300" d:DesignWidth="300">
+	<i:Interaction.Behaviors>
+		<behaviors:FlyoutOpener Name="TagsFlyout" />
+	</i:Interaction.Behaviors>
+	<controls:Flyout.Resources>
+		<local:TagListBindingProxy Data="{Binding}" x:Key="TagssProxy" />
+	</controls:Flyout.Resources>
+	<DockPanel>
+		<DockPanel DockPanel.Dock="Bottom" Margin="5">
+			<Button DockPanel.Dock="Right"
+			        Content="{lex:Loc GSD:Strings:Create}"
+			        Margin="5,0,0,0"
+			        Command="{Binding NewTagCommand}"
+			        Style="{DynamicResource SquareButtonStyle}" />
+			<ComboBox DockPanel.Dock="Right"
+			          ItemsSource="{Binding AvailableColors}"
+			          VerticalAlignment="Center" HorizontalContentAlignment="Stretch"
+			          SelectedItem="{Binding NewTagColor, Mode=TwoWay}">
+				<ComboBox.ItemTemplate>
+					<DataTemplate DataType="Color">
+						<Ellipse Width="16" MinHeight="16"
+						         Fill="{Binding Converter={StaticResource ColorToBrushConv}}" />
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+			<TextBox controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:AddTag}"
+			         VerticalAlignment="Center"
+			         Text="{Binding NewTagName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+				<i:Interaction.Behaviors>
+					<behaviors:CancelCommand Command="{Binding CloseFlyoutCommand}" />
+				</i:Interaction.Behaviors>
+			</TextBox>
+		</DockPanel>
+
+		<ItemsControl ItemsSource="{Binding Tags}">
+			<ItemsControl.ItemTemplate>
+				<DataTemplate DataType="viewModels:TagViewModel">
+					<DockPanel>
+						<Button DockPanel.Dock="Left" Width="32" Height="32"
+						        ToolTip="{lex:Loc GSD:Strings:Delete}"
+						        Style="{DynamicResource MetroCircleButtonStyle}"
+						        Command="{Binding Data.DeleteTagCommand, Source={StaticResource TagssProxy}}"
+						        CommandParameter="{Binding}">
+							<Rectangle Width="12" Height="12"
+							           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+								<Rectangle.OpacityMask>
+									<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_delete}" />
+								</Rectangle.OpacityMask>
+							</Rectangle>
+						</Button>
+
+						<Ellipse DockPanel.Dock="Right" VerticalAlignment="Center" Margin="5,0" Height="24" Width="24"
+						         Stroke="{DynamicResource IdealForegroundColorBrush}"
+						         Fill="{Binding Model.Color, Converter={StaticResource BackgroundColorConv}}" />
+
+						<TextBlock Text="{Binding Model.Name}"
+						           FontSize="{DynamicResource NormalFontSize}"
+						           VerticalAlignment="Center" Margin="5,0" />
+					</DockPanel>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+	</DockPanel>
+</controls:Flyout>

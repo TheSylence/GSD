@@ -1,0 +1,80 @@
+﻿<controls:Flyout x:Class="GSD.Views.AddEntryFlyout" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:GSD.Views" xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:behaviors="clr-namespace:GSD.Behaviors" xmlns:viewModels="clr-namespace:GSD.ViewModels" xmlns:lex="http://wpflocalizeextension.codeplex.com" mc:Ignorable="d" Position="Left"
+                 Header="{lex:Loc GSD:Strings:NewEntry}"
+                 Theme="Adapt" IsPinned="False"
+                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}"
+                 d:DesignHeight="300" d:DesignWidth="300">
+	<i:Interaction.Behaviors>
+		<behaviors:FlyoutOpener Name="AddEntryFlyout" />
+	</i:Interaction.Behaviors>
+	<DockPanel d:DataContext="{d:DesignInstance viewModels:AddEntryViewModel}">
+		<DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
+			<Button DockPanel.Dock="Right"
+			        Content="{lex:Loc GSD:Strings:Add}"
+			        Margin="5"
+			        Command="{Binding AddCommand}" />
+			<CheckBox Content="{lex:Loc GSD:Strings:AddAnother}"
+			          Margin="5"
+			          IsChecked="{Binding StayOpen, Mode=TwoWay}"
+			          DockPanel.Dock="Left" />
+		</DockPanel>
+
+		<Grid Margin="5">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<TextBlock Text="{lex:Loc GSD:Strings:Summary}" FontSize="{DynamicResource NormalFontSize}" />
+			<TextBox Text="{Binding Summary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+			         Grid.Row="1"
+			         controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:EntrySummary}" />
+
+			<TextBlock Text="{lex:Loc GSD:Strings:Details}"
+			           Grid.Row="2"
+			           FontSize="{DynamicResource NormalFontSize}" />
+
+			<TextBox Text="{Binding Details, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+			         AcceptsReturn="True" Grid.Row="3"
+			         controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:EntryDetails}" />
+
+			<TextBlock Text="{lex:Loc GSD:Strings:Tags}"
+			           Grid.Row="4"
+			           FontSize="{DynamicResource NormalFontSize}" />
+			<ItemsControl Grid.Row="5" ItemsSource="{Binding Tags}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate DataType="viewModels:TagEntry">
+						<CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}">
+							<Border BorderBrush="{DynamicResource IdealForegroundColorBrush}"
+							        BorderThickness="1" Margin="5,0" Padding="4,2" CornerRadius="5"
+							        Background="{Binding Tag.Model.Color, Converter={StaticResource BackgroundColorConv}}">
+								<TextBlock Text="{Binding Tag.Model.Name}"
+								           FontSize="{DynamicResource NormalFontSize}"
+								           Foreground="{Binding Tag.Model.Color, Converter={StaticResource ForegroundColorConv}}"
+								           VerticalAlignment="Center" />
+							</Border>
+						</CheckBox>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+				<ItemsControl.Style>
+					<Style TargetType="ItemsControl">
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding Tags.Count}" Value="0">
+								<Setter Property="Template">
+									<Setter.Value>
+										<ControlTemplate>
+											<TextBlock Text="{lex:Loc GSD:Strings:NoTagsDefinedForProject}" FontStyle="Italic" FontSize="{StaticResource NormalFontSize}" />
+										</ControlTemplate>
+									</Setter.Value>
+								</Setter>
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</ItemsControl.Style>
+			</ItemsControl>
+		</Grid>
+	</DockPanel>
+</controls:Flyout>
