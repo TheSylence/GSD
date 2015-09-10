@@ -280,7 +280,7 @@
 												</Popup>
 
 												<Button Width="32" Height="32"
-												        ToolTip="{lex:Loc EditEntry}"
+												        ToolTip="{lex:Loc GSD:Strings:EditEntry}"
 												        Style="{DynamicResource MetroCircleButtonStyle}"
 												        Command="{Binding Data.EditEntryCommand, Source={StaticResource MainProxy}}"
 												        CommandParameter="{Binding}"
@@ -294,7 +294,7 @@
 													</Rectangle>
 												</Button>
 												<Button Width="32" Height="32"
-												        ToolTip="{lex:Loc DeleteEntry}"
+												        ToolTip="{lex:Loc GSD:Strings:DeleteEntry}"
 												        Style="{DynamicResource MetroCircleButtonStyle}"
 												        Command="{Binding DeleteEntryCommand}"
 												        VerticalAlignment="Center"
@@ -309,9 +309,9 @@
 											</StackPanel>
 
 											<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-												<CheckBox ToolTip="{lex:Loc Done}"
+                                                <CheckBox ToolTip="{lex:Loc GSD:Strings:Done}"
 												          Content="{Binding Model.Summary}"
-												          IsChecked="{Binding Model.Done}"
+												          IsChecked="{Binding Done, Mode=TwoWay}"
 												          Foreground="{DynamicResource IdealForegroundColorBrush}"
 												          VerticalAlignment="Center"
 												          FontSize="{DynamicResource NormalFontSize}" />
@@ -338,52 +338,7 @@
 				</ScrollViewer>
 			</DockPanel>
 
-			<StatusBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Padding="5,0">
-				<StatusBar.Style>
-					<Style TargetType="StatusBar" BasedOn="{StaticResource {x:Type StatusBar}}">
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding ProjectList.Projects.Count}" Value="0">
-								<Setter Property="Visibility" Value="Hidden" />
-							</DataTrigger>
-							<DataTrigger Binding="{Binding ProjectList.CurrentProject.Todos.Count}" Value="0">
-								<Setter Property="Visibility" Value="Hidden" />
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</StatusBar.Style>
-				<StatusBar.ItemsPanel>
-					<ItemsPanelTemplate>
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="Auto" />
-							</Grid.ColumnDefinitions>
-						</Grid>
-					</ItemsPanelTemplate>
-				</StatusBar.ItemsPanel>
-
-				<StatusBarItem Grid.Column="0">
-					<TextBlock Text="{Binding ProjectList.CurrentProject.Model.Name}" Margin="0,0,10,0" />
-				</StatusBarItem>
-				<StatusBarItem Grid.Column="2">
-					<TextBlock views:Localization.FormatSegment1="{Binding Searcher.Matches.Count}"
-					           views:Localization.StringFormat="{lex:Loc GSD:Strings:SearchMatches}"
-					           Visibility="{Binding Searcher.IsSearching, Converter={StaticResource BoolToVisibleConv}}" />
-				</StatusBarItem>
-				<StatusBarItem Grid.Column="3">
-					<TextBlock views:Localization.StringFormat="{lex:Loc GSD:Strings:OpenEntries}" views:Localization.FormatSegment1="{Binding ProjectList.CurrentProject.OpenTodoCount}" />
-				</StatusBarItem>
-				<StatusBarItem Grid.Column="4">
-					<TextBlock views:Localization.StringFormat="{lex:Loc GSD:Strings:TotalEntries}" views:Localization.FormatSegment1="{Binding ProjectList.CurrentProject.Todos.Count}" />
-				</StatusBarItem>
-				<StatusBarItem Grid.Column="5">
-					<TextBlock Text="{Binding ProjectList.CurrentProject.Progress, StringFormat={}{0}%}" />
-				</StatusBarItem>
-			</StatusBar>
+			<views:StatusBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Padding="5,0" />
 		</Grid>
 
 		<Grid Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibleConv}}" Background="{StaticResource SemiTransparentWhiteBrush}">
