@@ -1,7 +1,6 @@
-﻿using System.IO;
-using GSD.Models;
-using GSD.Models.Repositories;
+﻿using GSD.Models.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 
 namespace GSD.Tests.Models.Repositories
 {

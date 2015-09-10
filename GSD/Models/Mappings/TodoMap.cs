@@ -2,6 +2,7 @@
 
 namespace GSD.Models.Mappings
 {
+	// ReSharper disable once UnusedMember.Global
 	internal class TodoMap : ClassMap<Todo>
 	{
 		public TodoMap()
@@ -14,8 +15,8 @@ namespace GSD.Models.Mappings
 			Map( x => x.Details ).Length( 10000 );
 			Map( x => x.Done ).Not.Nullable();
 
-			HasManyToMany<Tag>( x => x.Tags ).AsBag().Table( "TodoTags" ).ChildKeyColumn( "Tag" ).ParentKeyColumn( "Todo" );
-			References<Project>( x => x.Project ).Column( nameof( Todo.Project ) );
+			HasManyToMany( x => x.Tags ).AsBag().Table( "TodoTags" ).ChildKeyColumn( "Tag" ).ParentKeyColumn( "Todo" );
+			References( x => x.Project ).Column( nameof( Todo.Project ) );
 		}
 	}
 }

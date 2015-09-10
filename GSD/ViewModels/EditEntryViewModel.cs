@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using GalaSoft.MvvmLight.CommandWpf;
+﻿using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Messages;
 using GSD.Models.Repositories;
+using System.Diagnostics;
 
 namespace GSD.ViewModels
 {
@@ -65,7 +63,7 @@ namespace GSD.ViewModels
 				RaisePropertyChanged();
 			}
 		}
-		
+
 		private readonly TodoViewModel Entry;
 		private readonly ITodoRepository TodoRepo;
 

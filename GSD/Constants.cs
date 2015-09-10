@@ -7,7 +7,9 @@ namespace GSD
 	{
 		public static string DefaultDatabasePath => Path.Combine( DataPath, "data.db3" );
 
-		public static string DataPath
+		public static string SettingsFileName => Path.Combine( DataPath, "settings.cfg" );
+
+		private static string DataPath
 		{
 			get
 			{
@@ -21,7 +23,5 @@ namespace GSD
 				return path;
 			}
 		}
-
-		public static string SettingsFileName => Path.Combine( DataPath, "settings.cfg" );
 	}
 }

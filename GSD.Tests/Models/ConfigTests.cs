@@ -10,10 +10,12 @@ namespace GSD.Tests.Models
 		public void GetReturnsConvertedValue()
 		{
 			// Arrange
-			var cfg = new Config();
+			var cfg = new Config
+			{
+				Value = "True"
+			};
 
 			// Act
-			cfg.Value = "True";
 			bool b = cfg.Get<bool>();
 
 			cfg.Value = "123";

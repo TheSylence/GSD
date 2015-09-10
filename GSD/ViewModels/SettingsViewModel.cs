@@ -123,7 +123,7 @@ namespace GSD.ViewModels
 			}
 		}
 
-		[System.Diagnostics.DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private bool _ExpandEntries;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]

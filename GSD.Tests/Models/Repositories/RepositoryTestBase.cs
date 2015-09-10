@@ -1,6 +1,5 @@
 ﻿using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
@@ -10,7 +9,7 @@ namespace GSD.Tests.Models.Repositories
 {
 	public class RepositoryTestBase
 	{
-		protected static void ClassInitStatic( TestContext context )
+		protected static void ClassInitStatic()
 		{
 			var dbConfig = SQLiteConfiguration.Standard.InMemory().ShowSql();
 

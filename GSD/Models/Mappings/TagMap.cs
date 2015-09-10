@@ -2,6 +2,7 @@ using FluentNHibernate.Mapping;
 
 namespace GSD.Models.Mappings
 {
+	// ReSharper disable once UnusedMember.Global
 	internal class TagMap : ClassMap<Tag>
 	{
 		public TagMap()
@@ -13,8 +14,8 @@ namespace GSD.Models.Mappings
 			Map( x => x.Name ).Not.Nullable().Length( 100 );
 			Map( x => x.Color ).Length( 6 );
 
-			References<Project>( x => x.Project ).Column( nameof( Tag.Project ) );
-			HasManyToMany<Todo>( x => x.Todos ).Table( "TodoTags" ).AsBag().ChildKeyColumn( "Todo" ).ParentKeyColumn( "Tag" );
+			References( x => x.Project ).Column( nameof( Tag.Project ) );
+			HasManyToMany( x => x.Todos ).Table( "TodoTags" ).AsBag().ChildKeyColumn( "Todo" ).ParentKeyColumn( "Tag" );
 		}
 	}
 }

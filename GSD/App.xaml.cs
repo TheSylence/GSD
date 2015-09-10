@@ -8,12 +8,11 @@ using NHibernate.Tool.hbm2ddl;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using WPFLocalizeExtension.Providers;
 
 namespace GSD
 {
 	/// <summary>
-	/// Interaction logic for App.xaml
+	///     Interaction logic for App.xaml
 	/// </summary>
 	public partial class App
 	{

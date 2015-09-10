@@ -12,7 +12,7 @@ namespace GSD.Models
 
 		public virtual string Name { get; set; }
 
-		public virtual ICollection<Tag> Tags { get; set; }
-		public virtual ICollection<Todo> Todos { get; set; }
+		public virtual ICollection<Tag> Tags { get; protected set; }
+		public virtual ICollection<Todo> Todos { get; protected set; }
 	}
 }

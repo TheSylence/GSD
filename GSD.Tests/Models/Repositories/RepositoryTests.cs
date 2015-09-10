@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NHibernate;
-using NHibernate.Cfg;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace GSD.Tests.Models.Repositories
 {
@@ -13,7 +11,7 @@ namespace GSD.Tests.Models.Repositories
 		{
 			MapAction = map => map.FluentMappings.AddFromAssemblyOf<RepositoryTests>();
 
-			ClassInitStatic( context );
+			ClassInitStatic();
 		}
 
 		[TestCleanup]
@@ -42,7 +40,7 @@ namespace GSD.Tests.Models.Repositories
 		public void CanAddEntity()
 		{
 			// Arrange
-			var entity = new TestEntity {Id = 123, PropOne = "One", PropTwo = 2};
+			var entity = new TestEntity { Id = 123, PropOne = "One", PropTwo = 2 };
 			var repo = new TestRepository( Session );
 
 			// Act

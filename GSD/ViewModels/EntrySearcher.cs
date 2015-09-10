@@ -151,7 +151,7 @@ namespace GSD.ViewModels
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private ProjectViewModel _CurrentProject;
 
-		[System.Diagnostics.DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private bool _IsSearching;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]

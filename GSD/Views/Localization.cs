@@ -7,7 +7,7 @@ namespace GSD.Views
 	{
 		public static object GetFormatSegment1( DependencyObject obj )
 		{
-			return (object)obj.GetValue( FormatSegment1Property );
+			return obj.GetValue( FormatSegment1Property );
 		}
 
 		public static string GetStringFormat( DependencyObject obj )

@@ -13,7 +13,7 @@ namespace GSD.Tests.Models.Repositories
 		{
 			MapAction = map => map.FluentMappings.AddFromAssemblyOf<Project>();
 
-			ClassInitStatic( context );
+			ClassInitStatic();
 		}
 
 		[TestCleanup]

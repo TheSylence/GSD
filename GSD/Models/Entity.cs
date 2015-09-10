@@ -16,13 +16,17 @@
 		{
 			Entity other = obj as Entity;
 			if( other == null )
+			{
 				return false;
+			}
 
 			// handle the case of comparing two NEW objects
 			bool otherIsTransient = Equals( other.Id, 0 );
 			bool thisIsTransient = Equals( Id, 0 );
 			if( otherIsTransient && thisIsTransient )
+			{
 				return ReferenceEquals( other, this );
+			}
 
 			return other.Id.Equals( Id );
 		}
@@ -31,7 +35,9 @@
 		{
 			// Once we have a hash code we'll never change it
 			if( OldHashCode.HasValue )
+			{
 				return OldHashCode.Value;
+			}
 
 			bool thisIsTransient = Equals( Id, 0 );
 
@@ -45,7 +51,9 @@
 			return Id.GetHashCode();
 		}
 
+		// ReSharper disable once VirtualMemberNeverOverriden.Global
 		public virtual int Id { get; set; }
+
 		private int? OldHashCode;
 	}
 }
