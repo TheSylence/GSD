@@ -267,4 +267,16 @@
   <data name="MarkdownSupported" xml:space="preserve">
     <value>(Markdown wird unterstützt)</value>
   </data>
+  <data name="Info" xml:space="preserve">
+    <value>Infos</value>
+  </data>
+  <data name="ReportError" xml:space="preserve">
+    <value>Fehler berichten</value>
+  </data>
+  <data name="VersionInfo" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
 </root>

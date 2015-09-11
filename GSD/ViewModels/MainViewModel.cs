@@ -1,9 +1,10 @@
-﻿using GalaSoft.MvvmLight.CommandWpf;
-using GSD.Messages;
-using GSD.Models.Repositories;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using GalaSoft.MvvmLight.CommandWpf;
+using GSD.Messages;
+using GSD.Models.Repositories;
+using GSD.ViewServices;
 
 namespace GSD.ViewModels
 {
@@ -19,7 +20,6 @@ namespace GSD.ViewModels
 				ProjectList = new ProjectListViewModel();
 				TagList = new TagListViewModel( ProjectList );
 				Searcher = new EntrySearcher( ProjectList );
-
 			} ).ContinueWith( t =>
 			{
 				ExpandEntries = Settings.GetById( SettingKeys.ExpandEntries ).Get<bool>();
@@ -59,6 +59,16 @@ namespace GSD.ViewModels
 			MessengerInstance.Send( new FlyoutMessage( FlyoutMessage.EditEntryFlyoutName, vm ) );
 		}
 
+		private void ExecuteErrorReportCommand()
+		{
+			Process.Start( "https://github.com/TheSylence/GSD/issues" );
+		}
+
+		private async void ExecuteInfoCommand()
+		{
+			await ViewServices.Execute<IInfoService>();
+		}
+
 		private void ExecuteOpenProjectManagementCommand()
 		{
 			MessengerInstance.Send( new FlyoutMessage( FlyoutMessage.ProjectFlyoutName ) );
@@ -79,6 +89,8 @@ namespace GSD.ViewModels
 		public ICommand EditEntryCommand
 			=> _EditEntryCommand ?? ( _EditEntryCommand = new RelayCommand<TodoViewModel>( ExecuteEditEntryCommand, CanExecuteEditEntryCommand ) );
 
+		public RelayCommand ErrorReportCommand => _ErrorReportCommand ?? ( _ErrorReportCommand = new RelayCommand( ExecuteErrorReportCommand ) );
+
 		public bool ExpandEntries
 		{
 			[DebuggerStepThrough] get { return _ExpandEntries; }
@@ -93,6 +105,8 @@ namespace GSD.ViewModels
 				RaisePropertyChanged();
 			}
 		}
+
+		public RelayCommand InfoCommand => _InfoCommand ?? ( _InfoCommand = new RelayCommand( ExecuteInfoCommand ) );
 
 		public bool IsLoading
 		{
@@ -118,7 +132,9 @@ namespace GSD.ViewModels
 			=> _OpenTagManagementCommand ?? ( _OpenTagManagementCommand = new RelayCommand( ExecuteOpenTagManagementCommand, CanExecuteOpenTagManagementCommand ) );
 
 		public ProjectListViewModel ProjectList { get; private set; }
+
 		public EntrySearcher Searcher { get; private set; }
+
 		public TagListViewModel TagList { get; private set; }
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
@@ -127,7 +143,13 @@ namespace GSD.ViewModels
 		private RelayCommand<TodoViewModel> _EditEntryCommand;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private RelayCommand _ErrorReportCommand;
+
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private bool _ExpandEntries;
+
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private RelayCommand _InfoCommand;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private bool _IsLoading;

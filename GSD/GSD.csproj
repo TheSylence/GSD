@@ -109,11 +109,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\InfoViewModel.cs" />
+    <Compile Include="ViewModels\IViewController.cs" />
+    <Compile Include="ViewServices\InfoService.cs" />
     <Compile Include="Views\AddEntryFlyout.xaml.cs">
       <DependentUpon>AddEntryFlyout.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditEntryFlyout.xaml.cs">
       <DependentUpon>EditEntryFlyout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InfoDialog.xaml.cs">
+      <DependentUpon>InfoDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProjectsFlyout.xaml.cs">
       <DependentUpon>ProjectsFlyout.xaml</DependentUpon>
@@ -140,6 +146,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditEntryFlyout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InfoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

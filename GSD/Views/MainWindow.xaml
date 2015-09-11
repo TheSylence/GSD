@@ -30,11 +30,19 @@
 
 	<controls:MetroWindow.RightWindowCommands>
 		<controls:WindowCommands>
-			<Button>
+			<Button ToolTip="{lex:Loc GSD:Strings:Info}" Command="{Binding InfoCommand}">
 				<Rectangle Width="20" Height="20"
 				           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
 					<Rectangle.OpacityMask>
 						<VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_information_circle}" />
+					</Rectangle.OpacityMask>
+				</Rectangle>
+			</Button>
+			<Button ToolTip="{lex:Loc GSD:Strings:ReportError}" Command="{Binding ErrorReportCommand}">
+				<Rectangle Width="20" Height="20"
+				           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+					<Rectangle.OpacityMask>
+						<VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_social_github_octocat_solid}" />
 					</Rectangle.OpacityMask>
 				</Rectangle>
 			</Button>
@@ -309,7 +317,7 @@
 											</StackPanel>
 
 											<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                <CheckBox ToolTip="{lex:Loc GSD:Strings:Done}"
+												<CheckBox ToolTip="{lex:Loc GSD:Strings:Done}"
 												          Content="{Binding Model.Summary}"
 												          IsChecked="{Binding Done, Mode=TwoWay}"
 												          Foreground="{DynamicResource IdealForegroundColorBrush}"
@@ -344,7 +352,7 @@
 		<Grid Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibleConv}}" Background="{StaticResource SemiTransparentWhiteBrush}">
 			<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
 				<controls:ProgressRing IsActive="{Binding IsLoading}" IsLarge="True" />
-				<TextBlock Text="{lex:Loc PleaseWait}" />
+				<TextBlock Text="{lex:Loc GSD:Strings:PleaseWait}" />
 			</StackPanel>
 		</Grid>
 	</Grid>

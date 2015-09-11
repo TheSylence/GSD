@@ -1,13 +1,14 @@
-﻿using FluentNHibernate.Cfg;
+﻿using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
+using System.Windows;
+using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using GSD.Models.Repositories;
 using GSD.ViewServices;
 using MahApps.Metro;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
-using System.Linq;
-using System.Reflection;
-using System.Windows;
 
 namespace GSD
 {
@@ -26,6 +27,13 @@ namespace GSD
 		protected override void OnStartup( StartupEventArgs e )
 		{
 			base.OnStartup( e );
+
+#if DEBUG
+			WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.MissingKeyEvent += ( s, args ) =>
+			{
+				Debug.WriteLine( $"Error: Resource key not found: '{args.Key}'" );
+			};
+#endif
 
 			SetupViewServices();
 			ApplySettings();
@@ -61,6 +69,7 @@ namespace GSD
 		{
 			ViewServices = new ViewServiceRepository();
 			ViewServices.Register<IConfirmationService>( new ConfirmationService() );
+			ViewServices.Register<IInfoService>( new InfoService() );
 		}
 
 		private void ApplySettings()

@@ -36,7 +36,7 @@ namespace GSD.Views
 			txt.Text = string.Format( GetStringFormat( d ), GetFormatSegment1( d ) );
 		}
 
-		public static readonly DependencyProperty FormatSegment1Property = DependencyProperty.RegisterAttached( "FormatSegment1", typeof( object ), typeof( Localization ), new PropertyMetadata( null, OnValueChanged ) );
-		public static readonly DependencyProperty StringFormatProperty = DependencyProperty.RegisterAttached( "StringFormat", typeof( string ), typeof( Localization ), new PropertyMetadata( null, OnValueChanged ) );
+		public static readonly DependencyProperty FormatSegment1Property = DependencyProperty.RegisterAttached( "FormatSegment1", typeof( object ), typeof( Localization ), new PropertyMetadata( string.Empty, OnValueChanged ) );
+		public static readonly DependencyProperty StringFormatProperty = DependencyProperty.RegisterAttached( "StringFormat", typeof( string ), typeof( Localization ), new PropertyMetadata( string.Empty, OnValueChanged ) );
 	}
 }
