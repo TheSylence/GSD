@@ -2,7 +2,6 @@
                  Header="{lex:Loc GSD:Strings:Tags}"
                  Theme="Adapt"
                  DataContext="{Binding TagList}"
-                 IsPinned="False"
                  Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}"
                  d:DesignHeight="300" d:DesignWidth="300">
 	<i:Interaction.Behaviors>
