@@ -117,12 +117,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="SingleInstance.cs" />
     <Compile Include="ViewModels\AppThemes.cs" />
     <Compile Include="ViewModels\DatabasePathViewModel.cs" />
     <Compile Include="ViewModels\IDatabaseConnector.cs" />
     <Compile Include="ViewModels\InfoViewModel.cs" />
     <Compile Include="ViewModels\IViewController.cs" />
     <Compile Include="ViewModels\ProgressReport.cs" />
+    <Compile Include="ViewModels\StartupConfigurator.cs" />
     <Compile Include="ViewModels\TaskRunner.cs" />
     <Compile Include="ViewServices\BrowseFileService.cs" />
     <Compile Include="ViewServices\InfoService.cs" />
@@ -297,7 +299,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <SplashScreen Include="Resources\Splash.png" />
+    <Resource Include="Resources\Splash.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\packages\System.Data.SQLite.Core.1.0.98.1\build\net451\x64\SQLite.Interop.dll">

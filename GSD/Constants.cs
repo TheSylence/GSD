@@ -23,5 +23,7 @@ namespace GSD
 				return path;
 			}
 		}
+
+		public const string AutostartArgument = "/autostart";
 	}
 }

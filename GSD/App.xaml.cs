@@ -28,12 +28,38 @@ namespace GSD
 		protected override void OnExit( ExitEventArgs e )
 		{
 			Session.Dispose();
+			Instance.Dispose();
 
 			base.OnExit( e );
 		}
 
+		private SingleInstance Instance;
+
 		protected override void OnStartup( StartupEventArgs e )
 		{
+			Instance = new SingleInstance( this );
+			if( !Instance.IsFirstInstance )
+			{
+				Instance.Shutdown();
+				return;
+			}
+
+			var settingsRepo = new SettingsRepository();
+			bool minimize = false;
+			if( settingsRepo.GetById( SettingKeys.StartMinimized ).Get<bool>() )
+			{
+				if( e.Args.Any( x => x.Equals( Constants.AutostartArgument, System.StringComparison.OrdinalIgnoreCase ) ) )
+				{
+					minimize = true;
+				}
+			}
+
+			if( !minimize )
+			{
+				SplashScreen splash = new SplashScreen( "Resources\\Splash.png" );
+				splash.Show( true, true );
+			}
+
 			base.OnStartup( e );
 
 #if DEBUG
@@ -46,7 +72,18 @@ namespace GSD
 			DispatcherHelper.Initialize();
 
 			SetupViewServices();
-			ApplySettings();
+
+			ApplySettings( settingsRepo );
+
+			Views.MainWindow window = new Views.MainWindow();
+			if( minimize )
+			{
+				window.WindowState = WindowState.Minimized;
+			}
+			MainWindow = window;
+			window.Show();
+
+			Instance.RegisterWindow( MainWindow );
 		}
 
 		public void ConnectToDatabase()
@@ -85,10 +122,8 @@ namespace GSD
 			ViewServices.Register<IProgressService>( new ProgressService() );
 		}
 
-		private void ApplySettings()
+		private void ApplySettings( ISettingsRepository repo )
 		{
-			var repo = new SettingsRepository();
-
 			var themeName = repo.GetById( SettingKeys.Theme ).Value;
 			var accentName = repo.GetById( SettingKeys.Accent ).Value;
 

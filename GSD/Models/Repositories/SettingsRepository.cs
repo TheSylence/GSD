@@ -20,7 +20,9 @@ namespace GSD.Models.Repositories
 				{LastProject, "-1"},
 				{DatabasePath, Constants.DefaultDatabasePath},
 				{ExpandEntries, "False"},
-				{Language, "en-US"}
+				{Language, "en-US"},
+				{StartMinimized, "False"},
+				{StartWithWindows, "False"}
 			};
 		}
 
@@ -30,6 +32,8 @@ namespace GSD.Models.Repositories
 		internal const string ExpandEntries = "state.expand";
 		internal const string Language = "ui.language";
 		internal const string LastProject = "state.project";
+		internal const string StartMinimized = "ui.startminimized";
+		internal const string StartWithWindows = "app.startwithwindows";
 		internal const string Theme = "style.theme";
 	}
 
@@ -86,10 +90,11 @@ namespace GSD.Models.Repositories
 			string key = id.ToString();
 
 			string value;
-			return Entries.TryGetValue( key, out value ) 
+			return Entries.TryGetValue( key, out value )
 				? new Config
 				{
-					Id = key, Value = value
+					Id = key,
+					Value = value
 				}
 				: null;
 		}

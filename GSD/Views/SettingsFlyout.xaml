@@ -54,8 +54,11 @@
 			          SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}" />
 
 			<Separator />
-			<CheckBox Content="{lex:Loc GSD:Strings:ExpandEntries}" IsChecked="{Binding ExpandEntries, Mode=TwoWay}" />
-			<Separator />
+            <CheckBox Content="{lex:Loc GSD:Strings:ExpandEntries}" IsChecked="{Binding ExpandEntries, Mode=TwoWay}" />
+            <Separator />
+            <CheckBox Content="{lex:Loc GSD:Strings:StartWithWindows}" IsChecked="{Binding StartWithWindows, Mode=TwoWay}"/>
+            <CheckBox Content="{lex:Loc GSD:Strings:StartMinimized}" IsEnabled="{Binding StartWithWindows}" IsChecked="{Binding StartMinimized, Mode=TwoWay}" Margin="25,5"/>
+            <Separator />
 			<TextBlock Text="{lex:Loc GSD:Strings:DatabasePath}"
 			           TextWrapping="Wrap"
 			           FontSize="{DynamicResource NormalFontSize}" />
@@ -75,6 +78,6 @@
 				        Grid.Column="1" Margin="5"
 				        Style="{DynamicResource SquareButtonStyle}" />
 			</Grid>
-		</StackPanel>
+        </StackPanel>
 	</DockPanel>
 </controls:Flyout>

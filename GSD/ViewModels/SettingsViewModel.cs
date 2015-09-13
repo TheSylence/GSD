@@ -22,10 +22,12 @@ namespace GSD.ViewModels
 		{
 		}
 
-		public SettingsViewModel( IViewServiceRepository viewServices, ISettingsRepository settingsRepo = null, IAppThemes themes = null )
+		public SettingsViewModel( IViewServiceRepository viewServices, ISettingsRepository settingsRepo = null,
+			IAppThemes themes = null, IStartupConfigurator startup = null )
 			: base( viewServices, settingsRepo )
 		{
 			Themes = themes ?? new AppThemes();
+			Startup = startup ?? new StartupConfigurator();
 
 			AvailableAccents = Themes.Accents.ToList();
 			AvailableThemes = Themes.Themes.ToList();
@@ -46,6 +48,8 @@ namespace GSD.ViewModels
 			SelectedTheme = AvailableThemes.FirstOrDefault( t => t.Name == theme );
 
 			ExpandEntries = Settings.GetById( SettingKeys.ExpandEntries ).Get<bool>();
+			StartMinimized = Settings.GetById( SettingKeys.StartMinimized ).Get<bool>();
+			StartWithWindows = Settings.GetById( SettingKeys.StartWithWindows ).Get<bool>();
 
 			var lang = Settings.GetById( SettingKeys.Language ).Value;
 			ChangeLanguage = false;
@@ -124,8 +128,12 @@ namespace GSD.ViewModels
 			Settings.Set( SettingKeys.Theme, SelectedTheme.Name );
 			Settings.Set( SettingKeys.ExpandEntries, ExpandEntries.ToString() );
 			Settings.Set( SettingKeys.Language, SelectedLanguage.IetfLanguageTag );
+			Settings.Set( SettingKeys.StartWithWindows, StartWithWindows.ToString() );
+			Settings.Set( SettingKeys.StartMinimized, StartMinimized.ToString() );
 
 			Themes.ChangeStyle( SelectedTheme.Name, SelectedAccent.Name );
+
+			Startup.SetStartup( StartWithWindows, Constants.AutostartArgument );
 		}
 
 		public List<ColorItem> AvailableAccents { get; }
@@ -241,6 +249,45 @@ namespace GSD.ViewModels
 			}
 		}
 
+		public bool StartMinimized
+		{
+			[DebuggerStepThrough]
+			get
+			{
+				return _StartMinimized;
+			}
+			set
+			{
+				if( _StartMinimized == value )
+				{
+					return;
+				}
+
+				_StartMinimized = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		public bool StartWithWindows
+		{
+			[DebuggerStepThrough]
+			get
+			{
+				return _StartWithWindows;
+			}
+			set
+			{
+				if( _StartWithWindows == value )
+				{
+					return;
+				}
+
+				_StartWithWindows = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		private readonly IStartupConfigurator Startup;
 		private readonly IAppThemes Themes;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
@@ -269,6 +316,12 @@ namespace GSD.ViewModels
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private ColorItem _SelectedTheme;
+
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private bool _StartMinimized;
+
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private bool _StartWithWindows;
 
 		private bool ChangeLanguage = true;
 	}

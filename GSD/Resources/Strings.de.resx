@@ -315,4 +315,10 @@
   <data name="Tags" xml:space="preserve">
     <value>Tags</value>
   </data>
+  <data name="StartMinimized" xml:space="preserve">
+    <value>Minimiert starten</value>
+  </data>
+  <data name="StartWithWindows" xml:space="preserve">
+    <value>Mit Windows starten</value>
+  </data>
 </root>

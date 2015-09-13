@@ -583,6 +583,24 @@ namespace GSD.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start minimized.
+        /// </summary>
+        internal static string StartMinimized {
+            get {
+                return ResourceManager.GetString("StartMinimized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start with windows.
+        /// </summary>
+        internal static string StartWithWindows {
+            get {
+                return ResourceManager.GetString("StartWithWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Summary.
         /// </summary>
         internal static string Summary {
