@@ -33,7 +33,7 @@ namespace GSD.ViewModels
 			ProjectNames = new List<string>();
 
 			Validate( nameof( NewProjectName ) ).Check( () => !string.IsNullOrWhiteSpace( NewProjectName ) ).Message( Strings.ProjectMustHaveName );
-			Validate( nameof( NewProjectName ) ).Check( () => !ProjectNames.Contains( NewProjectName ) == false ).Message( Strings.ThisNameIsAlreadyUsed );
+			Validate( nameof( NewProjectName ) ).Check( () => !ProjectNames.Contains( NewProjectName ) ).Message( Strings.ThisNameIsAlreadyUsed );
 			Reset();
 		}
 
