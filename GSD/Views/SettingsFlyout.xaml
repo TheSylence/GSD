@@ -1,5 +1,6 @@
 ﻿<controls:Flyout x:Class="GSD.Views.SettingsFlyout" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:GSD.Views" xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls" xmlns:lex="http://wpflocalizeextension.codeplex.com" xmlns:viewModels="clr-namespace:GSD.ViewModels" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:behaviors="clr-namespace:GSD.Behaviors" mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300" Position="Left"
-                 Header="{lex:Loc GSD:Strings:Settings}" Theme="Adapt"
+                 Header="{lex:Loc GSD:Strings:Settings}"
+                 Theme="Adapt"
                  Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}">
 	<controls:Flyout.DataContext>
 		<viewModels:SettingsViewModel />
@@ -10,11 +11,13 @@
 	<DockPanel>
 		<DockPanel LastChildFill="False" DockPanel.Dock="Bottom" Margin="5">
 			<Button Content="{lex:Loc GSD:Strings:Save}"
-			        Command="{Binding SaveCommand}" MinWidth="50"
+			        Command="{Binding SaveCommand}"
+			        MinWidth="50"
 			        Style="{DynamicResource SquareButtonStyle}"
 			        Margin="5,0" DockPanel.Dock="Right" />
 			<Button Content="{lex:Loc GSD:Strings:ResetToDefaults}"
-			        Command="{Binding ResetToDefaultsCommand}" MinWidth="50"
+			        Command="{Binding ResetToDefaultsCommand}"
+			        MinWidth="50"
 			        Style="{DynamicResource SquareButtonStyle}"
 			        Margin="5,0" DockPanel.Dock="Left" />
 		</DockPanel>
@@ -44,13 +47,26 @@
 			<ComboBox ItemsSource="{Binding AvailableAccents}"
 			          SelectedItem="{Binding SelectedAccent, Mode=TwoWay}"
 			          ItemTemplate="{StaticResource ColorDataTemplate}" />
-			
+
 			<TextBlock Text="{lex:Loc GSD:Strings:Language}" FontSize="{DynamicResource NormalFontSize}" />
-			<ComboBox ItemsSource="{Binding AvailableLanguages}" DisplayMemberPath="NativeName"
-					  SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"/>
+			<ComboBox ItemsSource="{Binding AvailableLanguages}"
+			          DisplayMemberPath="NativeName"
+			          SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}" />
 
 			<Separator />
 			<CheckBox Content="{lex:Loc GSD:Strings:ExpandEntries}" IsChecked="{Binding ExpandEntries, Mode=TwoWay}" />
+			<Separator />
+            <TextBlock Text="{lex:Loc GSD:Strings:DatabasePath}" TextWrapping="Wrap" FontSize="{DynamicResource NormalFontSize}" />
+			<TextBlock Text="{Binding DatabasePath}" FontSize="{DynamicResource ContentFontSize}" />
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+
+                <Button Content="{lex:Loc GSD:Strings:OpenFolder}" Command="{Binding OpenDatabaseFolderCommand}" Grid.Column="0" Margin="5" Style="{DynamicResource SquareButtonStyle}" />
+                <Button Content="{lex:Loc GSD:Strings:MoveDatabase}" Command="{Binding MoveDatabaseCommand}" Grid.Column="1" Margin="5" Style="{DynamicResource SquareButtonStyle}" />
+			</Grid>
 		</StackPanel>
 	</DockPanel>
 </controls:Flyout>

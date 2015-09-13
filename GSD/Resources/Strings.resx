@@ -282,4 +282,34 @@
   <data name="Language" xml:space="preserve">
     <value>Language</value>
   </data>
+  <data name="DatabasePath" xml:space="preserve">
+    <value>Database path</value>
+  </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>Open folder</value>
+  </data>
+  <data name="MoveDatabase" xml:space="preserve">
+    <value>Move database</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="MoveDatabaseMessage" xml:space="preserve">
+    <value>After moving the database, the application will be restarted. Continue?</value>
+  </data>
+  <data name="NewDatabasePath" xml:space="preserve">
+    <value>New database path</value>
+  </data>
+  <data name="Move" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="MustEnterValidPath" xml:space="preserve">
+    <value>Path must be valid</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="EnterNewDatabasePath" xml:space="preserve">
+    <value>Enter new database path</value>
+  </data>
 </root>

@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Models.Repositories;
+using GSD.ViewServices;
 using MahApps.Metro;
 using WPFLocalizeExtension.Engine;
 using WPFLocalizeExtension.Providers;
@@ -49,12 +51,35 @@ namespace GSD.ViewModels
 
 			var lang = Settings.GetById( SettingKeys.Language ).Value;
 			ChangeLanguage = false;
-			SelectedLanguage = AvailableLanguages.FirstOrDefault( l => l.IetfLanguageTag.Equals( lang ) );
-			if( SelectedLanguage == null )
-			{
-				SelectedLanguage = AvailableLanguages.FirstOrDefault( l => l.IetfLanguageTag.Equals( "en-US" ) );
-			}
+			SelectedLanguage = AvailableLanguages.FirstOrDefault( l => l.IetfLanguageTag.Equals( lang ) ) ??
+								AvailableLanguages.FirstOrDefault( l => l.IetfLanguageTag.Equals( "en-US" ) );
 			ChangeLanguage = true;
+
+			var path = Settings.GetById( SettingKeys.DatabasePath )?.Value;
+			if( string.IsNullOrWhiteSpace( path ) )
+			{
+				path = Constants.DefaultDatabasePath;
+			}
+
+			DatabasePath = path;
+		}
+
+		private async void ExecuteMoveDatabaseCommand()
+		{
+			var newPath = await ViewServices.Execute<IMoveDatabaseService, string>();
+			if( string.IsNullOrWhiteSpace( newPath ) )
+			{
+				return;
+			}
+		}
+
+		private void ExecuteOpenDatabaseFolderCommand()
+		{
+			var path = Path.GetDirectoryName( DatabasePath );
+			if( path != null )
+			{
+				Process.Start( path );
+			}
 		}
 
 		private void ExecuteResetToDefaultsCommand()
@@ -79,8 +104,29 @@ namespace GSD.ViewModels
 		}
 
 		public List<ColorItem> AvailableAccents { get; }
+
 		public List<CultureInfo> AvailableLanguages { get; }
+
 		public List<ColorItem> AvailableThemes { get; }
+
+		public string DatabasePath
+		{
+			[DebuggerStepThrough]
+			get
+			{
+				return _DatabasePath;
+			}
+			set
+			{
+				if( _DatabasePath == value )
+				{
+					return;
+				}
+
+				_DatabasePath = value;
+				RaisePropertyChanged();
+			}
+		}
 
 		public bool ExpandEntries
 		{
@@ -101,7 +147,12 @@ namespace GSD.ViewModels
 			}
 		}
 
+		public RelayCommand MoveDatabaseCommand => _MoveDatabaseCommand ?? ( _MoveDatabaseCommand = new RelayCommand( ExecuteMoveDatabaseCommand ) );
+
+		public RelayCommand OpenDatabaseFolderCommand => _OpenDatabaseFolderCommand ?? ( _OpenDatabaseFolderCommand = new RelayCommand( ExecuteOpenDatabaseFolderCommand ) );
+
 		public RelayCommand ResetToDefaultsCommand => _ResetToDefaultsCommand ?? ( _ResetToDefaultsCommand = new RelayCommand( ExecuteResetToDefaultsCommand ) );
+
 		public RelayCommand SaveCommand => _SaveCommand ?? ( _SaveCommand = new RelayCommand( ExecuteSaveCommand ) );
 
 		public ColorItem SelectedAccent
@@ -132,7 +183,7 @@ namespace GSD.ViewModels
 			}
 			set
 			{
-				if( _SelectedLanguage == value )
+				if( Equals( _SelectedLanguage, value ) )
 				{
 					return;
 				}
@@ -169,7 +220,16 @@ namespace GSD.ViewModels
 		}
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private string _DatabasePath;
+
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private bool _ExpandEntries;
+
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private RelayCommand _MoveDatabaseCommand;
+
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private RelayCommand _OpenDatabaseFolderCommand;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private RelayCommand _ResetToDefaultsCommand;

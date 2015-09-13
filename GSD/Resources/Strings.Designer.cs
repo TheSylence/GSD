@@ -115,6 +115,15 @@ namespace GSD.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         internal static string Close {
@@ -147,6 +156,15 @@ namespace GSD.Resources {
         internal static string CreateProject {
             get {
                 return ResourceManager.GetString("CreateProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database path.
+        /// </summary>
+        internal static string DatabasePath {
+            get {
+                return ResourceManager.GetString("DatabasePath", resourceCulture);
             }
         }
         
@@ -219,6 +237,15 @@ namespace GSD.Resources {
         internal static string EditEntry {
             get {
                 return ResourceManager.GetString("EditEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter new database path.
+        /// </summary>
+        internal static string EnterNewDatabasePath {
+            get {
+                return ResourceManager.GetString("EnterNewDatabasePath", resourceCulture);
             }
         }
         
@@ -304,11 +331,65 @@ namespace GSD.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move.
+        /// </summary>
+        internal static string Move {
+            get {
+                return ResourceManager.GetString("Move", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move database.
+        /// </summary>
+        internal static string MoveDatabase {
+            get {
+                return ResourceManager.GetString("MoveDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to After moving the database, the application will be restarted. Continue?.
+        /// </summary>
+        internal static string MoveDatabaseMessage {
+            get {
+                return ResourceManager.GetString("MoveDatabaseMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path must be valid.
+        /// </summary>
+        internal static string MustEnterValidPath {
+            get {
+                return ResourceManager.GetString("MustEnterValidPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New database path.
+        /// </summary>
+        internal static string NewDatabasePath {
+            get {
+                return ResourceManager.GetString("NewDatabasePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New entry.
         /// </summary>
         internal static string NewEntry {
             get {
                 return ResourceManager.GetString("NewEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        internal static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
             }
         }
         
@@ -345,6 +426,15 @@ namespace GSD.Resources {
         internal static string OpenEntries {
             get {
                 return ResourceManager.GetString("OpenEntries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open folder.
+        /// </summary>
+        internal static string OpenFolder {
+            get {
+                return ResourceManager.GetString("OpenFolder", resourceCulture);
             }
         }
         

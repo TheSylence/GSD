@@ -282,4 +282,34 @@
   <data name="Language" xml:space="preserve">
     <value>Sprache</value>
   </data>
+  <data name="DatabasePath" xml:space="preserve">
+    <value>Datenbankpfad</value>
+  </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>Ordner öffnen</value>
+  </data>
+  <data name="MoveDatabase" xml:space="preserve">
+    <value>Datenbank verschieben</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="NewDatabasePath" xml:space="preserve">
+    <value>Neuer Datenbankpfad</value>
+  </data>
+  <data name="Move" xml:space="preserve">
+    <value>Verschieben</value>
+  </data>
+  <data name="MustEnterValidPath" xml:space="preserve">
+    <value>Der Pfad muss gültig sein</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="MoveDatabaseMessage" xml:space="preserve">
+    <value>Nach dem Verschieben der Datenbank wird die Anwendung neugestartet. Fortfahren?</value>
+  </data>
+  <data name="EnterNewDatabasePath" xml:space="preserve">
+    <value>Neuen Datenbankpfad eingeben</value>
+  </data>
 </root>
