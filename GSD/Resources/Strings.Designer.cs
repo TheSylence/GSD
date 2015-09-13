@@ -349,7 +349,7 @@ namespace GSD.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to After moving the database, the application will be restarted. Continue?.
+        ///   Looks up a localized string similar to After moving the database, the application will be restarted..
         /// </summary>
         internal static string MoveDatabaseMessage {
             get {

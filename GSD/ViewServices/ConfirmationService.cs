@@ -2,6 +2,7 @@
 using MahApps.Metro.Controls.Dialogs;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using GSD.Resources;
 
 namespace GSD.ViewServices
 {
@@ -31,7 +32,7 @@ namespace GSD.ViewServices
 
 	internal class ConfirmationServiceArgs
 	{
-		public ConfirmationServiceArgs( string title, string message, string yes = "Yes", string no = "No" )
+		public ConfirmationServiceArgs( string title, string message, string yes, string no )
 		{
 			Title = title;
 			Message = message;

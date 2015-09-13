@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Threading;
 using GSD.Resources;
 using GSD.ViewServices;
 
@@ -26,7 +27,7 @@ namespace GSD.ViewModels
 			var path = await ViewServices.Execute<IBrowseFolderService, string>( Path );
 			if( !string.IsNullOrWhiteSpace( path ) )
 			{
-				Path = path;
+				await DispatcherHelper.RunAsync( () => Path = path );
 			}
 		}
 

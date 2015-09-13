@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using GalaSoft.MvvmLight.Threading;
 using GSD.Models.Repositories;
 using GSD.ViewServices;
 using MahApps.Metro;
@@ -38,6 +39,8 @@ namespace GSD
 				Debug.WriteLine( $"Error: Resource key not found: '{args.Key}'" );
 			};
 #endif
+
+			DispatcherHelper.Initialize();
 
 			SetupViewServices();
 			ApplySettings();

@@ -1,10 +1,4 @@
-﻿using GalaSoft.MvvmLight.CommandWpf;
-using GSD.Messages;
-using GSD.Models;
-using GSD.Models.Repositories;
-using GSD.Resources;
-using GSD.ViewServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -12,6 +6,12 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
+using GalaSoft.MvvmLight.CommandWpf;
+using GSD.Messages;
+using GSD.Models;
+using GSD.Models.Repositories;
+using GSD.Resources;
+using GSD.ViewServices;
 
 namespace GSD.ViewModels
 {
@@ -98,7 +98,8 @@ namespace GSD.ViewModels
 		private async void ExecuteDeleteTagCommand( TagViewModel arg )
 		{
 			ConfirmationServiceArgs args = new ConfirmationServiceArgs( Strings.Confirm,
-				string.Format( Strings.DoYouReallyWantToDeleteTagXXX, arg.Model.Name ) );
+				string.Format( Strings.DoYouReallyWantToDeleteTagXXX, arg.Model.Name ),
+				Strings.Yes, Strings.No );
 
 			if( !await ViewServices.Execute<IConfirmationService, bool>( args ) )
 			{
@@ -338,11 +339,14 @@ namespace GSD.ViewModels
 		private RelayCommand _CloseFlyoutCommand;
 		private RelayCommand<TagViewModel> _DeleteTagCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private Color _NewTagColor;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private Color _NewTagColor;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private RelayCommand _NewTagCommand;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private RelayCommand _NewTagCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private string _NewTagName;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private string _NewTagName;
 
 		private List<string> TagNames;
 	}

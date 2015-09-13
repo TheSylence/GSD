@@ -47,7 +47,7 @@ namespace GSD.ViewModels
 
 		private async void ExecuteDeleteEntryCommand()
 		{
-			ConfirmationServiceArgs args = new ConfirmationServiceArgs( Strings.Confirm, Strings.DoYouReallyWantToDeleteThisEntry );
+			ConfirmationServiceArgs args = new ConfirmationServiceArgs( Strings.Confirm, Strings.DoYouReallyWantToDeleteThisEntry, Strings.Yes, Strings.No );
 			if( !await ViewServices.Execute<IConfirmationService, bool>( args ) )
 			{
 				return;

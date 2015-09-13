@@ -28,7 +28,8 @@ namespace GSD.ViewServices
 
 		public async Task<TResult> Execute<TService, TResult>( object args = null ) where TService : IViewService
 		{
-			return (TResult)( await Execute<TService>( args ) );
+			object result = await Execute<TService>( args );
+            return (TResult)( result );
 		}
 
 		public void Register<TService>( IViewService service ) where TService : IViewService

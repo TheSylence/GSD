@@ -1,12 +1,15 @@
 ﻿<dialogs:CustomDialog x:Class="GSD.Views.DatabasePathDialog"
-                      Title="{lex:Loc GSD:Strings:NewDatabasePath}"
+                      Title="{lex:Loc GSD:Strings:MoveDatabase}"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro" xmlns:viewModels="clr-namespace:GSD.ViewModels" xmlns:lex="http://wpflocalizeextension.codeplex.com" xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls" mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
 	<dialogs:CustomDialog.DataContext>
 		<viewModels:DatabasePathViewModel />
 	</dialogs:CustomDialog.DataContext>
 	<StackPanel Orientation="Vertical">
+        <TextBlock  Text="{lex:Loc GSD:Strings:MoveDatabaseMessage}" FontSize="{DynamicResource DialogMessageFontSize}" TextWrapping="Wrap"/>
+		
 		<TextBox Text="{Binding Path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-		         Style="{DynamicResource MetroButtonTextBox}" controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:EnterNewDatabasePath}"
+		         Style="{DynamicResource MetroButtonTextBox}"
+		         controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:EnterNewDatabasePath}"
 		         FontSize="{DynamicResource DialogMessageFontSize}"
 		         controls:TextBoxHelper.ButtonCommand="{Binding BrowseFolderCommand}">
 			<controls:TextBoxHelper.ButtonTemplate>
@@ -41,16 +44,15 @@
 		</TextBox>
 
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="85">
-
 			<Button Content="{lex:Loc GSD:Strings:Move}"
 			        Height="35" MinWidth="80"
 			        Command="{Binding OkCommand}"
 			        Style="{DynamicResource AccentedDialogSquareButton}"
-			        IsDefault="True" Grid.Column="0" Margin="5" />
+			        IsDefault="True" Margin="5" />
 			<Button Content="{lex:Loc GSD:Strings:Cancel}"
 			        Height="35" MinWidth="80"
 			        Command="{Binding CancelCommand}"
-			        IsCancel="True" Grid.Column="1" Margin="5" />
+			        IsCancel="True" Margin="5" />
 		</StackPanel>
 	</StackPanel>
 </dialogs:CustomDialog>

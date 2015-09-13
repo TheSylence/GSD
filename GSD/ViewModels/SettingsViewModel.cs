@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Media;
 using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Models.Repositories;
+using GSD.Resources;
 using GSD.ViewServices;
 using MahApps.Metro;
 using WPFLocalizeExtension.Engine;

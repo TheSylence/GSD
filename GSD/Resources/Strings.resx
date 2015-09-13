@@ -295,7 +295,7 @@
     <value>No</value>
   </data>
   <data name="MoveDatabaseMessage" xml:space="preserve">
-    <value>After moving the database, the application will be restarted. Continue?</value>
+    <value>After moving the database, the application will be restarted.</value>
   </data>
   <data name="NewDatabasePath" xml:space="preserve">
     <value>New database path</value>

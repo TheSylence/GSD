@@ -16,34 +16,21 @@ namespace GSD.ViewServices
 	{
 		public async Task<object> Execute( MetroWindow window, object args )
 		{
-			var settings = new MetroDialogSettings
-			{
-				AffirmativeButtonText = Strings.Yes,
-				NegativeButtonText = Strings.No
-			};
-
-			var result = await window.ShowMessageAsync(Strings.MoveDatabase, Strings.MoveDatabaseMessage, MessageDialogStyle.AffirmativeAndNegative, settings );
-			if( result != MessageDialogResult.Affirmative )
-			{
-				return null;
-			}
-
-			SemaphoreSlim evt = new SemaphoreSlim( 1 );
-
 			var pathDlg = new DatabasePathDialog();
 			var vm = pathDlg.DataContext as DatabasePathViewModel;
 			Debug.Assert( vm != null );
 
+			TaskCompletionSource<string> tcs = new TaskCompletionSource<string>();
+
 			vm.CloseRequested += async ( s, e ) =>
 			{
-				await window.HideMetroDialogAsync( pathDlg, settings );
-				evt.Release();
+				await window.HideMetroDialogAsync( pathDlg );
+				tcs.TrySetResult( vm.Path );
 			};
 
-			await window.ShowMetroDialogAsync( pathDlg, settings );
-			await evt.WaitAsync();
+			await window.ShowMetroDialogAsync( pathDlg );
 
-			return vm.Path;
+			return await tcs.Task;
 		}
 	}
 }

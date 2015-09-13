@@ -307,7 +307,7 @@
     <value>Abbrechen</value>
   </data>
   <data name="MoveDatabaseMessage" xml:space="preserve">
-    <value>Nach dem Verschieben der Datenbank wird die Anwendung neugestartet. Fortfahren?</value>
+    <value>Nach dem Verschieben der Datenbank wird die Anwendung neugestartet.</value>
   </data>
   <data name="EnterNewDatabasePath" xml:space="preserve">
     <value>Neuen Datenbankpfad eingeben</value>
