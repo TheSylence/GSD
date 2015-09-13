@@ -117,7 +117,7 @@ namespace GSD.ViewModels
 				}
 
 				_IsSearching = value;
-				RaisePropertyChanged( nameof( IsSearching ) );
+				RaisePropertyChanged();
 			}
 		}
 
@@ -125,7 +125,7 @@ namespace GSD.ViewModels
 
 		public string Text
 		{
-			[DebuggerStepThrough] get { return _Text; }
+			[DebuggerStepThrough] get { return _Text ?? string.Empty; }
 			set
 			{
 				if( _Text == value )
