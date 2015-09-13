@@ -120,9 +120,11 @@
     <Compile Include="ViewModels\DatabasePathViewModel.cs" />
     <Compile Include="ViewModels\InfoViewModel.cs" />
     <Compile Include="ViewModels\IViewController.cs" />
-    <Compile Include="ViewServices\BrowseFolderService.cs" />
+    <Compile Include="ViewModels\ProgressReport.cs" />
+    <Compile Include="ViewServices\BrowseFileService.cs" />
     <Compile Include="ViewServices\InfoService.cs" />
     <Compile Include="ViewServices\MoveDatabaseService.cs" />
+    <Compile Include="ViewServices\ProgressService.cs" />
     <Compile Include="Views\AddEntryFlyout.xaml.cs">
       <DependentUpon>AddEntryFlyout.xaml</DependentUpon>
     </Compile>

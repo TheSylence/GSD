@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
-using GSD.Resources;
 using GSD.ViewModels;
 using GSD.Views;
 using MahApps.Metro.Controls;

@@ -312,4 +312,7 @@
   <data name="EnterNewDatabasePath" xml:space="preserve">
     <value>Enter new database path</value>
   </data>
+  <data name="MovingDatabase" xml:space="preserve">
+    <value>Moving database</value>
+  </data>
 </root>

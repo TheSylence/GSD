@@ -358,6 +358,15 @@ namespace GSD.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Moving database.
+        /// </summary>
+        internal static string MovingDatabase {
+            get {
+                return ResourceManager.GetString("MovingDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Path must be valid.
         /// </summary>
         internal static string MustEnterValidPath {

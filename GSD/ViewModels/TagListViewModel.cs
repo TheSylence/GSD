@@ -290,7 +290,7 @@ namespace GSD.ViewModels
 
 		private void ReadTagNames()
 		{
-			TagNames = TagRepo.GetAllNames( ProjectList.CurrentProject.Model ).ToList();
+			TagNames = TagRepo.GetAllNames( ProjectList.CurrentProject?.Model ).ToList();
 		}
 
 		public List<Color> AvailableColors { get; }

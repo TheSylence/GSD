@@ -204,8 +204,8 @@
 											<Setter.Value>
 												<ControlTemplate>
 													<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-														<TextBlock Text="{lex:Loc NoProjectsDefined}" FontSize="{StaticResource NormalFontSize}" />
-														<Button Content="{lex:Loc CreateProject}"
+                                                        <TextBlock Text="{lex:Loc GSD:Strings:NoProjectsDefined}" FontSize="{StaticResource NormalFontSize}" />
+                                                        <Button Content="{lex:Loc GSD:Strings:CreateProject}"
 														        Margin="0,5"
 														        Command="{Binding OpenProjectManagementCommand}" />
 													</StackPanel>
@@ -218,8 +218,8 @@
 											<Setter.Value>
 												<ControlTemplate>
 													<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-														<TextBlock Text="{lex:Loc NoEntriesDefined}" FontSize="{StaticResource NormalFontSize}" />
-														<Button Content="{lex:Loc AddNewEntry}"
+                                                        <TextBlock Text="{lex:Loc GSD:Strings:NoEntriesDefined}" FontSize="{StaticResource NormalFontSize}" />
+                                                        <Button Content="{lex:Loc GSD:Strings:AddNewEntry}"
 														        Margin="0,5"
 														        Command="{Binding AddEntryCommand}" />
 													</StackPanel>

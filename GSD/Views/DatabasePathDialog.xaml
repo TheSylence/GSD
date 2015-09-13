@@ -5,8 +5,10 @@
 		<viewModels:DatabasePathViewModel />
 	</dialogs:CustomDialog.DataContext>
 	<StackPanel Orientation="Vertical">
-        <TextBlock  Text="{lex:Loc GSD:Strings:MoveDatabaseMessage}" FontSize="{DynamicResource DialogMessageFontSize}" TextWrapping="Wrap"/>
-		
+		<TextBlock Text="{lex:Loc GSD:Strings:MoveDatabaseMessage}"
+		           FontSize="{DynamicResource DialogMessageFontSize}"
+		           TextWrapping="Wrap" />
+
 		<TextBox Text="{Binding Path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 		         Style="{DynamicResource MetroButtonTextBox}"
 		         controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:EnterNewDatabasePath}"

@@ -24,7 +24,7 @@ namespace GSD.ViewModels
 
 		private async void ExecuteBrowseFolderCommand()
 		{
-			var path = await ViewServices.Execute<IBrowseFolderService, string>( Path );
+			var path = await ViewServices.Execute<IBrowseFileService, string>( System.IO.Path.GetDirectoryName( Path ) );
 			if( !string.IsNullOrWhiteSpace( path ) )
 			{
 				await DispatcherHelper.RunAsync( () => Path = path );
@@ -33,7 +33,7 @@ namespace GSD.ViewModels
 
 		private void ExecuteCancelCommand()
 		{
-			Path = null;
+			_Path = null;
 			CloseRequested?.Invoke( this, EventArgs.Empty );
 		}
 

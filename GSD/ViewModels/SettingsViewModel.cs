@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Models.Repositories;
-using GSD.Resources;
 using GSD.ViewServices;
 using MahApps.Metro;
 using WPFLocalizeExtension.Engine;
@@ -72,6 +73,34 @@ namespace GSD.ViewModels
 			{
 				return;
 			}
+			
+			await ViewServices.Execute<IProgressService>( new ProgressServiceArgs( report =>
+			{
+				SQLiteBackupCallback callback =
+					( source, sourceName, destination, destinationName, pages, remainingPages, totalPages, retry ) =>
+					{
+						report.SetProgress( totalPages - remainingPages, totalPages );
+						return true;
+					};
+
+				SQLiteConnectionStringBuilder sb = new SQLiteConnectionStringBuilder
+				{
+					DataSource = newPath
+				};
+
+				using( SQLiteConnection destConnection = new SQLiteConnection( sb.ToString() ) )
+				{
+					destConnection.Open();
+
+					var connection = App.Session.Connection as SQLiteConnection;
+					Debug.Assert( connection != null, "connection != null" );
+					connection.BackupDatabase( destConnection, "main", "main", -1, callback, 100 );
+				}
+			} ) );
+
+			Settings.Set( SettingKeys.DatabasePath, newPath );
+			Application.Current.Shutdown();
+			Process.Start( Assembly.GetExecutingAssembly().Location );
 		}
 
 		private void ExecuteOpenDatabaseFolderCommand()

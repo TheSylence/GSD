@@ -78,7 +78,8 @@ namespace GSD
 			ViewServices.Register<IConfirmationService>( new ConfirmationService() );
 			ViewServices.Register<IInfoService>( new InfoService() );
 			ViewServices.Register<IMoveDatabaseService>( new MoveDatabaseService() );
-			ViewServices.Register<IBrowseFolderService>( new BrowseFolderService() );
+			ViewServices.Register<IBrowseFileService>( new BrowseFileService() );
+			ViewServices.Register<IProgressService>( new ProgressService() );
 		}
 
 		private void ApplySettings()

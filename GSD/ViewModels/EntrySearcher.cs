@@ -1,9 +1,10 @@
-using GSD.Messages;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
+using GSD.Messages;
 
 namespace GSD.ViewModels
 {
@@ -13,7 +14,7 @@ namespace GSD.ViewModels
 		{
 			ProjectList = projectList;
 			_CurrentProject = ProjectList.CurrentProject;
-			Matches = new ObservableCollection<TodoViewModel>( CurrentProject.Todos );
+			Matches = new ObservableCollection<TodoViewModel>( CurrentProject?.Todos ?? Enumerable.Empty<TodoViewModel>() );
 
 			MessengerInstance.Register<CurrentProjectChangedMessage>( this, OnCurrentProjectChanged );
 		}
@@ -52,7 +53,7 @@ namespace GSD.ViewModels
 					continue;
 				}
 
-				results = results.Where( r => r.Tags.Any( t => t.Model.Name.Equals( tagName, System.StringComparison.OrdinalIgnoreCase ) ) );
+				results = results.Where( r => r.Tags.Any( t => t.Model.Name.Equals( tagName, StringComparison.OrdinalIgnoreCase ) ) );
 				expression = expression.Remove( match.Index, match.Length );
 			}
 
