@@ -44,6 +44,10 @@
 			<ComboBox ItemsSource="{Binding AvailableAccents}"
 			          SelectedItem="{Binding SelectedAccent, Mode=TwoWay}"
 			          ItemTemplate="{StaticResource ColorDataTemplate}" />
+			
+			<TextBlock Text="{lex:Loc GSD:Strings:Language}" FontSize="{DynamicResource NormalFontSize}" />
+			<ComboBox ItemsSource="{Binding AvailableLanguages}" DisplayMemberPath="NativeName"
+					  SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"/>
 
 			<Separator />
 			<CheckBox Content="{lex:Loc GSD:Strings:ExpandEntries}" IsChecked="{Binding ExpandEntries, Mode=TwoWay}" />

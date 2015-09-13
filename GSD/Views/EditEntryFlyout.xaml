@@ -33,7 +33,7 @@
 			           FontSize="{DynamicResource NormalFontSize}" />
 			<TextBox Text="{Binding Details, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 			         AcceptsReturn="True" Grid.Row="3"
-			         controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:SummaryDetails}" />
+			         controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:EntryDetails}" />
 		</Grid>
 	</DockPanel>
 </controls:Flyout>

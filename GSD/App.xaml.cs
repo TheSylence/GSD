@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
@@ -9,6 +11,8 @@ using GSD.ViewServices;
 using MahApps.Metro;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
+using WPFLocalizeExtension.Engine;
+using WPFLocalizeExtension.Providers;
 
 namespace GSD
 {
@@ -29,7 +33,7 @@ namespace GSD
 			base.OnStartup( e );
 
 #if DEBUG
-			WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.MissingKeyEvent += ( s, args ) =>
+			LocalizeDictionary.Instance.MissingKeyEvent += ( s, args ) =>
 			{
 				Debug.WriteLine( $"Error: Resource key not found: '{args.Key}'" );
 			};
@@ -83,6 +87,26 @@ namespace GSD
 			var theme = ThemeManager.AppThemes.FirstOrDefault( t => t.Name.Equals( themeName ) );
 
 			ThemeManager.ChangeAppStyle( this, accent, theme );
+
+			ResxLocalizationProvider.Instance.UpdateCultureList( GetType().Assembly.FullName, "Strings" );
+			var availableCultures = ResxLocalizationProvider.Instance.AvailableCultures.ToList();
+
+			var lang = repo.GetById( SettingKeys.Language ).Value;
+			var cultureInfo = CultureInfo.CreateSpecificCulture( lang );
+
+			while( !Equals( cultureInfo, CultureInfo.InvariantCulture ) && !availableCultures.Contains( cultureInfo ) )
+			{
+				cultureInfo = cultureInfo.Parent;
+			}
+
+			if( Equals( cultureInfo, CultureInfo.InvariantCulture ) )
+			{
+				cultureInfo = new CultureInfo( "en" );
+			}
+
+			LocalizeDictionary.Instance.Culture = cultureInfo;
+			Thread.CurrentThread.CurrentUICulture = cultureInfo;
+			Thread.CurrentThread.CurrentCulture = cultureInfo;
 		}
 
 		public static ISession Session { get; private set; }

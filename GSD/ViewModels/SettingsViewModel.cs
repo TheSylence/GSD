@@ -1,11 +1,15 @@
-﻿using GalaSoft.MvvmLight.CommandWpf;
-using GSD.Models.Repositories;
-using MahApps.Metro;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Media;
+using GalaSoft.MvvmLight.CommandWpf;
+using GSD.Models.Repositories;
+using MahApps.Metro;
+using WPFLocalizeExtension.Engine;
+using WPFLocalizeExtension.Providers;
 
 namespace GSD.ViewModels
 {
@@ -25,6 +29,12 @@ namespace GSD.ViewModels
 				ColorBrush = t.Resources["WhiteColorBrush"] as Brush,
 				BorderBrush = t.Resources["BlackColorBrush"] as Brush
 			} ).ToList();
+
+			ResxLocalizationProvider.Instance.UpdateCultureList( GetType().Assembly.FullName, "Strings" );
+			IEnumerable<CultureInfo> languages = ResxLocalizationProvider.Instance.AvailableCultures;
+			languages = languages.Where( l => !Equals( l, CultureInfo.InvariantCulture ) );
+
+			AvailableLanguages = new List<CultureInfo>( languages.OrderBy( l => l.NativeName ) );
 		}
 
 		public void Reset()
@@ -36,6 +46,15 @@ namespace GSD.ViewModels
 			SelectedTheme = AvailableThemes.FirstOrDefault( t => t.Name == theme );
 
 			ExpandEntries = Settings.GetById( SettingKeys.ExpandEntries ).Get<bool>();
+
+			var lang = Settings.GetById( SettingKeys.Language ).Value;
+			ChangeLanguage = false;
+			SelectedLanguage = AvailableLanguages.FirstOrDefault( l => l.IetfLanguageTag.Equals( lang ) );
+			if( SelectedLanguage == null )
+			{
+				SelectedLanguage = AvailableLanguages.FirstOrDefault( l => l.IetfLanguageTag.Equals( "en-US" ) );
+			}
+			ChangeLanguage = true;
 		}
 
 		private void ExecuteResetToDefaultsCommand()
@@ -51,6 +70,7 @@ namespace GSD.ViewModels
 			Settings.Set( SettingKeys.Accent, SelectedAccent.Name );
 			Settings.Set( SettingKeys.Theme, SelectedTheme.Name );
 			Settings.Set( SettingKeys.ExpandEntries, ExpandEntries.ToString() );
+			Settings.Set( SettingKeys.Language, SelectedLanguage.IetfLanguageTag );
 
 			var accent = ThemeManager.Accents.FirstOrDefault( a => a.Name == SelectedAccent.Name );
 			var theme = ThemeManager.AppThemes.FirstOrDefault( t => t.Name == SelectedTheme.Name );
@@ -59,7 +79,7 @@ namespace GSD.ViewModels
 		}
 
 		public List<ColorItem> AvailableAccents { get; }
-
+		public List<CultureInfo> AvailableLanguages { get; }
 		public List<ColorItem> AvailableThemes { get; }
 
 		public bool ExpandEntries
@@ -82,7 +102,6 @@ namespace GSD.ViewModels
 		}
 
 		public RelayCommand ResetToDefaultsCommand => _ResetToDefaultsCommand ?? ( _ResetToDefaultsCommand = new RelayCommand( ExecuteResetToDefaultsCommand ) );
-
 		public RelayCommand SaveCommand => _SaveCommand ?? ( _SaveCommand = new RelayCommand( ExecuteSaveCommand ) );
 
 		public ColorItem SelectedAccent
@@ -101,6 +120,32 @@ namespace GSD.ViewModels
 
 				_SelectedAccent = value;
 				RaisePropertyChanged();
+			}
+		}
+
+		public CultureInfo SelectedLanguage
+		{
+			[DebuggerStepThrough]
+			get
+			{
+				return _SelectedLanguage;
+			}
+			set
+			{
+				if( _SelectedLanguage == value )
+				{
+					return;
+				}
+
+				_SelectedLanguage = value;
+				RaisePropertyChanged();
+
+				if( ChangeLanguage )
+				{
+					LocalizeDictionary.Instance.Culture = value;
+					Thread.CurrentThread.CurrentUICulture = value;
+					Thread.CurrentThread.CurrentCulture = value;
+				}
 			}
 		}
 
@@ -136,6 +181,11 @@ namespace GSD.ViewModels
 		private ColorItem _SelectedAccent;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private CultureInfo _SelectedLanguage;
+
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private ColorItem _SelectedTheme;
+
+		private bool ChangeLanguage = true;
 	}
 }

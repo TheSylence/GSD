@@ -279,4 +279,7 @@
   <data name="Close" xml:space="preserve">
     <value>Schließen</value>
   </data>
+  <data name="Language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
 </root>
