@@ -8,9 +8,9 @@
 	</i:Interaction.Behaviors>
 	<DockPanel d:DataContext="{d:DesignInstance viewModels:AddEntryViewModel}">
 		<DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
-			<Button DockPanel.Dock="Right"
+			<Button DockPanel.Dock="Right" MinWidth="50"
 			        Content="{lex:Loc GSD:Strings:Add}"
-			        Margin="5"
+			        Margin="5" Style="{DynamicResource SquareButtonStyle}"
 			        Command="{Binding AddCommand}" />
 			<CheckBox Content="{lex:Loc GSD:Strings:AddAnother}"
 			          Margin="5"

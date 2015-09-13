@@ -8,9 +8,9 @@
 	</i:Interaction.Behaviors>
 	<DockPanel d:DataContext="{d:DesignInstance viewModels:EditEntryViewModel}">
 		<DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
-			<Button DockPanel.Dock="Right"
+            <Button DockPanel.Dock="Right" MinWidth="50"
 			        Content="{lex:Loc GSD:Strings:Save}"
-			        Margin="5"
+			        Margin="5" Style="{DynamicResource SquareButtonStyle}"
 			        Command="{Binding SaveCommand}" />
 		</DockPanel>
 

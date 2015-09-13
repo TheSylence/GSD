@@ -14,7 +14,7 @@
 		<DockPanel DockPanel.Dock="Bottom" Margin="5">
 			<Button DockPanel.Dock="Right"
 			        Content="{lex:Loc GSD:Strings:Create}"
-			        Margin="5,0,0,0"
+			        Margin="5,0,0,0" MinWidth="50"
 			        Command="{Binding NewProjectCommand}"
 			        Style="{DynamicResource SquareButtonStyle}" />
 			<TextBox controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:CreateProject}"

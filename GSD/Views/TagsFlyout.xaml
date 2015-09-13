@@ -12,7 +12,7 @@
 	</controls:Flyout.Resources>
 	<DockPanel>
 		<DockPanel DockPanel.Dock="Bottom" Margin="5">
-			<Button DockPanel.Dock="Right"
+            <Button DockPanel.Dock="Right" MinWidth="50"
 			        Content="{lex:Loc GSD:Strings:Create}"
 			        Margin="5,0,0,0"
 			        Command="{Binding NewTagCommand}"

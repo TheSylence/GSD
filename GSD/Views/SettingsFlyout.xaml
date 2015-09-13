@@ -10,11 +10,11 @@
 	<DockPanel>
 		<DockPanel LastChildFill="False" DockPanel.Dock="Bottom" Margin="5">
 			<Button Content="{lex:Loc GSD:Strings:Save}"
-			        Command="{Binding SaveCommand}"
+			        Command="{Binding SaveCommand}" MinWidth="50"
 			        Style="{DynamicResource SquareButtonStyle}"
 			        Margin="5,0" DockPanel.Dock="Right" />
 			<Button Content="{lex:Loc GSD:Strings:ResetToDefaults}"
-			        Command="{Binding ResetToDefaultsCommand}"
+			        Command="{Binding ResetToDefaultsCommand}" MinWidth="50"
 			        Style="{DynamicResource SquareButtonStyle}"
 			        Margin="5,0" DockPanel.Dock="Left" />
 		</DockPanel>
