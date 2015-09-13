@@ -47,20 +47,22 @@ namespace GSD.ViewModels
 
 		private void Todos_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
 		{
+			// ReSharper disable ExplicitCallerInfoArgument
 			RaisePropertyChanged( nameof( OpenTodoCount ) );
 			RaisePropertyChanged( nameof( Progress ) );
+			// ReSharper restore ExplicitCallerInfoArgument
 
-			if( e.Action == NotifyCollectionChangedAction.Add )
+			if( e.Action != NotifyCollectionChangedAction.Add )
 			{
-				foreach( TodoViewModel newItem in e.NewItems )
-				{
-					newItem.DeleteRequested += Todo_DeleteRequested;
-					newItem.SaveRequested += Todo_SaveRequested;
-				}
+				return;
+			}
+
+			foreach( TodoViewModel newItem in e.NewItems )
+			{
+				newItem.DeleteRequested += Todo_DeleteRequested;
+				newItem.SaveRequested += Todo_SaveRequested;
 			}
 		}
-
-		public int ClosedTodoCount => Todos.Count( t => t.Model.Done );
 
 		public bool IsCurrent
 		{
@@ -99,6 +101,7 @@ namespace GSD.ViewModels
 		}
 
 		public ObservableCollection<TodoViewModel> Todos { get; }
+		private int ClosedTodoCount => Todos.Count( t => t.Model.Done );
 		private readonly ITodoRepository TodoRepo;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]

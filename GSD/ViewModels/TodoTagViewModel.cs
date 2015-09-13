@@ -6,9 +6,8 @@ namespace GSD.ViewModels
 {
 	internal class TodoTagViewModel : ViewModelBaseEx
 	{
-		public TodoTagViewModel( Todo todo, Tag tag )
+		public TodoTagViewModel( Tag tag )
 		{
-			Todo = todo;
 			Model = tag;
 		}
 
@@ -53,7 +52,5 @@ namespace GSD.ViewModels
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private bool _IsSelected;
-
-		private Todo Todo;
 	}
 }

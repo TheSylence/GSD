@@ -1,8 +1,8 @@
-﻿using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using GSD.Resources;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace GSD.ViewServices
 {
@@ -10,7 +10,7 @@ namespace GSD.ViewServices
 	{
 	}
 
-	[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+	[ExcludeFromCodeCoverage]
 	internal class ConfirmationService : IConfirmationService
 	{
 		public async Task<object> Execute( MetroWindow window, object args )

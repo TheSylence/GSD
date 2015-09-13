@@ -75,8 +75,8 @@ namespace GSD.Tests.Models
 				.Mappings( map => map.FluentMappings.Add<TestEntityMap>() )
 				.BuildConfiguration();
 
-			var ent1 = new TestEntity {PropTwo = 1};
-			var ent2 = new TestEntity {PropTwo = 2};
+			var ent1 = new TestEntity { PropTwo = 1 };
+			var ent2 = new TestEntity { PropTwo = 2 };
 
 			var sessionFactory = config.BuildSessionFactory();
 			using( var session = sessionFactory.OpenSession() )
@@ -106,14 +106,13 @@ namespace GSD.Tests.Models
 			Assert.IsTrue( equal );
 			Assert.IsTrue( equal2 );
 		}
-		
 
 		[TestMethod, TestCategory( "Models" )]
 		public void EqualsWorksWithUnsavedObjects()
 		{
 			// Arrange
-			TestEntity ent1 = new TestEntity {Id = 1};
-			TestEntity ent2 = new TestEntity {Id = 2};
+			TestEntity ent1 = new TestEntity { Id = 1 };
+			TestEntity ent2 = new TestEntity { Id = 2 };
 
 			// Act
 			bool different = ent1.Equals( ent2 );
@@ -134,7 +133,7 @@ namespace GSD.Tests.Models
 		public void HashCodeForSavedIsDifferentForId()
 		{
 			// Arrange
-			var ent = new TestEntity {Id = 123};
+			var ent = new TestEntity { Id = 123 };
 
 			// Act
 			int hash1 = ent.GetHashCode();

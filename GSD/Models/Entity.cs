@@ -34,6 +34,7 @@
 		public override int GetHashCode()
 		{
 			// Once we have a hash code we'll never change it
+			// ReSharper disable NonReadonlyMemberInGetHashCode
 			if( OldHashCode.HasValue )
 			{
 				return OldHashCode.Value;
@@ -49,6 +50,7 @@
 				return OldHashCode.Value;
 			}
 			return Id.GetHashCode();
+			// ReSharper restore NonReadonlyMemberInGetHashCode
 		}
 
 		// ReSharper disable once VirtualMemberNeverOverriden.Global

@@ -42,10 +42,8 @@ namespace GSD.Models.Repositories
 			if( File.Exists( FileName ) )
 			{
 				Entries = new Dictionary<string, string>();
-				foreach( var line in File.ReadAllLines( FileName ) )
+				foreach( var parts in File.ReadAllLines( FileName ).Select( line => line.Split( new[] { '=' }, 2 ) ) )
 				{
-					var parts = line.Split( new[] { '=' }, 2 );
-
 					Entries.Add( parts[0], parts[1] );
 				}
 
@@ -88,12 +86,12 @@ namespace GSD.Models.Repositories
 			string key = id.ToString();
 
 			string value;
-			if( Entries.TryGetValue( key, out value ) )
-			{
-				return new Config { Id = key, Value = value };
-			}
-
-			return null;
+			return Entries.TryGetValue( key, out value ) 
+				? new Config
+				{
+					Id = key, Value = value
+				}
+				: null;
 		}
 
 		public void Set( string key, string value )

@@ -216,7 +216,7 @@ namespace GSD.Tests.ViewModels
 					}
 
 					_Name = value;
-					RaisePropertyChanged( nameof( Name ) );
+					RaisePropertyChanged();
 				}
 			}
 

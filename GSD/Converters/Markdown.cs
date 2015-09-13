@@ -29,6 +29,8 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Shapes;
 
+// ReSharper disable All
+
 namespace GSD.Converters
 {
 	[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
@@ -194,33 +196,33 @@ namespace GSD.Converters
 
 			switch( level )
 			{
-			case 1:
-				if( Heading1Style != null )
-				{
-					block.Style = Heading1Style;
-				}
-				break;
+				case 1:
+					if( Heading1Style != null )
+					{
+						block.Style = Heading1Style;
+					}
+					break;
 
-			case 2:
-				if( Heading2Style != null )
-				{
-					block.Style = Heading2Style;
-				}
-				break;
+				case 2:
+					if( Heading2Style != null )
+					{
+						block.Style = Heading2Style;
+					}
+					break;
 
-			case 3:
-				if( Heading3Style != null )
-				{
-					block.Style = Heading3Style;
-				}
-				break;
+				case 3:
+					if( Heading3Style != null )
+					{
+						block.Style = Heading3Style;
+					}
+					break;
 
-			case 4:
-				if( Heading4Style != null )
-				{
-					block.Style = Heading4Style;
-				}
-				break;
+				case 4:
+					if( Heading4Style != null )
+					{
+						block.Style = Heading4Style;
+					}
+					break;
 			}
 
 			return block;
@@ -360,8 +362,8 @@ namespace GSD.Converters
 			// See extended comment in _ProcessListItems().
 			if( ListLevel > 0 )
 				return Evaluate( text, ListNested, ListEvaluator, defaultHandler );
-			else
-				return Evaluate( text, ListTopLevel, ListEvaluator, defaultHandler );
+
+			return Evaluate( text, ListTopLevel, ListEvaluator, defaultHandler );
 		}
 
 		private IEnumerable<Inline> DoText( string text )
@@ -400,13 +402,15 @@ namespace GSD.Converters
 				index = m.Index + m.Length;
 			}
 
-			if( index < text.Length )
+			if( index >= text.Length )
 			{
-				var suffix = text.Substring( index, text.Length - index );
-				foreach( var t in rest( suffix ) )
-				{
-					yield return t;
-				}
+				yield break;
+			}
+
+			var suffix = text.Substring( index, text.Length - index );
+			foreach( var t in rest( suffix ) )
+			{
+				yield return t;
 			}
 		}
 
@@ -494,39 +498,39 @@ namespace GSD.Converters
 			{
 				switch( text[i] )
 				{
-				case '\n':
-					if( valid )
-						output.Append( line );
-					output.Append( '\n' );
-					line.Length = 0;
-					valid = false;
-					break;
-
-				case '\r':
-					if( ( i < text.Length - 1 ) && ( text[i + 1] != '\n' ) )
-					{
+					case '\n':
 						if( valid )
 							output.Append( line );
 						output.Append( '\n' );
 						line.Length = 0;
 						valid = false;
-					}
-					break;
+						break;
 
-				case '\t':
-					int width = ( TabWidth - line.Length % TabWidth );
-					for( int k = 0; k < width; k++ )
-						line.Append( ' ' );
-					break;
+					case '\r':
+						if( ( i < text.Length - 1 ) && ( text[i + 1] != '\n' ) )
+						{
+							if( valid )
+								output.Append( line );
+							output.Append( '\n' );
+							line.Length = 0;
+							valid = false;
+						}
+						break;
 
-				case '\x1A':
-					break;
+					case '\t':
+						int width = ( TabWidth - line.Length % TabWidth );
+						for( int k = 0; k < width; k++ )
+							line.Append( ' ' );
+						break;
 
-				default:
-					if( !valid && text[i] != ' ' )
-						valid = true;
-					line.Append( text[i] );
-					break;
+					case '\x1A':
+						break;
+
+					default:
+						if( !valid && text[i] != ' ' )
+							valid = true;
+						line.Append( text[i] );
+						break;
 				}
 			}
 
@@ -668,7 +672,7 @@ namespace GSD.Converters
 			}
 
 			string header = match.Groups[1].Value;
-			int level = match.Groups[2].Value.StartsWith( "=" ) ? 1 : 2;
+			int level = match.Groups[2].Value.StartsWith( "=", StringComparison.Ordinal ) ? 1 : 2;
 
 			//TODO: Style the paragraph based on the header level
 			return CreateHeader( level, RunSpanGamut( header.Trim() ) );

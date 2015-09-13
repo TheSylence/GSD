@@ -1,4 +1,4 @@
-﻿<controls:Flyout x:Class="GSD.Views.AddEntryFlyout" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:GSD.Views" xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:behaviors="clr-namespace:GSD.Behaviors" xmlns:viewModels="clr-namespace:GSD.ViewModels" xmlns:lex="http://wpflocalizeextension.codeplex.com" mc:Ignorable="d" Position="Left"
+﻿<controls:Flyout x:Class="GSD.Views.AddEntryFlyout" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:behaviors="clr-namespace:GSD.Behaviors" xmlns:viewModels="clr-namespace:GSD.ViewModels" xmlns:lex="http://wpflocalizeextension.codeplex.com" mc:Ignorable="d" Position="Left"
                  Header="{lex:Loc GSD:Strings:NewEntry}"
                  Theme="Adapt"
                  Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MetroWindow}, ConverterParameter=40, Converter={StaticResource RelativeWidthConv}}"
@@ -10,7 +10,8 @@
 		<DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
 			<Button DockPanel.Dock="Right" MinWidth="50"
 			        Content="{lex:Loc GSD:Strings:Add}"
-			        Margin="5" Style="{DynamicResource SquareButtonStyle}"
+			        Margin="5"
+			        Style="{DynamicResource SquareButtonStyle}"
 			        Command="{Binding AddCommand}" />
 			<CheckBox Content="{lex:Loc GSD:Strings:AddAnother}"
 			          Margin="5"

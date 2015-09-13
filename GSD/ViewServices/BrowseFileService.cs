@@ -19,12 +19,7 @@ namespace GSD.ViewServices
 				InitialDirectory = directory
 			};
 
-			if( dlg.ShowDialog( window ) == true )
-			{
-				return Task.FromResult<object>( dlg.FileName );
-			}
-
-			return Task.FromResult<object>( null );
+			return Task.FromResult<object>( dlg.ShowDialog( window ) == true ? dlg.FileName : null );
 		}
 	}
 }

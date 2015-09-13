@@ -45,6 +45,7 @@ namespace GSD.Tests
 			CheckException<TException>( catched );
 		}
 
+		// ReSharper disable once UnusedParameter.Local
 		private static void CheckException<TException>( Exception catched ) where TException : Exception
 		{
 			if( catched == null )

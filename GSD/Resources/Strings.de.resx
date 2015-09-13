@@ -129,9 +129,6 @@
   <data name="CreateProject" xml:space="preserve">
     <value>Projekt erstellen</value>
   </data>
-  <data name="Tags" xml:space="preserve">
-    <value>Tags</value>
-  </data>
   <data name="AddTag" xml:space="preserve">
     <value>Tag hinzufügen</value>
   </data>
@@ -314,5 +311,8 @@
   </data>
   <data name="MovingDatabase" xml:space="preserve">
     <value>Verschiebe Datenbank</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags</value>
   </data>
 </root>

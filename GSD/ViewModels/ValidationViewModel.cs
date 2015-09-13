@@ -72,6 +72,7 @@ namespace GSD.ViewModels
 		{
 			ValidateProperty( propertyName );
 
+			// ReSharper disable once ExplicitCallerInfoArgument
 			base.RaisePropertyChanged( propertyName );
 		}
 

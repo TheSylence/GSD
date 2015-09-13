@@ -22,7 +22,7 @@ namespace GSD.ViewModels
 			Model = todo;
 			_Done = Model.Done;
 
-			AllTags = new ObservableCollection<TodoTagViewModel>( Model.Project.Tags.Select( t => new TodoTagViewModel( Model, t )
+			AllTags = new ObservableCollection<TodoTagViewModel>( Model.Project.Tags.Select( t => new TodoTagViewModel( t )
 			{
 				IsSelected = Model.Tags.Contains( t )
 			} ) );
@@ -42,6 +42,7 @@ namespace GSD.ViewModels
 
 		public void RaiseUpdates()
 		{
+			// ReSharper disable once ExplicitCallerInfoArgument
 			RaisePropertyChanged( nameof( Model ) );
 		}
 
@@ -58,7 +59,7 @@ namespace GSD.ViewModels
 
 		private void OnTagAdded( TagAddedMessage msg )
 		{
-			AllTags.Add( new TodoTagViewModel( Model, msg.Tag ) );
+			AllTags.Add( new TodoTagViewModel( msg.Tag ) );
 		}
 
 		private void OnTagRemoved( TagRemovedMessage msg )

@@ -73,7 +73,7 @@ namespace GSD.ViewModels
 			{
 				return;
 			}
-			
+
 			await ViewServices.Execute<IProgressService>( new ProgressServiceArgs( report =>
 			{
 				SQLiteBackupCallback callback =
@@ -221,12 +221,14 @@ namespace GSD.ViewModels
 				_SelectedLanguage = value;
 				RaisePropertyChanged();
 
-				if( ChangeLanguage )
+				if( !ChangeLanguage )
 				{
-					LocalizeDictionary.Instance.Culture = value;
-					Thread.CurrentThread.CurrentUICulture = value;
-					Thread.CurrentThread.CurrentCulture = value;
+					return;
 				}
+
+				LocalizeDictionary.Instance.Culture = value;
+				Thread.CurrentThread.CurrentUICulture = value;
+				Thread.CurrentThread.CurrentCulture = value;
 			}
 		}
 

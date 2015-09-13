@@ -24,11 +24,15 @@ namespace GSD.ViewModels
 			{
 				ExpandEntries = Settings.GetById( SettingKeys.ExpandEntries ).Get<bool>();
 
+				// ReSharper disable ExplicitCallerInfoArgument
 				RaisePropertyChanged( nameof( ProjectList ) );
 				RaisePropertyChanged( nameof( TagList ) );
 				RaisePropertyChanged( nameof( Searcher ) );
+				// ReSharper restore ExplicitCallerInfoArgument
 
 				IsLoading = false;
+
+				CommandManager.InvalidateRequerySuggested();
 			} );
 		}
 
@@ -94,7 +98,7 @@ namespace GSD.ViewModels
 		public bool ExpandEntries
 		{
 			[DebuggerStepThrough] get { return _ExpandEntries; }
-			set
+			private set
 			{
 				if( _ExpandEntries == value )
 				{
@@ -135,7 +139,7 @@ namespace GSD.ViewModels
 
 		public EntrySearcher Searcher { get; private set; }
 
-		public TagListViewModel TagList { get; private set; }
+		public TagListViewModel TagList { get; set; }
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private RelayCommand _AddEntryCommand;
