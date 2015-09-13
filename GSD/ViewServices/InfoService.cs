@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using GSD.ViewModels;
 using GSD.Views;
 using MahApps.Metro.Controls;
@@ -9,6 +10,7 @@ namespace GSD.ViewServices
 	internal interface IInfoService : IViewService
 	{ }
 
+	[ExcludeFromCodeCoverage]
 	internal class InfoService : IInfoService
 	{
 		public async Task<object> Execute( MetroWindow window, object args )

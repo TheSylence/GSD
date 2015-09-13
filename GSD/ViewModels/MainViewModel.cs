@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Messages;
@@ -11,11 +12,21 @@ namespace GSD.ViewModels
 	internal class MainViewModel : ViewModelBaseEx
 	{
 		public MainViewModel()
+			: this( null )
 		{
+		}
+
+		public MainViewModel( IDatabaseConnector connector, ITaskRunner taskRunner = null )
+		{
+			var dbConnector = connector ?? Application.Current as IDatabaseConnector;
+			Debug.Assert( dbConnector != null );
+
+			var runner = taskRunner ?? new TaskRunner();
+
 			IsLoading = true;
-			Task.Run( () =>
+			runner.Run( () =>
 			{
-				App.ConnectToDatabase();
+				dbConnector.ConnectToDatabase();
 
 				ProjectList = new ProjectListViewModel();
 				TagList = new TagListViewModel( ProjectList );

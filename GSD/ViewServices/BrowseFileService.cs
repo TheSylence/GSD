@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using MahApps.Metro.Controls;
 using Microsoft.Win32;
 
@@ -8,6 +9,7 @@ namespace GSD.ViewServices
 	{
 	}
 
+	[ExcludeFromCodeCoverage]
 	internal class BrowseFileService : IBrowseFileService
 	{
 		public Task<object> Execute( MetroWindow window, object args )

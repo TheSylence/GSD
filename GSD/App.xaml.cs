@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -8,6 +9,7 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using GalaSoft.MvvmLight.Threading;
 using GSD.Models.Repositories;
+using GSD.ViewModels;
 using GSD.ViewServices;
 using MahApps.Metro;
 using NHibernate;
@@ -20,7 +22,8 @@ namespace GSD
 	/// <summary>
 	///     Interaction logic for App.xaml
 	/// </summary>
-	public partial class App
+	[ExcludeFromCodeCoverage]
+	public partial class App : IDatabaseConnector
 	{
 		protected override void OnExit( ExitEventArgs e )
 		{
@@ -46,7 +49,7 @@ namespace GSD
 			ApplySettings();
 		}
 
-		public static void ConnectToDatabase()
+		public void ConnectToDatabase()
 		{
 			var repo = new SettingsRepository();
 			string fileName = repo.GetById( SettingKeys.DatabasePath )?.Value;

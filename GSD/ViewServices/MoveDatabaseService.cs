@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using GSD.ViewModels;
 using GSD.Views;
@@ -10,6 +11,7 @@ namespace GSD.ViewServices
 	internal interface IMoveDatabaseService : IViewService
 	{ }
 
+	[ExcludeFromCodeCoverage]
 	internal class MoveDatabaseService : IMoveDatabaseService
 	{
 		public async Task<object> Execute( MetroWindow window, object args )

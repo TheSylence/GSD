@@ -18,7 +18,7 @@ namespace GSD.Models.Repositories
 				{Accent, "Blue"},
 				{Theme, "BaseLight"},
 				{LastProject, "-1"},
-				{DatabasePath, ""},
+				{DatabasePath, Constants.DefaultDatabasePath},
 				{ExpandEntries, "False"},
 				{Language, "en-US"}
 			};

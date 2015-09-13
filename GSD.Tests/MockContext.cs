@@ -1,4 +1,5 @@
 ﻿using GSD.Models.Repositories;
+using GSD.ViewModels;
 using GSD.ViewServices;
 using Moq;
 
@@ -13,8 +14,11 @@ namespace GSD.Tests
 			SettingsRepoMock = new Mock<ISettingsRepository>( behavior );
 			ProjectRepoMock = new Mock<IProjectRepository>( behavior );
 			ViewServiceRepoMock = new Mock<IViewServiceRepository>( behavior );
+			AppThemesMock = new Mock<IAppThemes>( behavior );
 		}
 
+		public IAppThemes AppThemes => AppThemesMock.Object;
+		public Mock<IAppThemes> AppThemesMock { get; }
 		public IProjectRepository ProjectRepo => ProjectRepoMock.Object;
 		public Mock<IProjectRepository> ProjectRepoMock { get; }
 		public ISettingsRepository SettingsRepo => SettingsRepoMock.Object;

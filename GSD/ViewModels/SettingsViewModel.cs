@@ -7,11 +7,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
-using System.Windows.Media;
 using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Models.Repositories;
 using GSD.ViewServices;
-using MahApps.Metro;
 using WPFLocalizeExtension.Engine;
 using WPFLocalizeExtension.Providers;
 
@@ -20,19 +18,17 @@ namespace GSD.ViewModels
 	internal class SettingsViewModel : ViewModelBaseEx, IResettable
 	{
 		public SettingsViewModel()
+			: this( null )
 		{
-			AvailableAccents = ThemeManager.Accents.Select( a => new ColorItem
-			{
-				Name = a.Name,
-				BorderBrush = a.Resources["AccentColorBrush"] as Brush
-			} ).ToList();
+		}
 
-			AvailableThemes = ThemeManager.AppThemes.Select( t => new ColorItem
-			{
-				Name = t.Name,
-				ColorBrush = t.Resources["WhiteColorBrush"] as Brush,
-				BorderBrush = t.Resources["BlackColorBrush"] as Brush
-			} ).ToList();
+		public SettingsViewModel( IViewServiceRepository viewServices, ISettingsRepository settingsRepo = null, IAppThemes themes = null )
+			: base( viewServices, settingsRepo )
+		{
+			Themes = themes ?? new AppThemes();
+
+			AvailableAccents = Themes.Accents.ToList();
+			AvailableThemes = Themes.Themes.ToList();
 
 			ResxLocalizationProvider.Instance.UpdateCultureList( GetType().Assembly.FullName, "Strings" );
 			IEnumerable<CultureInfo> languages = ResxLocalizationProvider.Instance.AvailableCultures;
@@ -118,6 +114,8 @@ namespace GSD.ViewModels
 			{
 				Settings.Set( key, SettingKeys.DefaultValues[key] );
 			}
+
+			Reset();
 		}
 
 		private void ExecuteSaveCommand()
@@ -127,16 +125,11 @@ namespace GSD.ViewModels
 			Settings.Set( SettingKeys.ExpandEntries, ExpandEntries.ToString() );
 			Settings.Set( SettingKeys.Language, SelectedLanguage.IetfLanguageTag );
 
-			var accent = ThemeManager.Accents.FirstOrDefault( a => a.Name == SelectedAccent.Name );
-			var theme = ThemeManager.AppThemes.FirstOrDefault( t => t.Name == SelectedTheme.Name );
-
-			ThemeManager.ChangeAppStyle( Application.Current, accent, theme );
+			Themes.ChangeStyle( SelectedTheme.Name, SelectedAccent.Name );
 		}
 
 		public List<ColorItem> AvailableAccents { get; }
-
 		public List<CultureInfo> AvailableLanguages { get; }
-
 		public List<ColorItem> AvailableThemes { get; }
 
 		public string DatabasePath
@@ -178,11 +171,8 @@ namespace GSD.ViewModels
 		}
 
 		public RelayCommand MoveDatabaseCommand => _MoveDatabaseCommand ?? ( _MoveDatabaseCommand = new RelayCommand( ExecuteMoveDatabaseCommand ) );
-
 		public RelayCommand OpenDatabaseFolderCommand => _OpenDatabaseFolderCommand ?? ( _OpenDatabaseFolderCommand = new RelayCommand( ExecuteOpenDatabaseFolderCommand ) );
-
 		public RelayCommand ResetToDefaultsCommand => _ResetToDefaultsCommand ?? ( _ResetToDefaultsCommand = new RelayCommand( ExecuteResetToDefaultsCommand ) );
-
 		public RelayCommand SaveCommand => _SaveCommand ?? ( _SaveCommand = new RelayCommand( ExecuteSaveCommand ) );
 
 		public ColorItem SelectedAccent
@@ -250,6 +240,8 @@ namespace GSD.ViewModels
 				RaisePropertyChanged();
 			}
 		}
+
+		private readonly IAppThemes Themes;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private string _DatabasePath;

@@ -21,7 +21,7 @@ namespace GSD.Tests.Models.Repositories
 			Assert.IsTrue( File.ReadAllText( fileName ).Contains( $"{SettingKeys.Accent}={SettingKeys.DefaultValues[SettingKeys.Accent]}" ) );
 		}
 
-		[TestMethod, TestCategory( "Models.Repository" )]
+		[TestMethod, TestCategory( "Models.Repositories" )]
 		public void SetWritesNewValue()
 		{
 			// Arrange

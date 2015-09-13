@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using GSD.Resources;
 using GSD.ViewModels;
@@ -12,6 +13,7 @@ namespace GSD.ViewServices
 	{
 	}
 
+	[ExcludeFromCodeCoverage]
 	internal class ProgressService : IProgressService
 	{
 		public async Task<object> Execute( MetroWindow window, object args )

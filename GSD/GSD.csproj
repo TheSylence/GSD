@@ -117,10 +117,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\AppThemes.cs" />
     <Compile Include="ViewModels\DatabasePathViewModel.cs" />
+    <Compile Include="ViewModels\IDatabaseConnector.cs" />
     <Compile Include="ViewModels\InfoViewModel.cs" />
     <Compile Include="ViewModels\IViewController.cs" />
     <Compile Include="ViewModels\ProgressReport.cs" />
+    <Compile Include="ViewModels\TaskRunner.cs" />
     <Compile Include="ViewServices\BrowseFileService.cs" />
     <Compile Include="ViewServices\InfoService.cs" />
     <Compile Include="ViewServices\MoveDatabaseService.cs" />
