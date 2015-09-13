@@ -71,6 +71,8 @@ namespace GSD.ViewModels
 		protected override void RaisePropertyChanged( [CallerMemberName] string propertyName = null )
 		{
 			ValidateProperty( propertyName );
+
+			base.RaisePropertyChanged( propertyName );
 		}
 
 		protected IValidationSetup Validate( string propertyName )
