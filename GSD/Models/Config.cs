@@ -2,7 +2,7 @@
 
 namespace GSD.Models
 {
-	internal class Config
+	public class Config
 	{
 		public virtual T Get<T>()
 		{

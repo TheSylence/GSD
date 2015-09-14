@@ -1,19 +1,20 @@
-﻿using System.Diagnostics;
+﻿using FluentNHibernate.Cfg;
+using FluentNHibernate.Cfg.Db;
+using GalaSoft.MvvmLight.Threading;
+using GSD.Models.Repositories;
+using GSD.ViewModels;
+using GSD.Views;
+using GSD.ViewServices;
+using MahApps.Metro;
+using NHibernate;
+using NHibernate.Tool.hbm2ddl;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
-using FluentNHibernate.Cfg;
-using FluentNHibernate.Cfg.Db;
-using GalaSoft.MvvmLight.Threading;
-using GSD.Models.Repositories;
-using GSD.ViewModels;
-using GSD.ViewServices;
-using MahApps.Metro;
-using NHibernate;
-using NHibernate.Tool.hbm2ddl;
 using WPFLocalizeExtension.Engine;
 using WPFLocalizeExtension.Providers;
 
@@ -29,11 +30,15 @@ namespace GSD
 		{
 			Session.Dispose();
 			Instance.Dispose();
+			TrayIcon?.Dispose();
+			TrayIcon = null;
 
 			base.OnExit( e );
 		}
 
 		private SingleInstance Instance;
+
+		public static ISettingsRepository Settings { get; private set; }
 
 		protected override void OnStartup( StartupEventArgs e )
 		{
@@ -44,9 +49,11 @@ namespace GSD
 				return;
 			}
 
-			var settingsRepo = new SettingsRepository();
+			DispatcherUnhandledException += App_DispatcherUnhandledException;
+
+			Settings = new SettingsRepository();
 			bool minimize = false;
-			if( settingsRepo.GetById( SettingKeys.StartMinimized ).Get<bool>() )
+			if( Settings.GetById( SettingKeys.StartMinimized ).Get<bool>() )
 			{
 				if( e.Args.Any( x => x.Equals( Constants.AutostartArgument, System.StringComparison.OrdinalIgnoreCase ) ) )
 				{
@@ -60,22 +67,21 @@ namespace GSD
 				splash.Show( true, true );
 			}
 
+			TrayIcon = (TrayIcon)FindResource( "NotificationIcon" );
+
 			base.OnStartup( e );
 
 #if DEBUG
-			LocalizeDictionary.Instance.MissingKeyEvent += ( s, args ) =>
-			{
-				Debug.WriteLine( $"Error: Resource key not found: '{args.Key}'" );
-			};
+			LocalizeDictionary.Instance.MissingKeyEvent += ( s, args ) => { Debug.WriteLine( $"Error: Resource key not found: '{args.Key}'" ); };
 #endif
 
 			DispatcherHelper.Initialize();
 
 			SetupViewServices();
 
-			ApplySettings( settingsRepo );
+			ApplySettings();
 
-			Views.MainWindow window = new Views.MainWindow();
+			MainWindow window = new MainWindow();
 			if( minimize )
 			{
 				window.WindowState = WindowState.Minimized;
@@ -86,10 +92,17 @@ namespace GSD
 			Instance.RegisterWindow( MainWindow );
 		}
 
+		private void App_DispatcherUnhandledException( object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e )
+		{
+			TrayIcon?.Dispose();
+			TrayIcon = null;
+		}
+
+		private TrayIcon TrayIcon;
+
 		public void ConnectToDatabase()
 		{
-			var repo = new SettingsRepository();
-			string fileName = repo.GetById( SettingKeys.DatabasePath )?.Value;
+			string fileName = Settings.GetById( SettingKeys.DatabasePath )?.Value;
 			if( string.IsNullOrWhiteSpace( fileName ) )
 			{
 				fileName = Constants.DefaultDatabasePath;
@@ -122,10 +135,10 @@ namespace GSD
 			ViewServices.Register<IProgressService>( new ProgressService() );
 		}
 
-		private void ApplySettings( ISettingsRepository repo )
+		private void ApplySettings()
 		{
-			var themeName = repo.GetById( SettingKeys.Theme ).Value;
-			var accentName = repo.GetById( SettingKeys.Accent ).Value;
+			var themeName = Settings.GetById( SettingKeys.Theme ).Value;
+			var accentName = Settings.GetById( SettingKeys.Accent ).Value;
 
 			var accent = ThemeManager.Accents.FirstOrDefault( a => a.Name.Equals( accentName ) );
 			var theme = ThemeManager.AppThemes.FirstOrDefault( t => t.Name.Equals( themeName ) );
@@ -135,7 +148,7 @@ namespace GSD
 			ResxLocalizationProvider.Instance.UpdateCultureList( GetType().Assembly.FullName, "Strings" );
 			var availableCultures = ResxLocalizationProvider.Instance.AvailableCultures.ToList();
 
-			var lang = repo.GetById( SettingKeys.Language ).Value;
+			var lang = Settings.GetById( SettingKeys.Language ).Value;
 			var cultureInfo = CultureInfo.CreateSpecificCulture( lang );
 
 			while( !Equals( cultureInfo, CultureInfo.InvariantCulture ) && !availableCultures.Contains( cultureInfo ) )

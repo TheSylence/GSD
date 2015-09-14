@@ -56,6 +56,7 @@
 			<Separator />
             <CheckBox Content="{lex:Loc GSD:Strings:ExpandEntries}" IsChecked="{Binding ExpandEntries, Mode=TwoWay}" />
             <Separator />
+            <CheckBox Content="{lex:Loc GSD:Strings:CloseToTray}" IsChecked="{Binding CloseToTray, Mode=TwoWay}" Margin="0,5"/>
             <CheckBox Content="{lex:Loc GSD:Strings:StartWithWindows}" IsChecked="{Binding StartWithWindows, Mode=TwoWay}"/>
             <CheckBox Content="{lex:Loc GSD:Strings:StartMinimized}" IsEnabled="{Binding StartWithWindows}" IsChecked="{Binding StartMinimized, Mode=TwoWay}" Margin="25,5"/>
             <Separator />

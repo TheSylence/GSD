@@ -3,357 +3,358 @@
                       mc:Ignorable="d" xmlns:lex="http://wpflocalizeextension.codeplex.com" lex:ResxLocalizationProvider.DefaultAssembly="GSD" lex:InheritingResxLocalizationProvider.DefaultDictionary="Strings"
                       Title="{Binding ProjectList.CurrentProject.Model.Name, StringFormat=GSD - {0}, FallbackValue=GSD}"
                       Height="600" Width="800">
-	<Window.DataContext>
-		<viewModels:MainViewModel />
-	</Window.DataContext>
+    <Window.DataContext>
+        <viewModels:MainViewModel />
+    </Window.DataContext>
 
-	<Window.Resources>
-		<views:MainBindingProxy Data="{Binding}" x:Key="MainProxy" />
-		<GeometryDrawing x:Key="WindowIcon"
-		                 Brush="{StaticResource IdealForegroundColorBrush}"
+    <Window.Resources>
+        <views:MainBindingProxy Data="{Binding}" x:Key="MainProxy" />
+        <GeometryDrawing x:Key="WindowIcon"
+		                 Brush="{DynamicResource IdealForegroundColorBrush}"
 		                 Geometry="M373.529,81.667C364.437,81.667,355.715,78.069,349.265,71.659L327.5,50 184.5,50 162.733,71.658C156.285,78.069,147.562,81.667,138.47,81.667L79.5,81.667 79.5,462 432.5,462 432.5,81.667 373.529,81.667z M392,421.5L119,421.5 119,121.5 181.333,121.5 206.25,146.5 307.5,146.5 332.75,121.5 392,121.5 392,421.5z M162.874,277.426L179.23,262.305C198.363,271.563 210.496,278.607 232.001,293.936 272.427,248.059 299.14,224.784 348.793,193.891L354.115,206.133C313.168,241.867 283.178,281.668 239.996,359.11 213.361,327.741 195.585,307.746 162.874,277.426z" />
-	</Window.Resources>
 
-	<controls:MetroWindow.IconTemplate>
-		<DataTemplate>
-			<Grid Width="{TemplateBinding Width}"
+    </Window.Resources>
+
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Grid Width="{TemplateBinding Width}"
 			      Height="{TemplateBinding Height}"
 			      Margin="4" Background="Transparent" RenderOptions.EdgeMode="Aliased" RenderOptions.BitmapScalingMode="HighQuality">
-				<Image>
-					<Image.Source>
-						<DrawingImage Drawing="{StaticResource WindowIcon}" />
-					</Image.Source>
-				</Image>
-			</Grid>
-		</DataTemplate>
-	</controls:MetroWindow.IconTemplate>
+                <Image>
+                    <Image.Source>
+                        <DrawingImage Drawing="{StaticResource WindowIcon}" />
+                    </Image.Source>
+                </Image>
+            </Grid>
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
 
-	<controls:MetroWindow.RightWindowCommands>
-		<controls:WindowCommands>
-			<Button ToolTip="{lex:Loc GSD:Strings:Info}" Command="{Binding InfoCommand}">
-				<Rectangle Width="20" Height="20"
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button ToolTip="{lex:Loc GSD:Strings:Info}" Command="{Binding InfoCommand}">
+                <Rectangle Width="20" Height="20"
 				           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-					<Rectangle.OpacityMask>
-						<VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_information_circle}" />
-					</Rectangle.OpacityMask>
-				</Rectangle>
-			</Button>
-			<Button ToolTip="{lex:Loc GSD:Strings:ReportError}" Command="{Binding ErrorReportCommand}">
-				<Rectangle Width="20" Height="20"
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_information_circle}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button ToolTip="{lex:Loc GSD:Strings:ReportError}" Command="{Binding ErrorReportCommand}">
+                <Rectangle Width="20" Height="20"
 				           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-					<Rectangle.OpacityMask>
-						<VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_social_github_octocat_solid}" />
-					</Rectangle.OpacityMask>
-				</Rectangle>
-			</Button>
-		</controls:WindowCommands>
-	</controls:MetroWindow.RightWindowCommands>
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_social_github_octocat_solid}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
 
-	<Window.InputBindings>
-		<KeyBinding Modifiers="Control" Key="T"
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Control" Key="T"
 		            Command="{Binding OpenTagManagementCommand}" />
-		<KeyBinding Modifiers="Control" Key="N"
+        <KeyBinding Modifiers="Control" Key="N"
 		            Command="{Binding AddEntryCommand}" />
-		<KeyBinding Modifiers="Control" Key="P"
+        <KeyBinding Modifiers="Control" Key="P"
 		            Command="{Binding OpenProjectManagementCommand}" />
-	</Window.InputBindings>
+    </Window.InputBindings>
 
-	<Window.Icon>
-		<DrawingImage Drawing="{StaticResource WindowIcon}" />
-	</Window.Icon>
+    <Window.Icon>
+        <DrawingImage Drawing="{StaticResource WindowIcon}" />
+    </Window.Icon>
 
-	<i:Interaction.Behaviors>
-		<behaviors:DataContextDisposer />
-		<behaviours:BorderlessWindowBehavior />
-		<behaviours:WindowsSettingBehaviour />
-		<behaviours:GlowWindowBehavior />
-	</i:Interaction.Behaviors>
+    <i:Interaction.Behaviors>
+        <behaviors:DataContextDisposer />
+        <behaviours:BorderlessWindowBehavior />
+        <behaviours:WindowsSettingBehaviour />
+        <behaviours:GlowWindowBehavior />
+    </i:Interaction.Behaviors>
 
-	<controls:MetroWindow.Flyouts>
-		<controls:FlyoutsControl>
-			<views:ProjectsFlyout DataContext="{Binding ProjectList}" />
-			<views:TagsFlyout DataContext="{Binding TagList}" />
-			<views:SettingsFlyout />
-			<views:AddEntryFlyout />
-			<views:EditEntryFlyout />
-		</controls:FlyoutsControl>
-	</controls:MetroWindow.Flyouts>
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl>
+            <views:ProjectsFlyout DataContext="{Binding ProjectList}" />
+            <views:TagsFlyout DataContext="{Binding TagList}" />
+            <views:SettingsFlyout />
+            <views:AddEntryFlyout />
+            <views:EditEntryFlyout />
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
 
-	<Grid>
-		<Grid>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition />
-			</Grid.ColumnDefinitions>
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-			<Grid.RowDefinitions>
-				<RowDefinition />
-				<RowDefinition Height="Auto" />
-			</Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-			<StackPanel Orientation="Vertical" Grid.Row="0" Margin="5">
-				<Button Width="36" Height="36"
+            <StackPanel Orientation="Vertical" Grid.Row="0" Margin="5">
+                <Button Width="36" Height="36"
 				        ToolTip="{lex:Loc GSD:Strings:Settings}"
 				        Style="{DynamicResource MetroCircleButtonStyle}"
 				        Command="{Binding OpenSettingsCommand}">
-					<Rectangle Width="16" Height="16"
+                    <Rectangle Width="16" Height="16"
 					           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-						<Rectangle.OpacityMask>
-							<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_cog}" />
-						</Rectangle.OpacityMask>
-					</Rectangle>
-				</Button>
-				<Button Width="36" Height="36"
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_cog}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+                <Button Width="36" Height="36"
 				        ToolTip="{lex:Loc GSD:Strings:ManageProjects}"
 				        Style="{DynamicResource MetroCircleButtonStyle}"
 				        Command="{Binding OpenProjectManagementCommand}">
-					<Rectangle Width="16" Height="16"
+                    <Rectangle Width="16" Height="16"
 					           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-						<Rectangle.OpacityMask>
-							<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_checkmark}" />
-						</Rectangle.OpacityMask>
-					</Rectangle>
-				</Button>
-				<Button Width="36" Height="36"
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_checkmark}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+                <Button Width="36" Height="36"
 				        ToolTip="{lex:Loc GSD:Strings:ManageTags}"
 				        Style="{DynamicResource MetroCircleButtonStyle}"
 				        Command="{Binding OpenTagManagementCommand}">
-					<Rectangle Width="16" Height="16"
+                    <Rectangle Width="16" Height="16"
 					           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-						<Rectangle.OpacityMask>
-							<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_tag}" />
-						</Rectangle.OpacityMask>
-					</Rectangle>
-				</Button>
-				<Button Width="36" Height="36"
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_tag}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+                <Button Width="36" Height="36"
 				        ToolTip="{lex:Loc GSD:Strings:AddNewEntry}"
 				        Style="{DynamicResource MetroCircleButtonStyle}"
 				        Command="{Binding AddEntryCommand}">
-					<Rectangle Width="16" Height="16"
+                    <Rectangle Width="16" Height="16"
 					           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-						<Rectangle.OpacityMask>
-							<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_add}" />
-						</Rectangle.OpacityMask>
-					</Rectangle>
-				</Button>
-			</StackPanel>
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_add}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+            </StackPanel>
 
-			<DockPanel Grid.Column="1" Grid.Row="0" Margin="5">
-				<TextBox DockPanel.Dock="Top"
+            <DockPanel Grid.Column="1" Grid.Row="0" Margin="5">
+                <TextBox DockPanel.Dock="Top"
 				         controls:TextBoxHelper.Watermark="{lex:Loc GSD:Strings:Search}"
 				         controls:TextBoxHelper.ClearTextButton="True"
 				         Text="{Binding Searcher.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-					<TextBox.ToolTip>
-						<Grid>
-							<Grid.Resources>
-								<Style TargetType="TextBlock">
-									<Setter Property="Margin" Value="5" />
-								</Style>
-							</Grid.Resources>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="Auto" />
-							</Grid.RowDefinitions>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition />
-								<ColumnDefinition Width="Auto" />
-							</Grid.ColumnDefinitions>
-							<TextBlock Text="{lex:Loc GSD:Strings:SearchAllEntriesTagged}"
+                    <TextBox.ToolTip>
+                        <Grid>
+                            <Grid.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Margin" Value="5" />
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{lex:Loc GSD:Strings:SearchAllEntriesTagged}"
 							           Grid.Column="0" Grid.Row="0" />
-							<TextBlock Text="label:abc" FontWeight="Bold" Grid.Column="1" Grid.Row="0" />
+                            <TextBlock Text="label:abc" FontWeight="Bold" Grid.Column="1" Grid.Row="0" />
 
-							<TextBlock Text="{lex:Loc GSD:Strings:SearchAllCompletedEntries}"
+                            <TextBlock Text="{lex:Loc GSD:Strings:SearchAllCompletedEntries}"
 							           Grid.Row="1" Grid.Column="0" />
-							<TextBlock Text="status:done" FontWeight="Bold" Grid.Column="1" Grid.Row="1" />
+                            <TextBlock Text="status:done" FontWeight="Bold" Grid.Column="1" Grid.Row="1" />
 
-							<TextBlock Text="{lex:Loc GSD:Strings:SearchAllOpenEntries}"
+                            <TextBlock Text="{lex:Loc GSD:Strings:SearchAllOpenEntries}"
 							           Grid.Row="2" Grid.Column="0" />
-							<TextBlock Text="status:open" FontWeight="Bold" Grid.Column="1" Grid.Row="2" />
+                            <TextBlock Text="status:open" FontWeight="Bold" Grid.Column="1" Grid.Row="2" />
 
-							<TextBlock Text="{lex:Loc GSD:Strings:SearchAllEntriesContaining}"
+                            <TextBlock Text="{lex:Loc GSD:Strings:SearchAllEntriesContaining}"
 							           Grid.Row="3" Grid.Column="0" />
-							<TextBlock Text="details:&quot;test 123&quot;" FontWeight="Bold" Grid.Column="1" Grid.Row="3" />
+                            <TextBlock Text="details:&quot;test 123&quot;" FontWeight="Bold" Grid.Column="1" Grid.Row="3" />
 
-							<TextBlock Text="{lex:Loc GSD:Strings:SearchIsDoneUsingAND}"
+                            <TextBlock Text="{lex:Loc GSD:Strings:SearchIsDoneUsingAND}"
 							           FontStyle="Italic" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="4" />
-						</Grid>
-					</TextBox.ToolTip>
-				</TextBox>
+                        </Grid>
+                    </TextBox.ToolTip>
+                </TextBox>
 
-				<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
-					<ItemsControl ItemsSource="{Binding Searcher.Matches}">
-						<ItemsControl.Style>
-							<Style TargetType="ItemsControl" BasedOn="{StaticResource {x:Type ItemsControl}}">
-								<Style.Triggers>
-									<DataTrigger Binding="{Binding Searcher.Matches.Count}" Value="0">
-										<Setter Property="Template">
-											<Setter.Value>
-												<ControlTemplate>
-													<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-														<TextBlock Text="{lex:Loc GSD:Strings:SearchDidNotReturnAnyMatches}" FontSize="{StaticResource NormalFontSize}" />
-													</StackPanel>
-												</ControlTemplate>
-											</Setter.Value>
-										</Setter>
-									</DataTrigger>
-									<DataTrigger Binding="{Binding ProjectList.Projects.Count}" Value="0">
-										<Setter Property="Template">
-											<Setter.Value>
-												<ControlTemplate>
-													<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-														<TextBlock Text="{lex:Loc GSD:Strings:NoProjectsDefined}" FontSize="{StaticResource NormalFontSize}" />
-														<Button Content="{lex:Loc GSD:Strings:CreateProject}"
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
+                    <ItemsControl ItemsSource="{Binding Searcher.Matches}">
+                        <ItemsControl.Style>
+                            <Style TargetType="ItemsControl" BasedOn="{StaticResource {x:Type ItemsControl}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Searcher.Matches.Count}" Value="0">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                        <TextBlock Text="{lex:Loc GSD:Strings:SearchDidNotReturnAnyMatches}" FontSize="{StaticResource NormalFontSize}" />
+                                                    </StackPanel>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ProjectList.Projects.Count}" Value="0">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                        <TextBlock Text="{lex:Loc GSD:Strings:NoProjectsDefined}" FontSize="{StaticResource NormalFontSize}" />
+                                                        <Button Content="{lex:Loc GSD:Strings:CreateProject}"
 														        Margin="0,5"
 														        Command="{Binding OpenProjectManagementCommand}" />
-													</StackPanel>
-												</ControlTemplate>
-											</Setter.Value>
-										</Setter>
-									</DataTrigger>
-									<DataTrigger Binding="{Binding ProjectList.CurrentProject.Todos.Count}" Value="0">
-										<Setter Property="Template">
-											<Setter.Value>
-												<ControlTemplate>
-													<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-														<TextBlock Text="{lex:Loc GSD:Strings:NoEntriesDefined}" FontSize="{StaticResource NormalFontSize}" />
-														<Button Content="{lex:Loc GSD:Strings:AddNewEntry}"
+                                                    </StackPanel>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ProjectList.CurrentProject.Todos.Count}" Value="0">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                        <TextBlock Text="{lex:Loc GSD:Strings:NoEntriesDefined}" FontSize="{StaticResource NormalFontSize}" />
+                                                        <Button Content="{lex:Loc GSD:Strings:AddNewEntry}"
 														        Margin="0,5"
 														        Command="{Binding AddEntryCommand}" />
-													</StackPanel>
-												</ControlTemplate>
-											</Setter.Value>
-										</Setter>
-									</DataTrigger>
-								</Style.Triggers>
-							</Style>
-						</ItemsControl.Style>
-						<ItemsControl.ItemTemplate>
-							<DataTemplate DataType="viewModels:TodoViewModel">
-								<Expander IsExpanded="{Binding Data.ExpandEntries, Source={StaticResource MainProxy}, Mode=OneTime}">
-									<Expander.Header>
-										<DockPanel>
-											<StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
-												<ToggleButton Width="32" Height="32"
+                                                    </StackPanel>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ItemsControl.Style>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="viewModels:TodoViewModel">
+                                <Expander IsExpanded="{Binding Data.ExpandEntries, Source={StaticResource MainProxy}, Mode=OneTime}">
+                                    <Expander.Header>
+                                        <DockPanel>
+                                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
+                                                <ToggleButton Width="32" Height="32"
 												              Style="{DynamicResource MetroCircleToggleButtonStyle}"
 												              x:Name="btnTags"
 												              Foreground="{DynamicResource IdealForegroundColorBrush}">
-													<Rectangle Width="12" Height="12"
+                                                    <Rectangle Width="12" Height="12"
 													           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
-														<Rectangle.OpacityMask>
-															<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_tag}" />
-														</Rectangle.OpacityMask>
-													</Rectangle>
-												</ToggleButton>
+                                                        <Rectangle.OpacityMask>
+                                                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_tag}" />
+                                                        </Rectangle.OpacityMask>
+                                                    </Rectangle>
+                                                </ToggleButton>
 
-												<Popup StaysOpen="False"
+                                                <Popup StaysOpen="False"
 												       PlacementTarget="{Binding ElementName=btnTags}"
 												       Placement="Bottom"
 												       IsOpen="{Binding IsChecked, ElementName=btnTags}">
-													<Border BorderThickness="1"
+                                                    <Border BorderThickness="1"
 													        BorderBrush="{DynamicResource AccentColorBrush}"
 													        Background="{DynamicResource ControlBackgroundBrush}">
-														<ItemsControl ItemsSource="{Binding AllTags}" Margin="5">
-															<ItemsControl.Style>
-																<Style TargetType="ItemsControl" BasedOn="{StaticResource {x:Type ItemsControl}}">
-																	<Style.Triggers>
-																		<DataTrigger Binding="{Binding AllTags.Count}" Value="0">
-																			<Setter Property="Template">
-																				<Setter.Value>
-																					<ControlTemplate>
-																						<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-																							<TextBlock Text="{lex:Loc GSD:Strings:NoTagsDefinedForProject}" FontSize="{StaticResource NormalFontSize}" />
-																							<Button Content="{lex:Loc GSD:Strings:AddTag}"
+                                                        <ItemsControl ItemsSource="{Binding AllTags}" Margin="5">
+                                                            <ItemsControl.Style>
+                                                                <Style TargetType="ItemsControl" BasedOn="{StaticResource {x:Type ItemsControl}}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding AllTags.Count}" Value="0">
+                                                                            <Setter Property="Template">
+                                                                                <Setter.Value>
+                                                                                    <ControlTemplate>
+                                                                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                                            <TextBlock Text="{lex:Loc GSD:Strings:NoTagsDefinedForProject}" FontSize="{StaticResource NormalFontSize}" />
+                                                                                            <Button Content="{lex:Loc GSD:Strings:AddTag}"
 																							        Margin="0,5"
 																							        Command="{Binding Data.OpenTagManagementCommand, Source={StaticResource MainProxy}}" />
-																						</StackPanel>
-																					</ControlTemplate>
-																				</Setter.Value>
-																			</Setter>
-																		</DataTrigger>
-																	</Style.Triggers>
-																</Style>
-															</ItemsControl.Style>
-															<ItemsControl.ItemTemplate>
-																<DataTemplate DataType="viewModels:TodoTagViewModel">
-																	<CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                                                                        </StackPanel>
+                                                                                    </ControlTemplate>
+                                                                                </Setter.Value>
+                                                                            </Setter>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ItemsControl.Style>
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate DataType="viewModels:TodoTagViewModel">
+                                                                    <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
 																	          Content="{Binding}"
 																	          ContentTemplate="{StaticResource TodoTagTemplate}" />
-																</DataTemplate>
-															</ItemsControl.ItemTemplate>
-														</ItemsControl>
-													</Border>
-												</Popup>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </Border>
+                                                </Popup>
 
-												<Button Width="32" Height="32"
+                                                <Button Width="32" Height="32"
 												        ToolTip="{lex:Loc GSD:Strings:EditEntry}"
 												        Style="{DynamicResource MetroCircleButtonStyle}"
 												        Command="{Binding Data.EditEntryCommand, Source={StaticResource MainProxy}}"
 												        CommandParameter="{Binding}"
 												        VerticalAlignment="Center"
 												        Foreground="{DynamicResource IdealForegroundColorBrush}">
-													<Rectangle Width="12" Height="12"
+                                                    <Rectangle Width="12" Height="12"
 													           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-														<Rectangle.OpacityMask>
-															<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_edit}" />
-														</Rectangle.OpacityMask>
-													</Rectangle>
-												</Button>
-												<Button Width="32" Height="32"
+                                                        <Rectangle.OpacityMask>
+                                                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_edit}" />
+                                                        </Rectangle.OpacityMask>
+                                                    </Rectangle>
+                                                </Button>
+                                                <Button Width="32" Height="32"
 												        ToolTip="{lex:Loc GSD:Strings:DeleteEntry}"
 												        Style="{DynamicResource MetroCircleButtonStyle}"
 												        Command="{Binding DeleteEntryCommand}"
 												        VerticalAlignment="Center"
 												        Foreground="{DynamicResource IdealForegroundColorBrush}">
-													<Rectangle Width="12" Height="12"
+                                                    <Rectangle Width="12" Height="12"
 													           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-														<Rectangle.OpacityMask>
-															<VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_delete}" />
-														</Rectangle.OpacityMask>
-													</Rectangle>
-												</Button>
-											</StackPanel>
+                                                        <Rectangle.OpacityMask>
+                                                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_delete}" />
+                                                        </Rectangle.OpacityMask>
+                                                    </Rectangle>
+                                                </Button>
+                                            </StackPanel>
 
-											<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-												<CheckBox ToolTip="{lex:Loc GSD:Strings:Done}"
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <CheckBox ToolTip="{lex:Loc GSD:Strings:Done}"
 												          Content="{Binding Model.Summary}"
 												          IsChecked="{Binding Done, Mode=TwoWay}"
 												          Foreground="{DynamicResource IdealForegroundColorBrush}"
 												          VerticalAlignment="Center"
 												          FontSize="{DynamicResource NormalFontSize}" />
 
-												<ItemsControl ItemsSource="{Binding Tags}"
+                                                <ItemsControl ItemsSource="{Binding Tags}"
 												              ItemTemplate="{StaticResource TodoTagTemplate}"
 												              Margin="5,0" VerticalAlignment="Center">
-													<ItemsControl.ItemsPanel>
-														<ItemsPanelTemplate>
-															<StackPanel Orientation="Horizontal" />
-														</ItemsPanelTemplate>
-													</ItemsControl.ItemsPanel>
-												</ItemsControl>
-											</StackPanel>
-										</DockPanel>
-									</Expander.Header>
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Horizontal" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </DockPanel>
+                                    </Expander.Header>
 
-									<FlowDocumentScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden"
+                                    <FlowDocumentScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden"
 									                          Document="{Binding Model.Details, Converter={StaticResource TextToFlowDocumentConv}}" />
-								</Expander>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</ScrollViewer>
-			</DockPanel>
+                                </Expander>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </DockPanel>
 
-			<views:StatusBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Padding="5,0" />
-		</Grid>
+            <views:StatusBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Padding="5,0" />
+        </Grid>
 
-		<Grid Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibleConv}}" Background="{StaticResource SemiTransparentWhiteBrush}">
-			<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-				<controls:ProgressRing IsActive="{Binding IsLoading}" IsLarge="True" />
-				<TextBlock Text="{lex:Loc GSD:Strings:PleaseWait}" />
-			</StackPanel>
-		</Grid>
-	</Grid>
+        <Grid Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibleConv}}" Background="{StaticResource SemiTransparentWhiteBrush}">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <controls:ProgressRing IsActive="{Binding IsLoading}" IsLarge="True" />
+                <TextBlock Text="{lex:Loc GSD:Strings:PleaseWait}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
 </controls:MetroWindow>

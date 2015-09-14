@@ -321,4 +321,13 @@
   <data name="StartWithWindows" xml:space="preserve">
     <value>Mit Windows starten</value>
   </data>
+  <data name="ShowWindow" xml:space="preserve">
+    <value>Fenster anzeigen</value>
+  </data>
+  <data name="Quit" xml:space="preserve">
+    <value>Beenden</value>
+  </data>
+  <data name="CloseToTray" xml:space="preserve">
+    <value>Nach dem Schließen im Tray bleiben</value>
+  </data>
 </root>

@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using GalaSoft.MvvmLight.CommandWpf;
+using GSD.Models.Repositories;
+using GSD.ViewServices;
+using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.Globalization;
@@ -7,9 +10,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
-using GalaSoft.MvvmLight.CommandWpf;
-using GSD.Models.Repositories;
-using GSD.ViewServices;
 using WPFLocalizeExtension.Engine;
 using WPFLocalizeExtension.Providers;
 
@@ -50,6 +50,7 @@ namespace GSD.ViewModels
 			ExpandEntries = Settings.GetById( SettingKeys.ExpandEntries ).Get<bool>();
 			StartMinimized = Settings.GetById( SettingKeys.StartMinimized ).Get<bool>();
 			StartWithWindows = Settings.GetById( SettingKeys.StartWithWindows ).Get<bool>();
+			CloseToTray = Settings.GetById( SettingKeys.CloseToTray ).Get<bool>();
 
 			var lang = Settings.GetById( SettingKeys.Language ).Value;
 			ChangeLanguage = false;
@@ -130,6 +131,7 @@ namespace GSD.ViewModels
 			Settings.Set( SettingKeys.Language, SelectedLanguage.IetfLanguageTag );
 			Settings.Set( SettingKeys.StartWithWindows, StartWithWindows.ToString() );
 			Settings.Set( SettingKeys.StartMinimized, StartMinimized.ToString() );
+			Settings.Set( SettingKeys.CloseToTray, CloseToTray.ToString() );
 
 			Themes.ChangeStyle( SelectedTheme.Name, SelectedAccent.Name );
 
@@ -137,8 +139,29 @@ namespace GSD.ViewModels
 		}
 
 		public List<ColorItem> AvailableAccents { get; }
+
 		public List<CultureInfo> AvailableLanguages { get; }
+
 		public List<ColorItem> AvailableThemes { get; }
+
+		public bool CloseToTray
+		{
+			[DebuggerStepThrough]
+			get
+			{
+				return _CloseToTray;
+			}
+			set
+			{
+				if( _CloseToTray == value )
+				{
+					return;
+				}
+
+				_CloseToTray = value;
+				RaisePropertyChanged( nameof( CloseToTray ) );
+			}
+		}
 
 		public string DatabasePath
 		{
@@ -179,8 +202,11 @@ namespace GSD.ViewModels
 		}
 
 		public RelayCommand MoveDatabaseCommand => _MoveDatabaseCommand ?? ( _MoveDatabaseCommand = new RelayCommand( ExecuteMoveDatabaseCommand ) );
+
 		public RelayCommand OpenDatabaseFolderCommand => _OpenDatabaseFolderCommand ?? ( _OpenDatabaseFolderCommand = new RelayCommand( ExecuteOpenDatabaseFolderCommand ) );
+
 		public RelayCommand ResetToDefaultsCommand => _ResetToDefaultsCommand ?? ( _ResetToDefaultsCommand = new RelayCommand( ExecuteResetToDefaultsCommand ) );
+
 		public RelayCommand SaveCommand => _SaveCommand ?? ( _SaveCommand = new RelayCommand( ExecuteSaveCommand ) );
 
 		public ColorItem SelectedAccent
@@ -288,7 +314,11 @@ namespace GSD.ViewModels
 		}
 
 		private readonly IStartupConfigurator Startup;
+
 		private readonly IAppThemes Themes;
+
+		[System.Diagnostics.DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private bool _CloseToTray;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private string _DatabasePath;

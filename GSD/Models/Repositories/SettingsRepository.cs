@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GSD.Models.Repositories
 {
-	internal interface ISettingsRepository : IRepository<Config>
+	public interface ISettingsRepository : IRepository<Config>
 	{
 		void Set( string key, string value );
 	}
@@ -22,12 +22,14 @@ namespace GSD.Models.Repositories
 				{ExpandEntries, "False"},
 				{Language, "en-US"},
 				{StartMinimized, "False"},
-				{StartWithWindows, "False"}
+				{StartWithWindows, "False"},
+				{CloseToTray, "True"}
 			};
 		}
 
 		public static readonly IReadOnlyDictionary<string, string> DefaultValues;
 		internal const string Accent = "style.accent";
+		internal const string CloseToTray = "ui.closetotray";
 		internal const string DatabasePath = "io.dbpath";
 		internal const string ExpandEntries = "state.expand";
 		internal const string Language = "ui.language";
@@ -46,7 +48,7 @@ namespace GSD.Models.Repositories
 			if( File.Exists( FileName ) )
 			{
 				Entries = new Dictionary<string, string>();
-				foreach( var parts in File.ReadAllLines( FileName ).Select( line => line.Split( new[] { '=' }, 2 ) ) )
+				foreach( var parts in File.ReadAllLines( FileName ).Select( line => line.Split( new[] {'='}, 2 ) ) )
 				{
 					Entries.Add( parts[0], parts[1] );
 				}
@@ -82,7 +84,7 @@ namespace GSD.Models.Repositories
 
 		public IEnumerable<Config> GetAll()
 		{
-			return Entries.Select( kvp => new Config { Id = kvp.Key, Value = kvp.Value } );
+			return Entries.Select( kvp => new Config {Id = kvp.Key, Value = kvp.Value} );
 		}
 
 		public Config GetById( object id )

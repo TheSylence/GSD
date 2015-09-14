@@ -3,7 +3,7 @@ using NHibernate;
 
 namespace GSD.Models.Repositories
 {
-	internal interface IRepository<TEntity> where TEntity : class
+	public interface IRepository<TEntity> where TEntity : class
 	{
 		void Add( TEntity entity );
 
