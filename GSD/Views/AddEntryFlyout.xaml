@@ -45,39 +45,41 @@
 			<TextBlock Text="{lex:Loc GSD:Strings:Tags}"
 			           Grid.Row="4"
 			           FontSize="{DynamicResource NormalFontSize}" />
-			<ItemsControl Grid.Row="5" ItemsSource="{Binding Tags}">
-				<ItemsControl.ItemTemplate>
-					<DataTemplate DataType="viewModels:TagEntry">
-						<CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}">
-							<Border BorderBrush="{DynamicResource IdealForegroundColorBrush}"
-							        BorderThickness="1" Margin="5,0" Padding="4,2" CornerRadius="5"
-							        Background="{Binding Tag.Model.Color, Converter={StaticResource BackgroundColorConv}}">
-								<TextBlock Text="{Binding Tag.Model.Name}"
-								           FontSize="{DynamicResource NormalFontSize}"
-								           Foreground="{Binding Tag.Model.Color, Converter={StaticResource ForegroundColorConv}}"
-								           VerticalAlignment="Center" />
-							</Border>
-						</CheckBox>
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-				<ItemsControl.Style>
-					<Style TargetType="ItemsControl">
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding Tags.Count}" Value="0">
-								<Setter Property="Template">
-									<Setter.Value>
-										<ControlTemplate>
-											<TextBlock Text="{lex:Loc GSD:Strings:NoTagsDefinedForProject}"
-											           FontStyle="Italic"
-											           FontSize="{StaticResource NormalFontSize}" />
-										</ControlTemplate>
-									</Setter.Value>
-								</Setter>
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</ItemsControl.Style>
-			</ItemsControl>
+			<ScrollViewer Grid.Row="5" HorizontalScrollBarVisibility="Hidden">
+				<ItemsControl ItemsSource="{Binding Tags}">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate DataType="viewModels:TagEntry">
+							<CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}">
+								<Border BorderBrush="{DynamicResource IdealForegroundColorBrush}"
+								        BorderThickness="1" Margin="5,0" Padding="4,2" CornerRadius="5"
+								        Background="{Binding Tag.Model.Color, Converter={StaticResource BackgroundColorConv}}">
+									<TextBlock Text="{Binding Tag.Model.Name}"
+									           FontSize="{DynamicResource NormalFontSize}"
+									           Foreground="{Binding Tag.Model.Color, Converter={StaticResource ForegroundColorConv}}"
+									           VerticalAlignment="Center" />
+								</Border>
+							</CheckBox>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+					<ItemsControl.Style>
+						<Style TargetType="ItemsControl">
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding Tags.Count}" Value="0">
+									<Setter Property="Template">
+										<Setter.Value>
+											<ControlTemplate>
+												<TextBlock Text="{lex:Loc GSD:Strings:NoTagsDefinedForProject}"
+												           FontStyle="Italic"
+												           FontSize="{StaticResource NormalFontSize}" />
+											</ControlTemplate>
+										</Setter.Value>
+									</Setter>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</ItemsControl.Style>
+				</ItemsControl>
+			</ScrollViewer>
 		</Grid>
 	</DockPanel>
 </controls:Flyout>
