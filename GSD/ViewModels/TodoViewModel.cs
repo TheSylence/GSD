@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using GalaSoft.MvvmLight.CommandWpf;
+﻿using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
 using GSD.Resources;
 using GSD.ViewServices;
+using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 
 namespace GSD.ViewModels
 {
@@ -22,10 +22,17 @@ namespace GSD.ViewModels
 			Model = todo;
 			_Done = Model.Done;
 
-			AllTags = new ObservableCollection<TodoTagViewModel>( Model.Project.Tags.Select( t => new TodoTagViewModel( t )
+			if( Model?.Project?.Tags != null )
 			{
-				IsSelected = Model.Tags.Contains( t )
-			} ) );
+				AllTags = new ObservableCollection<TodoTagViewModel>( Model.Project.Tags.Select( t => new TodoTagViewModel( t )
+				{
+					IsSelected = Model.Tags.Contains( t )
+				} ) );
+			}
+			else
+			{
+				AllTags = new ObservableCollection<TodoTagViewModel>();
+			}
 
 			foreach( var t in AllTags )
 			{
@@ -102,11 +109,7 @@ namespace GSD.ViewModels
 
 		public bool Done
 		{
-			[DebuggerStepThrough]
-			get
-			{
-				return _Done;
-			}
+			[DebuggerStepThrough] get { return _Done; }
 			set
 			{
 				if( _Done == value )
@@ -127,10 +130,8 @@ namespace GSD.ViewModels
 
 		private readonly ITodoRepository TodoRepo;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private RelayCommand _DeleteEntryCommand;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private RelayCommand _DeleteEntryCommand;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private bool _Done;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private bool _Done;
 	}
 }

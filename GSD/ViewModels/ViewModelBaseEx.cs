@@ -9,8 +9,9 @@ namespace GSD.ViewModels
 {
 	internal abstract class ViewModelBaseEx : ViewModelBase, IDisposable
 	{
-		protected ViewModelBaseEx( IViewServiceRepository viewServices = null, ISettingsRepository settingsRepo = null )
+		protected ViewModelBaseEx( IViewServiceRepository viewServices = null, ISettingsRepository settingsRepo = null, IMessenger messenger = null )
 		{
+			MessengerInstance = messenger;
 			ViewServices = viewServices ?? App.ViewServices;
 			Session = App.Session;
 			Settings = settingsRepo ?? App.Settings;

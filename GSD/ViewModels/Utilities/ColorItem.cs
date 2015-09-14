@@ -1,7 +1,9 @@
-﻿using System.Windows.Media;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Windows.Media;
 
-namespace GSD.ViewModels
+namespace GSD.ViewModels.Utilities
 {
+	[ExcludeFromCodeCoverage]
 	internal class ColorItem
 	{
 		public Brush BorderBrush { get; set; }

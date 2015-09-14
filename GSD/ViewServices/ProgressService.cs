@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using GSD.Resources;
 using GSD.ViewModels;
+using GSD.ViewModels.Utilities;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 

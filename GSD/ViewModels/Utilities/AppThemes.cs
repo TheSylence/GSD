@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using MahApps.Metro;
 
-namespace GSD.ViewModels
+namespace GSD.ViewModels.Utilities
 {
 	internal interface IAppThemes
 	{
@@ -13,6 +14,7 @@ namespace GSD.ViewModels
 		void ChangeStyle( string theme, string accent );
 	}
 
+	[ExcludeFromCodeCoverage]
 	internal class AppThemes : IAppThemes
 	{
 		public IEnumerable<ColorItem> Accents => ThemeManager.Accents.Select( a => new ColorItem

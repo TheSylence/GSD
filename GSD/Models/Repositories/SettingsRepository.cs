@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -72,14 +73,12 @@ namespace GSD.Models.Repositories
 
 		public void Add( Config entity )
 		{
-			Entries.Add( entity.Id, entity.Value );
-			Save();
+			throw new NotSupportedException();
 		}
 
 		public void Delete( Config entity )
 		{
-			Entries.Remove( entity.Id );
-			Save();
+			throw new NotSupportedException();
 		}
 
 		public IEnumerable<Config> GetAll()

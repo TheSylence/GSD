@@ -4,6 +4,7 @@ using System.Linq;
 using GSD.Models;
 using GSD.Models.Repositories;
 using GSD.ViewModels;
+using GSD.ViewModels.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 

@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-namespace GSD.ViewModels
+namespace GSD.ViewModels.Utilities
 {
 	internal interface ITaskRunner
 	{
@@ -10,6 +11,7 @@ namespace GSD.ViewModels
 		Task Run( Action action );
 	}
 
+	[ExcludeFromCodeCoverage]
 	internal class TaskRunner : ITaskRunner
 	{
 		public Task<T> Run<T>( Func<T> action )

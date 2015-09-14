@@ -17,7 +17,7 @@ namespace GSD.ViewModels
 {
 	internal class TagListViewModel : ValidationViewModel, IResettable
 	{
-		public TagListViewModel( ProjectListViewModel projectList )
+		public TagListViewModel( IProjectListViewModel projectList )
 		{
 			TagRepo = new TagRepository( Session );
 
@@ -334,7 +334,7 @@ namespace GSD.ViewModels
 		}
 
 		public ObservableCollection<TagViewModel> Tags { get; }
-		private readonly ProjectListViewModel ProjectList;
+		private readonly IProjectListViewModel ProjectList;
 		private readonly ITagRepository TagRepo;
 		private RelayCommand _CloseFlyoutCommand;
 		private RelayCommand<TagViewModel> _DeleteTagCommand;

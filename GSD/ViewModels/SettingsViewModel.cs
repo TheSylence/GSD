@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
+using GSD.ViewModels.Utilities;
 using WPFLocalizeExtension.Engine;
 using WPFLocalizeExtension.Providers;
 

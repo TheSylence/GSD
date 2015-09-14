@@ -1,6 +1,7 @@
-﻿using System.Windows;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Windows;
 
-namespace GSD.ViewModels
+namespace GSD.ViewModels.Utilities
 {
 	interface IAppController
 	{
@@ -9,6 +10,7 @@ namespace GSD.ViewModels
 		void Shutdown();
 	}
 
+	[ExcludeFromCodeCoverage]
 	internal class AppController : IAppController
 	{
 		public void ShowWindow()

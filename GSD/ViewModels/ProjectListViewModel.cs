@@ -1,19 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Windows.Input;
-using GalaSoft.MvvmLight.CommandWpf;
+﻿using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
 using GSD.Resources;
 using GSD.ViewServices;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Windows.Input;
 
 namespace GSD.ViewModels
 {
-	internal class ProjectListViewModel : ValidationViewModel, IResettable
+	internal interface IProjectListViewModel
+	{
+		event EventHandler<EventArgs> CurrentProjectChanged;
+
+		void AddTag( Tag tag );
+
+		ProjectViewModel CurrentProject { get; set; }
+	}
+
+	internal class ProjectListViewModel : ValidationViewModel, IResettable, IProjectListViewModel
 	{
 		public ProjectListViewModel( IViewServiceRepository viewServices = null, ISettingsRepository settingsRepo = null, IProjectRepository projectRepo = null )
 			: base( viewServices, settingsRepo )

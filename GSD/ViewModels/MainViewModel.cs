@@ -1,11 +1,12 @@
-﻿using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using GalaSoft.MvvmLight.CommandWpf;
+﻿using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Messages;
 using GSD.Models.Repositories;
+using GSD.ViewModels.Utilities;
 using GSD.ViewServices;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace GSD.ViewModels
 {
@@ -16,19 +17,23 @@ namespace GSD.ViewModels
 		{
 		}
 
-		public MainViewModel( IDatabaseConnector connector, ITaskRunner taskRunner = null )
+		public MainViewModel( IDatabaseConnector connector, IViewServiceRepository viewServices = null, ITaskRunner taskRunner = null, 
+			IProcessStarter procStarter = null, IMessenger messenger = null, IProjectListViewModel projectList = null,
+			ISettingsRepository settingsRepo = null )
+			: base( viewServices, settingsRepo, messenger )
 		{
 			var dbConnector = connector ?? Application.Current as IDatabaseConnector;
 			Debug.Assert( dbConnector != null );
 
 			var runner = taskRunner ?? new TaskRunner();
-
+			ProcStarter = procStarter ?? new ProcessStarter();
+			
 			IsLoading = true;
 			runner.Run( () =>
 			{
 				dbConnector.ConnectToDatabase();
 
-				ProjectList = new ProjectListViewModel();
+				ProjectList = projectList ?? new ProjectListViewModel( ViewServices, Settings );
 				TagList = new TagListViewModel( ProjectList );
 				Searcher = new EntrySearcher( ProjectList );
 			} ).ContinueWith( t =>
@@ -76,7 +81,7 @@ namespace GSD.ViewModels
 
 		private void ExecuteErrorReportCommand()
 		{
-			Process.Start( "https://github.com/TheSylence/GSD/issues" );
+			ProcStarter.Start( "https://github.com/TheSylence/GSD/issues" );
 		}
 
 		private async void ExecuteInfoCommand()
@@ -146,11 +151,10 @@ namespace GSD.ViewModels
 		public ICommand OpenTagManagementCommand
 			=> _OpenTagManagementCommand ?? ( _OpenTagManagementCommand = new RelayCommand( ExecuteOpenTagManagementCommand, CanExecuteOpenTagManagementCommand ) );
 
-		public ProjectListViewModel ProjectList { get; private set; }
-
+		public IProjectListViewModel ProjectList { get; private set; }
 		public EntrySearcher Searcher { get; private set; }
-
 		public TagListViewModel TagList { get; set; }
+		private readonly IProcessStarter ProcStarter;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private RelayCommand _AddEntryCommand;

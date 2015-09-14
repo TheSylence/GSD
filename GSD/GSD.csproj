@@ -114,15 +114,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="SingleInstance.cs" />
-    <Compile Include="ViewModels\AppController.cs" />
-    <Compile Include="ViewModels\AppThemes.cs" />
+    <Compile Include="ViewModels\Utilities\AppController.cs" />
+    <Compile Include="ViewModels\Utilities\AppThemes.cs" />
     <Compile Include="ViewModels\DatabasePathViewModel.cs" />
     <Compile Include="ViewModels\IDatabaseConnector.cs" />
     <Compile Include="ViewModels\InfoViewModel.cs" />
     <Compile Include="ViewModels\IViewController.cs" />
-    <Compile Include="ViewModels\ProgressReport.cs" />
+    <Compile Include="ViewModels\Utilities\ProcessStarter.cs" />
+    <Compile Include="ViewModels\Utilities\ProgressReport.cs" />
     <Compile Include="ViewModels\StartupConfigurator.cs" />
-    <Compile Include="ViewModels\TaskRunner.cs" />
+    <Compile Include="ViewModels\Utilities\TaskRunner.cs" />
     <Compile Include="ViewModels\TrayIconViewModel.cs" />
     <Compile Include="ViewServices\BrowseFileService.cs" />
     <Compile Include="ViewServices\InfoService.cs" />
@@ -219,7 +220,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ColorItem.cs" />
+    <Compile Include="ViewModels\Utilities\ColorItem.cs" />
     <Compile Include="ViewModels\AddEntryViewModel.cs" />
     <Compile Include="ViewModels\EditEntryViewModel.cs" />
     <Compile Include="ViewModels\EntrySearcher.cs" />

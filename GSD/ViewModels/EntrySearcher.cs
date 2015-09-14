@@ -10,7 +10,7 @@ namespace GSD.ViewModels
 {
 	internal class EntrySearcher : ViewModelBaseEx
 	{
-		public EntrySearcher( ProjectListViewModel projectList )
+		public EntrySearcher( IProjectListViewModel projectList )
 		{
 			ProjectList = projectList;
 			_CurrentProject = ProjectList.CurrentProject;
@@ -143,7 +143,7 @@ namespace GSD.ViewModels
 
 		private readonly Regex DetailsPattern = new Regex( "(?:details:(?:(\\w+)|(?:\"(.*)\")))" );
 
-		private readonly ProjectListViewModel ProjectList;
+		private readonly IProjectListViewModel ProjectList;
 
 		private readonly Regex StatusPattern = new Regex( "status:(done|notdone|open|close(?:d?))" );
 

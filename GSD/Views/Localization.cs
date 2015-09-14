@@ -1,8 +1,10 @@
-﻿using System.Windows;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace GSD.Views
 {
+	[ExcludeFromCodeCoverage]
 	internal class Localization
 	{
 		public static object GetFormatSegment1( DependencyObject obj )

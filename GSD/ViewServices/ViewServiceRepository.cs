@@ -1,8 +1,9 @@
-﻿using MahApps.Metro.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using System.Windows;
+using MahApps.Metro.Controls;
 
 namespace GSD.ViewServices
 {
@@ -29,7 +30,7 @@ namespace GSD.ViewServices
 		public async Task<TResult> Execute<TService, TResult>( object args = null ) where TService : IViewService
 		{
 			object result = await Execute<TService>( args );
-            return (TResult)( result );
+			return (TResult)( result );
 		}
 
 		public void Register<TService>( IViewService service ) where TService : IViewService
@@ -37,6 +38,7 @@ namespace GSD.ViewServices
 			ServiceMap.Add( typeof( TService ), service );
 		}
 
+		[ExcludeFromCodeCoverage]
 		private static MetroWindow Window => Application.Current?.MainWindow as MetroWindow;
 
 		private readonly Dictionary<Type, IViewService> ServiceMap = new Dictionary<Type, IViewService>();
