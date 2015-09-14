@@ -20,17 +20,29 @@ namespace GSD.ViewServices
 			var vm = pathDlg.DataContext as DatabasePathViewModel;
 			Debug.Assert( vm != null );
 
-			TaskCompletionSource<string> tcs = new TaskCompletionSource<string>();
+			TaskCompletionSource<MoveDatabaseResult> tcs = new TaskCompletionSource<MoveDatabaseResult>();
 
 			vm.CloseRequested += async ( s, e ) =>
 			{
 				await window.HideMetroDialogAsync( pathDlg );
-				tcs.TrySetResult( vm.Path );
+				tcs.TrySetResult( new MoveDatabaseResult( vm.Path, vm.OverwriteExisting ) );
 			};
 
 			await window.ShowMetroDialogAsync( pathDlg );
 
 			return await tcs.Task;
 		}
+	}
+
+	class MoveDatabaseResult
+	{
+		public MoveDatabaseResult( string path, bool overwrite )
+		{
+			Path = path;
+			OverwriteExisting = overwrite;
+		}
+
+		public bool OverwriteExisting { get; }
+		public string Path { get; }
 	}
 }

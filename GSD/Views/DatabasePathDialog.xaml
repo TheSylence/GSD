@@ -44,6 +44,8 @@
 				</ControlTemplate>
 			</controls:TextBoxHelper.ButtonTemplate>
 		</TextBox>
+		
+		<CheckBox IsChecked="{Binding OverwriteExisting, Mode=TwoWay}" Content="{lex:Loc GSD:Strings:OverwriteExisting}" ToolTip="{lex:Loc GSD:Strings:OverwriteExistingDatabaseTooltip}"/>
 
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="85">
 			<Button Content="{lex:Loc GSD:Strings:Move}"

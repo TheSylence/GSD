@@ -53,6 +53,25 @@ namespace GSD.ViewModels
 
 		public RelayCommand OkCommand => _OkCommand ?? ( _OkCommand = new RelayCommand( ExecuteOkCommand, CanExecuteOkCommand ) );
 
+		public bool OverwriteExisting
+		{
+			[DebuggerStepThrough]
+			get
+			{
+				return _OverwriteExisting;
+			}
+			set
+			{
+				if( _OverwriteExisting == value )
+				{
+					return;
+				}
+
+				_OverwriteExisting = value;
+				RaisePropertyChanged( nameof( OverwriteExisting ) );
+			}
+		}
+
 		public string Path
 		{
 			[DebuggerStepThrough] get { return _Path; }
@@ -76,6 +95,9 @@ namespace GSD.ViewModels
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private RelayCommand _OkCommand;
+
+		[System.Diagnostics.DebuggerBrowsable( DebuggerBrowsableState.Never )]
+		private bool _OverwriteExisting;
 
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private string _Path;

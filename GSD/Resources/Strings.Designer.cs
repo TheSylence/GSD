@@ -457,6 +457,24 @@ namespace GSD.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overwrite existing database.
+        /// </summary>
+        internal static string OverwriteExisting {
+            get {
+                return ResourceManager.GetString("OverwriteExisting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you leave this unchecked the app will use the existing database from now on..
+        /// </summary>
+        internal static string OverwriteExistingDatabaseTooltip {
+            get {
+                return ResourceManager.GetString("OverwriteExistingDatabaseTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please wait....
         /// </summary>
         internal static string PleaseWait {

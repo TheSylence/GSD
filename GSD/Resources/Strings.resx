@@ -330,4 +330,10 @@
   <data name="CloseToTray" xml:space="preserve">
     <value>Close to tray</value>
   </data>
+  <data name="OverwriteExisting" xml:space="preserve">
+    <value>Overwrite existing database</value>
+  </data>
+  <data name="OverwriteExistingDatabaseTooltip" xml:space="preserve">
+    <value>If you leave this unchecked the app will use the existing database from now on.</value>
+  </data>
 </root>

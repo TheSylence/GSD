@@ -330,4 +330,10 @@
   <data name="CloseToTray" xml:space="preserve">
     <value>Nach dem Schließen im Tray bleiben</value>
   </data>
+  <data name="OverwriteExisting" xml:space="preserve">
+    <value>Vorhandene Datenbank überschreiben</value>
+  </data>
+  <data name="OverwriteExistingDatabaseTooltip" xml:space="preserve">
+    <value>Wenn dies deaktiviert bleibt, wird die Anwendung die bereits existierende Datenbank verwenden</value>
+  </data>
 </root>

@@ -70,37 +70,40 @@ namespace GSD.ViewModels
 
 		private async void ExecuteMoveDatabaseCommand()
 		{
-			var newPath = await ViewServices.Execute<IMoveDatabaseService, string>();
-			if( string.IsNullOrWhiteSpace( newPath ) )
+			var result = await ViewServices.Execute<IMoveDatabaseService, MoveDatabaseResult>();
+			if( string.IsNullOrWhiteSpace( result.Path ) )
 			{
 				return;
 			}
 
-			await ViewServices.Execute<IProgressService>( new ProgressServiceArgs( report =>
+			if( result.OverwriteExisting || !File.Exists( result.Path ) )
 			{
-				SQLiteBackupCallback callback =
-					( source, sourceName, destination, destinationName, pages, remainingPages, totalPages, retry ) =>
+				await ViewServices.Execute<IProgressService>( new ProgressServiceArgs( report =>
+				{
+					SQLiteBackupCallback callback =
+						( source, sourceName, destination, destinationName, pages, remainingPages, totalPages, retry ) =>
+						{
+							report.SetProgress( totalPages - remainingPages, totalPages );
+							return true;
+						};
+
+					SQLiteConnectionStringBuilder sb = new SQLiteConnectionStringBuilder
 					{
-						report.SetProgress( totalPages - remainingPages, totalPages );
-						return true;
+						DataSource = result.Path
 					};
 
-				SQLiteConnectionStringBuilder sb = new SQLiteConnectionStringBuilder
-				{
-					DataSource = newPath
-				};
+					using( SQLiteConnection destConnection = new SQLiteConnection( sb.ToString() ) )
+					{
+						destConnection.Open();
 
-				using( SQLiteConnection destConnection = new SQLiteConnection( sb.ToString() ) )
-				{
-					destConnection.Open();
+						var connection = App.Session.Connection as SQLiteConnection;
+						Debug.Assert( connection != null, "connection != null" );
+						connection.BackupDatabase( destConnection, "main", "main", -1, callback, 100 );
+					}
+				} ) );
+			}
 
-					var connection = App.Session.Connection as SQLiteConnection;
-					Debug.Assert( connection != null, "connection != null" );
-					connection.BackupDatabase( destConnection, "main", "main", -1, callback, 100 );
-				}
-			} ) );
-
-			Settings.Set( SettingKeys.DatabasePath, newPath );
+			Settings.Set( SettingKeys.DatabasePath, result.Path );
 			Application.Current.Shutdown();
 			Process.Start( Assembly.GetExecutingAssembly().Location );
 		}
