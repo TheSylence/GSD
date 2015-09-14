@@ -4,17 +4,19 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
+using GalaSoft.MvvmLight.Messaging;
 using GSD.Messages;
 
 namespace GSD.ViewModels
 {
 	internal class EntrySearcher : ViewModelBaseEx
 	{
-		public EntrySearcher( IProjectListViewModel projectList )
+		public EntrySearcher( IProjectListViewModel projectList, IMessenger messenger = null )
+			: base( null, null, messenger )
 		{
 			ProjectList = projectList;
 			_CurrentProject = ProjectList.CurrentProject;
-			Matches = new ObservableCollection<TodoViewModel>( CurrentProject?.Todos ?? Enumerable.Empty<TodoViewModel>() );
+			Matches = new ObservableCollection<TodoViewModel>( AllEntries );
 
 			MessengerInstance.Register<CurrentProjectChangedMessage>( this, OnCurrentProjectChanged );
 		}
@@ -27,13 +29,13 @@ namespace GSD.ViewModels
 		private void Search()
 		{
 			Matches.Clear();
-			IEnumerable<TodoViewModel> results = CurrentProject.Todos;
+			IEnumerable<TodoViewModel> results = AllEntries;
 
 			string expression = Text.ToLower();
 			foreach( var match in StatusPattern.Matches( expression ).OfType<Match>().OrderByDescending( x => x.Index ) )
 			{
 				string statusName = match.Groups[1].Value;
-				bool status = new[] { "done", "close", "closed" }.Contains( statusName );
+				bool status = new[] {"done", "close", "closed"}.Contains( statusName );
 
 				results = results.Where( r => r.Model.Done == status );
 
@@ -70,14 +72,14 @@ namespace GSD.ViewModels
 					continue;
 				}
 
-				results = results.Where( r => r.Model.Details.ToLower().Contains( searchText ) );
+				results = results.Where( r => ( r.Model.Details ?? string.Empty ).ToLower().Contains( searchText ) );
 				expression = expression.Remove( match.Index, match.Length );
 			}
 
 			expression = expression.Trim();
 			if( !string.IsNullOrWhiteSpace( expression ) )
 			{
-				results = results.Where( t => t.Model.Summary.Contains( expression ) );
+				results = results.Where( t => t.Model.Summary.ToLower().Contains( expression ) );
 			}
 
 			foreach( var entry in results )
@@ -104,11 +106,7 @@ namespace GSD.ViewModels
 
 		public bool IsSearching
 		{
-			[DebuggerStepThrough]
-			get
-			{
-				return _IsSearching;
-			}
+			[DebuggerStepThrough] get { return _IsSearching; }
 			set
 			{
 				if( _IsSearching == value )
@@ -141,6 +139,7 @@ namespace GSD.ViewModels
 			}
 		}
 
+		private IEnumerable<TodoViewModel> AllEntries => CurrentProject?.Todos ?? Enumerable.Empty<TodoViewModel>();
 		private readonly Regex DetailsPattern = new Regex( "(?:details:(?:(\\w+)|(?:\"(.*)\")))" );
 
 		private readonly IProjectListViewModel ProjectList;
@@ -149,13 +148,10 @@ namespace GSD.ViewModels
 
 		private readonly Regex TagPattern = new Regex( "(?:tag|label):(?:(\\w+)|(?:\"(.*)\"))" );
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private ProjectViewModel _CurrentProject;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private ProjectViewModel _CurrentProject;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private bool _IsSearching;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private bool _IsSearching;
 
-		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
-		private string _Text;
+		[DebuggerBrowsable( DebuggerBrowsableState.Never )] private string _Text;
 	}
 }

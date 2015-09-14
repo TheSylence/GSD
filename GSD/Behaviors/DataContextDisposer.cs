@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Interactivity;
 
 namespace GSD.Behaviors
 {
+	[ExcludeFromCodeCoverage]
 	internal class DataContextDisposer : Behavior<FrameworkElement>
 	{
 		protected override void OnAttached()

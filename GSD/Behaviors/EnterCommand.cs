@@ -7,6 +7,7 @@ using System.Windows.Interactivity;
 namespace GSD.Behaviors
 {
 	[SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )]
+	[ExcludeFromCodeCoverage]
 	internal class EnterCommand : Behavior<TextBox>
 	{
 		protected override void OnAttached()

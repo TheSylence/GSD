@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace GSD
 {
+	[ExcludeFromCodeCoverage]
 	internal static class Constants
 	{
 		public static string DefaultDatabasePath => Path.Combine( DataPath, "data.db3" );

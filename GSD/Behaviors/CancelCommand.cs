@@ -1,10 +1,12 @@
-﻿using System.Windows;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
 namespace GSD.Behaviors
 {
+	[ExcludeFromCodeCoverage]
 	internal class CancelCommand : Behavior<TextBox>
 	{
 		protected override void OnAttached()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Interactivity;
 using GalaSoft.MvvmLight.Messaging;
@@ -8,6 +9,7 @@ using MahApps.Metro.Controls;
 
 namespace GSD.Behaviors
 {
+	[ExcludeFromCodeCoverage]
 	internal class FlyoutOpener : Behavior<Flyout>
 	{
 		protected override void OnAttached()

@@ -1,15 +1,20 @@
-﻿using System;
-using System.Diagnostics;
-using GalaSoft.MvvmLight.CommandWpf;
-using GalaSoft.MvvmLight.Threading;
+﻿using GalaSoft.MvvmLight.CommandWpf;
 using GSD.Resources;
 using GSD.ViewServices;
+using System;
+using System.Diagnostics;
 
 namespace GSD.ViewModels
 {
 	internal class DatabasePathViewModel : ValidationViewModel, IViewController
 	{
 		public DatabasePathViewModel()
+			: this( null )
+		{
+		}
+
+		public DatabasePathViewModel( IViewServiceRepository viewServiceRepo )
+			: base( viewServiceRepo )
 		{
 			Validate( nameof( Path ) ).Check( () => !string.IsNullOrWhiteSpace( Path ) ).Message( Strings.MustEnterValidPath );
 			ClearValidationErrors();
@@ -27,7 +32,7 @@ namespace GSD.ViewModels
 			var path = await ViewServices.Execute<IBrowseFileService, string>( System.IO.Path.GetDirectoryName( Path ) );
 			if( !string.IsNullOrWhiteSpace( path ) )
 			{
-				await DispatcherHelper.RunAsync( () => Path = path );
+				Path = path;
 			}
 		}
 
@@ -50,11 +55,7 @@ namespace GSD.ViewModels
 
 		public string Path
 		{
-			[DebuggerStepThrough]
-			get
-			{
-				return _Path;
-			}
+			[DebuggerStepThrough] get { return _Path; }
 			set
 			{
 				if( _Path == value )
