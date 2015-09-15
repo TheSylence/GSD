@@ -4,9 +4,10 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using GalaSoft.MvvmLight;
-using GSD.Messages;
+using GalaSoft.MvvmLight.Messaging;
 using GSD.Models;
 using GSD.Models.Repositories;
+using GSD.Resources;
 
 namespace GSD.ViewModels
 {
@@ -28,6 +29,8 @@ namespace GSD.ViewModels
 			}
 		}
 
+		public event EventHandler CurrentChanged;
+
 		private void Todo_DeleteRequested( object sender, EventArgs e )
 		{
 			var todo = sender as TodoViewModel;
@@ -35,6 +38,8 @@ namespace GSD.ViewModels
 
 			TodoRepo.Delete( todo.Model );
 			Todos.Remove( todo );
+
+			MessengerInstance.Send( new NotificationMessage( Strings.EntryDeleted ) );
 		}
 
 		private void Todo_SaveRequested( object sender, EventArgs e )
@@ -83,8 +88,6 @@ namespace GSD.ViewModels
 				CurrentChanged?.Invoke( this, EventArgs.Empty );
 			}
 		}
-
-		public event EventHandler CurrentChanged;
 
 		public Project Model { get; }
 		public int OpenTodoCount => Todos.Count( t => !t.Model.Done );

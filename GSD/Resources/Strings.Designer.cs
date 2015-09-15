@@ -268,6 +268,15 @@ namespace GSD.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Entry deleted.
+        /// </summary>
+        internal static string EntryDeleted {
+            get {
+                return ResourceManager.GetString("EntryDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Details of the entry (Markdown is supported).
         /// </summary>
         internal static string EntryDetails {
@@ -502,6 +511,15 @@ namespace GSD.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Project deleted.
+        /// </summary>
+        internal static string ProjectDeleted {
+            get {
+                return ResourceManager.GetString("ProjectDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Project must have a name.
         /// </summary>
         internal static string ProjectMustHaveName {
@@ -669,6 +687,15 @@ namespace GSD.Resources {
         internal static string Summary {
             get {
                 return ResourceManager.GetString("Summary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag deleted.
+        /// </summary>
+        internal static string TagDeleted {
+            get {
+                return ResourceManager.GetString("TagDeleted", resourceCulture);
             }
         }
         

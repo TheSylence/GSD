@@ -342,4 +342,13 @@
   <data name="Dismiss" xml:space="preserve">
     <value>Ausblenden</value>
   </data>
+  <data name="TagDeleted" xml:space="preserve">
+    <value>Tag wurde gelöscht</value>
+  </data>
+  <data name="EntryDeleted" xml:space="preserve">
+    <value>Eintrag wurde gelöscht</value>
+  </data>
+  <data name="ProjectDeleted" xml:space="preserve">
+    <value>Projekt wurde gelöscht</value>
+  </data>
 </root>

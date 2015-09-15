@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
@@ -110,6 +111,7 @@ namespace GSD.ViewModels
 			Tags.Remove( arg );
 
 			MessengerInstance.Send( new TagRemovedMessage( arg.Model ) );
+			MessengerInstance.Send( new NotificationMessage( Strings.TagDeleted ) );
 			ReadTagNames();
 		}
 

@@ -1,16 +1,16 @@
-﻿using GalaSoft.MvvmLight.CommandWpf;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
 using GSD.Resources;
 using GSD.ViewServices;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Windows.Input;
 
 namespace GSD.ViewModels
 {
@@ -106,6 +106,8 @@ namespace GSD.ViewModels
 					CurrentProject.IsCurrent = true;
 				}
 			}
+
+			MessengerInstance.Send( new NotificationMessage( Strings.ProjectDeleted ) );
 		}
 
 		private void ExecuteNewProjectCommand()
@@ -131,8 +133,6 @@ namespace GSD.ViewModels
 			Reset();
 		}
 
-		private bool ListenForCurrentChange = true;
-
 		private void Proj_CurrentChanged( object sender, EventArgs e )
 		{
 			if( !ListenForCurrentChange )
@@ -155,7 +155,7 @@ namespace GSD.ViewModels
 					{
 						proj.IsCurrent = false;
 					}
-					
+
 					CurrentProject = vm;
 					Settings.Set( SettingKeys.LastProject, CurrentProject?.Model?.Id.ToString() );
 					MessengerInstance.Send( new CurrentProjectChangedMessage( vm ) );
@@ -221,6 +221,7 @@ namespace GSD.ViewModels
 		[DebuggerBrowsable( DebuggerBrowsableState.Never )]
 		private string _NewProjectName;
 
+		private bool ListenForCurrentChange = true;
 		private List<string> ProjectNames;
 	}
 }
