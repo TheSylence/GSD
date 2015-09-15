@@ -336,4 +336,7 @@
   <data name="OverwriteExistingDatabaseTooltip" xml:space="preserve">
     <value>Wenn dies deaktiviert bleibt, wird die Anwendung die bereits existierende Datenbank verwenden</value>
   </data>
+  <data name="NewEntryNotMatched" xml:space="preserve">
+    <value>Eintrag erfolgreich hinzugefügt. Er wird nicht angezeigt, weil er nicht der aktuellen Suche entspricht.</value>
+  </data>
 </root>

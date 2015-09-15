@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using GalaSoft.MvvmLight.Messaging;
 using GSD.Messages;
+using GSD.Resources;
 
 namespace GSD.ViewModels
 {
@@ -19,6 +20,19 @@ namespace GSD.ViewModels
 			Matches = new ObservableCollection<TodoViewModel>( AllEntries );
 
 			MessengerInstance.Register<CurrentProjectChangedMessage>( this, OnCurrentProjectChanged );
+			MessengerInstance.Register<EntryAddedMessage>( this, OnEntryAdded );
+		}
+
+		private void OnEntryAdded( EntryAddedMessage msg )
+		{
+			Search();
+
+			if( Matches.Any( m => m.Model.Id == msg.Entry.Id ) )
+			{
+				return;
+			}
+
+			MessengerInstance.Send( new NotificationMessage( Strings.NewEntryNotMatched ) );
 		}
 
 		private void OnCurrentProjectChanged( CurrentProjectChangedMessage obj )

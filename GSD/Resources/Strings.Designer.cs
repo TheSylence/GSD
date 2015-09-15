@@ -403,6 +403,15 @@ namespace GSD.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Entry was added successfully. It is not displayed because it doesn&apos;t match the active search..
+        /// </summary>
+        internal static string NewEntryNotMatched {
+            get {
+                return ResourceManager.GetString("NewEntryNotMatched", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         internal static string No {
