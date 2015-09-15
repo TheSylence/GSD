@@ -4,14 +4,17 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
+using GSD.ViewModels.Utilities;
 
 namespace GSD
 {
 	internal class SingleInstance : IDisposable
 	{
-		public SingleInstance( Application app )
+		public SingleInstance( Application app, IAppController appController = null )
 		{
 			App = app;
+			AppController = appController ?? new AppController();
+
 			string name = $"Local\\GSD:{Assembly.GetExecutingAssembly().GetName().Name}";
 
 			AppMutex = new Mutex( true, name, out MutexCreated );
@@ -40,10 +43,6 @@ namespace GSD
 		[DllImport( "user32.dll", SetLastError = true, CharSet = CharSet.Auto )]
 		private static extern uint RegisterWindowMessage( string lpString );
 
-		[DllImport( "user32.dll" )]
-		[return: MarshalAs( UnmanagedType.Bool )]
-		private static extern bool SetForegroundWindow( IntPtr hWnd );
-
 		private void Dispose( bool disposing )
 		{
 			AppMutex.Dispose();
@@ -53,7 +52,7 @@ namespace GSD
 		{
 			if( msg == MessageId )
 			{
-				SetForegroundWindow( WindowHandle );
+				AppController.ShowWindow();
 			}
 
 			return IntPtr.Zero;
@@ -61,6 +60,7 @@ namespace GSD
 
 		public bool IsFirstInstance => MutexCreated;
 		private readonly Application App;
+		private readonly IAppController AppController;
 		private readonly Mutex AppMutex;
 		private readonly uint MessageId;
 		private readonly bool MutexCreated;

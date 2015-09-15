@@ -82,14 +82,17 @@ namespace GSD
 			ApplySettings();
 
 			MainWindow window = new MainWindow();
+			MainWindow = window;
+
 			if( minimize )
 			{
 				window.WindowState = WindowState.Minimized;
 			}
-			MainWindow = window;
-			window.Show();
-
-			Instance.RegisterWindow( MainWindow );
+			else
+			{
+				window.Show();
+				Instance.RegisterWindow( MainWindow );
+			}
 		}
 
 		private void App_DispatcherUnhandledException( object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e )
