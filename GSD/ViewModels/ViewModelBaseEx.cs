@@ -32,8 +32,7 @@ namespace GSD.ViewModels
 				Session?.Dispose();
 			}
 		}
-
-		public IMessenger TestMessenger => MessengerInstance;
+		
 
 		protected IViewServiceRepository ViewServices { get; }
 		protected readonly ISession Session;

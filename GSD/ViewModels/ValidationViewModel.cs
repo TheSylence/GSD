@@ -1,4 +1,5 @@
-﻿using GSD.Models.Repositories;
+﻿using GalaSoft.MvvmLight.Messaging;
+using GSD.Models.Repositories;
 using GSD.ViewServices;
 using System;
 using System.Collections;
@@ -12,8 +13,8 @@ namespace GSD.ViewModels
 {
 	internal abstract class ValidationViewModel : ViewModelBaseEx, INotifyDataErrorInfo
 	{
-		protected ValidationViewModel( IViewServiceRepository viewServices = null, ISettingsRepository settingsRepo = null )
-			: base( viewServices, settingsRepo )
+		protected ValidationViewModel( IViewServiceRepository viewServices = null, ISettingsRepository settingsRepo = null, IMessenger messenger = null )
+			: base( viewServices, settingsRepo, messenger )
 		{
 		}
 

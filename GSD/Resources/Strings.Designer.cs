@@ -205,6 +205,15 @@ namespace GSD.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dismiss.
+        /// </summary>
+        internal static string Dismiss {
+            get {
+                return ResourceManager.GetString("Dismiss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Done.
         /// </summary>
         internal static string Done {
@@ -399,6 +408,15 @@ namespace GSD.Resources {
         internal static string NewEntry {
             get {
                 return ResourceManager.GetString("NewEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entry was added successfully. It is not displayed because it doesn&apos;t match the active search..
+        /// </summary>
+        internal static string NewEntryNotMatched {
+            get {
+                return ResourceManager.GetString("NewEntryNotMatched", resourceCulture);
             }
         }
         

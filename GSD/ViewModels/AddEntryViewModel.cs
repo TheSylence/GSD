@@ -65,6 +65,8 @@ namespace GSD.ViewModels
 			{
 				MessengerInstance.Send( new FlyoutMessage( FlyoutMessage.AddEntryFlyoutName ) );
 			}
+
+			MessengerInstance.Send( new EntryAddedMessage( todo ) );
 		}
 
 		public ICommand AddCommand => _AddCommand ?? ( _AddCommand = new RelayCommand( ExecuteAddCommand, CanExecuteAddCommand ) );

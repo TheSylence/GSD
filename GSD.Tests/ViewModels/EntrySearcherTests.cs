@@ -1,10 +1,10 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using System.Linq;
+using GalaSoft.MvvmLight.Messaging;
 using GSD.Messages;
 using GSD.Models;
 using GSD.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System.Linq;
 
 namespace GSD.Tests.ViewModels
 {
@@ -62,7 +62,7 @@ namespace GSD.Tests.ViewModels
 			var searcher = new EntrySearcher( projectListMock.Object, messenger );
 
 			// Act
-			messenger.Send( new CurrentProjectChangedMessage() );
+			messenger.Send( new CurrentProjectChangedMessage( null ) );
 
 			// Assert
 			projectListMock.VerifyGet( x => x.CurrentProject, Times.Exactly( 2 ) );
