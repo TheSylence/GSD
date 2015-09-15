@@ -20,7 +20,7 @@ namespace GSD.ViewModels.Utilities
 		public IEnumerable<ColorItem> Accents => ThemeManager.Accents.Select( a => new ColorItem
 		{
 			Name = a.Name,
-			BorderBrush = a.Resources["AccentColorBrush"] as Brush
+			ColorBrush = a.Resources["AccentColorBrush"] as Brush
 		} );
 
 		public IEnumerable<ColorItem> Themes => ThemeManager.AppThemes.Select( t => new ColorItem
