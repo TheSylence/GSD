@@ -51,9 +51,6 @@ namespace GSD.ViewModels
 				IsLoading = false;
 
 				CommandManager.InvalidateRequerySuggested();
-
-				DispatcherHelper.CheckBeginInvokeOnUI(
-					() => MessengerInstance.Send( new NotificationMessage( Strings.NewEntryNotMatched ) ) );
 			} );
 		}
 
