@@ -1,12 +1,13 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using GSD.Messages;
+﻿using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
 using GSD.ViewModels;
 using GSD.ViewServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System.Linq;
+using System.Threading.Tasks;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace GSD.Tests.ViewModels
 {
@@ -91,20 +92,19 @@ namespace GSD.Tests.ViewModels
 		}
 
 		[TestMethod, TestCategory( "ViewModels" )]
-		public void CurrentProjectMessageSavesIdToSettings()
+		public void ChangingCurrentProjectSavesToSettings()
 		{
 			// Arrange
 			var context = new MockContext();
 			context.SettingsRepoMock.Setup( s => s.Set( SettingKeys.LastProject, "1" ) ).Verifiable();
+			context.SettingsRepoMock.Setup( x => x.GetById( SettingKeys.LastProject ) ).Returns( new Config {Id = SettingKeys.LastProject, Value = "-1"} );
+			context.ProjectRepoMock.Setup( x => x.GetAll() ).Returns( new[] { new Project {Id = 1} } );
 
 			var vm = new ProjectListViewModel( context.ViewServiceRepo, context.SettingsRepo, context.ProjectRepo );
 			vm.Reset();
 
-			vm.Projects.Add( new ProjectViewModel( new Project { Id = 1 } ) { IsCurrent = true } );
-
 			// Act
-			vm.CurrentProject = vm.Projects[0];
-			vm.TestMessenger.Send( new CurrentProjectChangedMessage() );
+			vm.Projects[0].IsCurrent = true;
 
 			// Assert
 			context.SettingsRepoMock.VerifyAll();

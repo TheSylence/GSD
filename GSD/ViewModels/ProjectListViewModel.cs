@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
@@ -24,8 +25,8 @@ namespace GSD.ViewModels
 
 	internal class ProjectListViewModel : ValidationViewModel, IResettable, IProjectListViewModel
 	{
-		public ProjectListViewModel( IViewServiceRepository viewServices = null, ISettingsRepository settingsRepo = null, IProjectRepository projectRepo = null )
-			: base( viewServices, settingsRepo )
+		public ProjectListViewModel( IViewServiceRepository viewServices = null, ISettingsRepository settingsRepo = null, IProjectRepository projectRepo = null, IMessenger messenger = null )
+			: base( viewServices, settingsRepo, messenger )
 		{
 			ProjectRepo = projectRepo ?? new ProjectRepository( Session );
 
@@ -33,6 +34,11 @@ namespace GSD.ViewModels
 
 			var last = Settings.GetById( SettingKeys.LastProject );
 			CurrentProject = Projects.FirstOrDefault( p => p.Model.Id == last.Get<int>() ) ?? Projects.FirstOrDefault();
+
+			foreach( var proj in Projects )
+			{
+				proj.CurrentChanged += Proj_CurrentChanged;
+			}
 
 			if( CurrentProject != null )
 			{
@@ -57,9 +63,6 @@ namespace GSD.ViewModels
 		public void Reset()
 		{
 			NewProjectName = string.Empty;
-
-			MessengerInstance.Unregister( this );
-			MessengerInstance.Register<CurrentProjectChangedMessage>( this, OnCurrentProjectChanged );
 
 			ProjectNames = ProjectRepo.GetAllNames().ToList();
 
@@ -90,6 +93,8 @@ namespace GSD.ViewModels
 				return;
 			}
 
+			arg.CurrentChanged -= Proj_CurrentChanged;
+
 			Projects.Remove( arg );
 			ProjectRepo.Delete( arg.Model );
 
@@ -112,6 +117,8 @@ namespace GSD.ViewModels
 
 			ProjectRepo.Add( project );
 			var projectVm = new ProjectViewModel( project );
+			projectVm.CurrentChanged += Proj_CurrentChanged;
+
 			Projects.Add( projectVm );
 
 			if( CurrentProject != null )
@@ -124,10 +131,40 @@ namespace GSD.ViewModels
 			Reset();
 		}
 
-		private void OnCurrentProjectChanged( CurrentProjectChangedMessage msg )
+		private bool ListenForCurrentChange = true;
+
+		private void Proj_CurrentChanged( object sender, EventArgs e )
 		{
-			CurrentProject = Projects.FirstOrDefault( p => p.IsCurrent );
-			Settings.Set( SettingKeys.LastProject, CurrentProject?.Model?.Id.ToString() );
+			if( !ListenForCurrentChange )
+			{
+				return;
+			}
+
+			ProjectViewModel vm = sender as ProjectViewModel;
+			if( vm == null )
+			{
+				return;
+			}
+
+			if( vm.IsCurrent )
+			{
+				ListenForCurrentChange = false;
+				try
+				{
+					foreach( var proj in Projects.Where( p => p != vm ) )
+					{
+						proj.IsCurrent = false;
+					}
+					
+					CurrentProject = vm;
+					Settings.Set( SettingKeys.LastProject, CurrentProject?.Model?.Id.ToString() );
+					MessengerInstance.Send( new CurrentProjectChangedMessage( vm ) );
+				}
+				finally
+				{
+					ListenForCurrentChange = true;
+				}
+			}
 		}
 
 		public ICommand CloseFlyoutCommand => _CloseFlyoutCommand ?? ( _CloseFlyoutCommand = new RelayCommand( ExecuteCloseFlyoutCommand ) );

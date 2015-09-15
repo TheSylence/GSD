@@ -80,9 +80,11 @@ namespace GSD.ViewModels
 
 				_IsCurrent = value;
 				RaisePropertyChanged();
-				MessengerInstance.Send( new CurrentProjectChangedMessage() );
+				CurrentChanged?.Invoke( this, EventArgs.Empty );
 			}
 		}
+
+		public event EventHandler CurrentChanged;
 
 		public Project Model { get; }
 		public int OpenTodoCount => Todos.Count( t => !t.Model.Done );
