@@ -18,5 +18,6 @@ namespace GSD.Messages
 		internal const string ProjectFlyoutName = "ProjectsFlyout";
 		internal const string SettingsFlyoutName = "SettingsFlyout";
 		internal const string TagFlyoutName = "TagsFlyout";
+		internal const string NotificationFlyoutName = "NotificationsFlyout";
 	}
 }

@@ -76,6 +76,7 @@
 			<views:SettingsFlyout />
 			<views:AddEntryFlyout />
 			<views:EditEntryFlyout />
+			<views:NotificationFlyout />
 		</controls:FlyoutsControl>
 	</controls:MetroWindow.Flyouts>
 
