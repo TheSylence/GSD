@@ -339,4 +339,7 @@
   <data name="NewEntryNotMatched" xml:space="preserve">
     <value>Entry was added successfully. It is not displayed because it doesn't match the active search.</value>
   </data>
+  <data name="Dismiss" xml:space="preserve">
+    <value>Dismiss</value>
+  </data>
 </root>

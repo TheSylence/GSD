@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Threading;
+using GSD.Resources;
 
 namespace GSD.ViewModels
 {
@@ -49,6 +51,9 @@ namespace GSD.ViewModels
 				IsLoading = false;
 
 				CommandManager.InvalidateRequerySuggested();
+
+				DispatcherHelper.CheckBeginInvokeOnUI(
+					() => MessengerInstance.Send( new NotificationMessage( Strings.NewEntryNotMatched ) ) );
 			} );
 		}
 
