@@ -1,24 +1,26 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using GSD.Messages;
 using GSD.Models;
 using GSD.Models.Repositories;
+using GSD.Resources;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
-using GSD.Resources;
 
 namespace GSD.ViewModels
 {
 	internal class AddEntryViewModel : ValidationViewModel, IResettable
 	{
-		public AddEntryViewModel( TagListViewModel tagList, ProjectViewModel currentProject )
+		public AddEntryViewModel( IEnumerable<TagViewModel> tagList, ProjectViewModel currentProject, ITodoRepository todoRepo = null, IMessenger messenger = null )
+			: base( null, null, messenger )
 		{
 			CurrentProject = currentProject;
-			TodoRepo = new TodoRepository( App.Session );
-			Tags = tagList.Tags.Select( t => new TagEntry( t ) ).ToList();
+			TodoRepo = todoRepo ?? new TodoRepository( App.Session );
+			Tags = tagList.Select( t => new TagEntry( t ) ).ToList();
 
-			Validate( nameof( Summary ) ).Check( () => !string.IsNullOrWhiteSpace( Summary ) ).Message( Strings.EntryNeedsSummary);
+			Validate( nameof( Summary ) ).Check( () => !string.IsNullOrWhiteSpace( Summary ) ).Message( Strings.EntryNeedsSummary );
 			Reset();
 		}
 

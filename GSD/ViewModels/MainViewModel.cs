@@ -71,7 +71,7 @@ namespace GSD.ViewModels
 
 		private void ExecuteAddEntryCommand()
 		{
-			var vm = new AddEntryViewModel( TagList, ProjectList.CurrentProject );
+			var vm = new AddEntryViewModel( TagList.Tags, ProjectList.CurrentProject );
 			MessengerInstance.Send( new FlyoutMessage( FlyoutMessage.AddEntryFlyoutName, vm ) );
 		}
 

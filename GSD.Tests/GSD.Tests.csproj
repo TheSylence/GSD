@@ -120,6 +120,7 @@
     <Compile Include="Models\SchemaTests.cs" />
     <Compile Include="Models\TodoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AddEntryViewModelTests.cs" />
     <Compile Include="ViewModels\DatabasePathViewModelTests.cs" />
     <Compile Include="ViewModels\EditEntryViewModelTests.cs" />
     <Compile Include="ViewModels\EntrySearcherTests.cs" />

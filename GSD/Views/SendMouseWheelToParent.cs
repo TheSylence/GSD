@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -6,42 +7,47 @@ using System.Windows.Input;
 namespace GSD.Views
 {
 	/// <summary>
-	/// Found at http://stackoverflow.com/a/12080370/868361
+	///     Found at http://stackoverflow.com/a/12080370/868361
 	/// </summary>
+	[ExcludeFromCodeCoverage]
 	public static class SendMouseWheelToParent
 	{
 		/// <summary>
-		/// Gets the IsSendingMouseWheelEventToParent for a given <see cref="TextBox"/>.
+		///     Gets the IsSendingMouseWheelEventToParent for a given <see cref="TextBox" />.
 		/// </summary>
 		/// <param name="control">
-		/// The <see cref="TextBox"/> whose IsSendingMouseWheelEventToParent is to be retrieved.
+		///     The <see cref="TextBox" /> whose IsSendingMouseWheelEventToParent is to be retrieved.
 		/// </param>
 		/// <returns>
-		/// The IsSendingMouseWheelEventToParent, or <see langword="null"/>
-		/// if no IsSendingMouseWheelEventToParent has been set.
+		///     The IsSendingMouseWheelEventToParent, or <see langword="null" />
+		///     if no IsSendingMouseWheelEventToParent has been set.
 		/// </returns>
 		public static bool? GetIsSendingMouseWheelEventToParent( Control control )
 		{
 			if( control == null )
+			{
 				throw new ArgumentNullException( "" );
+			}
 
 			return control.GetValue( ScrollProperty ) as bool?;
 		}
 
 		/// <summary>
-		/// Sets the IsSendingMouseWheelEventToParent for a given <see cref="TextBox"/>.
+		///     Sets the IsSendingMouseWheelEventToParent for a given <see cref="TextBox" />.
 		/// </summary>
 		/// <param name="control">
-		/// The <see cref="TextBox"/> whose IsSendingMouseWheelEventToParent is to be set.
+		///     The <see cref="TextBox" /> whose IsSendingMouseWheelEventToParent is to be set.
 		/// </param>
 		/// <param name="sendToParent">
-		/// The IsSendingMouseWheelEventToParent to set, or <see langword="null"/>
-		/// to remove any existing IsSendingMouseWheelEventToParent from <paramref name="control"/>.
+		///     The IsSendingMouseWheelEventToParent to set, or <see langword="null" />
+		///     to remove any existing IsSendingMouseWheelEventToParent from <paramref name="control" />.
 		/// </param>
 		public static void SetIsSendingMouseWheelEventToParent( Control control, bool? sendToParent )
 		{
 			if( control == null )
+			{
 				throw new ArgumentNullException( "" );
+			}
 
 			control.SetValue( ScrollProperty, sendToParent );
 		}
@@ -83,6 +89,6 @@ namespace GSD.Views
 		}
 
 		public static readonly DependencyProperty ScrollProperty = DependencyProperty.RegisterAttached( "IsSendingMouseWheelEventToParent",
-			 typeof( bool ), typeof( SendMouseWheelToParent ), new FrameworkPropertyMetadata( OnValueChanged ) );
+			typeof( bool ), typeof( SendMouseWheelToParent ), new FrameworkPropertyMetadata( OnValueChanged ) );
 	}
 }
